@@ -6,7 +6,7 @@ import mongoose from "mongoose";
 
 // import User from "./src/routes/controller/models/User.js";
 
-import userRoutes from "./";
+import userRoutes from "./routes/";
 
 dotenv.config();
 const PORT = process.env.PORT || process.env.API_PORT;
