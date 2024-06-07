@@ -12,5 +12,6 @@ export default [
       "no-unused-vars": "warn",
       "no-undef": "warn",
     },
+    extends: ["eslint:recommended"],
   },
 ];
