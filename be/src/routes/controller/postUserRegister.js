@@ -25,8 +25,8 @@ export default async function postUserRegister(req, res) {
       oneTimePassword,
     } = req.body;
 
-    const userExist = await User.exists({ email });
-    if (userExist) {
+    const userEmailExist = await User.exists({ email });
+    if (userEmailExist) {
       return res.status(409).send("Email already exists");
     }
 
