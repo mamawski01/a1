@@ -9,10 +9,10 @@ export default function HomePage() {
     queryKey: ["users"],
     queryFn: getUsers,
   });
-  if (data.isLoading) return <Loader />;
-  if (data.data.data === undefined) return <Loader />;
+  if (data.isLoading || data.data.data === undefined) return <Loader />;
 
   const { users } = data.data.data;
+  console.log(users);
   return (
     <ul className="border-1 flex flex-col gap-4 rounded-lg">
       {users.map((user, i) => (

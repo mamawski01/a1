@@ -1,16 +1,15 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
 import {
-  DevicePhoneMobileIcon,
   ExclamationCircleIcon,
   ExclamationTriangleIcon,
-  HandRaisedIcon,
   HashtagIcon,
   HomeModernIcon,
   PhoneIcon,
 } from "@heroicons/react/24/solid";
 
-import { calculateAge } from "../../../be/src/utils/calculateAge";
+import { calculateAge } from "../utils/calculateAge";
+
 export default function UserCard({
   user: {
     firstName,
@@ -46,12 +45,15 @@ export default function UserCard({
       </span>
       <div
         onClick={handleExpand}
-        className={`${expand ? "" : "items-center justify-center rounded-md pb-8 text-center"} relative flex w-full cursor-pointer rounded-t-lg bg-gray-800 hover:bg-gray-700 sm:px-2`}
+        className={`${expand ? "" : "items-center justify-center rounded-md pb-8 text-center"} relative flex w-full cursor-pointer items-center justify-center rounded-t-lg bg-gray-800 text-center align-middle hover:bg-gray-700 sm:px-2`}
       >
         <div
           className={`${expand ? "left-5 top-10 h-40 w-40" : "top-5 h-24 w-24"} overflow-hidden p-3 sm:relative sm:rounded-full sm:p-0`}
         >
-          <img src="https://media.licdn.com/dms/image/C4D03AQH8qidO0nb_Ng/profile-displayphoto-shrink_800_800/0/1615696897070?e=2147483647&v=beta&t=ia3wfE2J7kVLdBy9ttkgUDAA_ul29fymykhQo0lABDo" />
+          <img
+            src="https://media.licdn.com/dms/image/C4D03AQH8qidO0nb_Ng/profile-displayphoto-shrink_800_800/0/1615696897070?e=2147483647&v=beta&t=ia3wfE2J7kVLdBy9ttkgUDAA_ul29fymykhQo0lABDo"
+            className="rounded-full"
+          />
         </div>
 
         <div className="mt-10 w-2/3 pl-5 text-start sm:text-center">
