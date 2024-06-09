@@ -4,11 +4,11 @@
 
 @layer components {
   .btn {
-    @apply rounded bg-blue-500 px-4 py-2 font-bold text-white;
+    @apply flex gap-2 rounded bg-blue-500 px-2 py-1 font-bold text-white hover:bg-blue-400;
   }
 
-  .input {
-    @apply rounded border border-gray-400 px-4 py-2;
+  .board {
+    @apply absolute inset-0 left-16 top-12 z-50 h-[calc(100vh-3.75rem)] bg-slate-200/10 p-2 backdrop-blur-sm;
   }
 
   .loader {

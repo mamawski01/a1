@@ -34,4 +34,4 @@ app.get("/", (req, res) => {
   return res.json("Hello Earth");
 });
 
-app.use("/api", userRoutes);
+app.use("/", userRoutes);
