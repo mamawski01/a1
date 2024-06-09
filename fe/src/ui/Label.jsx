@@ -1,8 +1,10 @@
 import PropTypes from "prop-types";
 export default function Label({ text }) {
+  const font =
+    text.toLowerCase().charAt(0).toUpperCase() + text.toLowerCase().slice(1);
   return (
     <label htmlFor={text} className="font-bold">
-      {text.charAt(0).toUpperCase() + text.slice(1)}
+      {font}
     </label>
   );
 }

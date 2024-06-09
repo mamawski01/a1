@@ -6,7 +6,7 @@ import { useState } from "react";
 import Form from "../ui/Form";
 
 export default function Header() {
-  const [showForm, showFormSet] = useState(false);
+  const [showForm, showFormSet] = useState(true);
 
   function handleShowForm() {
     showFormSet((show) => !show);
