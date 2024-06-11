@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { getUsers } from "../api/api.js";
-import Loader from "../ui/Loader.jsx";
+import Loader from "../reusable/components/Loader.jsx";
 
 export default function HomePage() {
   const data = useQuery({

@@ -7,7 +7,7 @@ import LoginPage from "./Pages/LoginPage.jsx";
 import PageNotFound from "./Pages/PageNotFound.jsx";
 import DashboardPage from "./Pages/DashboardPage.jsx";
 import HomePage from "./Pages/HomePage.jsx";
-import AppLayout from "./layout/AppLayout.jsx";
+import AppLayout from "./reusable/layout/AppLayout.jsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {

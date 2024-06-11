@@ -3,49 +3,27 @@
 @tailwind utilities;
 
 @layer components {
-  .btn {
-    @apply flex gap-2 rounded bg-blue-500 px-2 py-1 font-bold text-white hover:bg-blue-400;
+  body {
+    @apply bg-slate-950 text-blue-100;
   }
 
-  .board {
-    @apply absolute inset-0 left-0 top-12 z-50 h-[calc(100vh-3.75rem)] overflow-y-auto bg-slate-200/10 p-2 backdrop-blur-sm md:left-16;
+  .mainHeader {
+    @apply w-full border-b border-gray-300/20 p-2;
   }
 
-  .loader {
-    width: 45px;
-    aspect-ratio: 0.75;
-    --c: no-repeat linear-gradient(theme(colors.blue.300) 0 0);
-    background:
-      var(--c) 0% 50%,
-      var(--c) 50% 50%,
-      var(--c) 100% 50%;
-    background-size: 20% 50%;
-    animation: loading 1s infinite linear;
+  .mainSubHeader {
+    @apply container mx-auto flex items-center justify-between;
   }
-  @keyframes loading {
-    20% {
-      background-position:
-        0% 0%,
-        50% 50%,
-        100% 50%;
-    }
-    40% {
-      background-position:
-        0% 100%,
-        50% 0%,
-        100% 50%;
-    }
-    60% {
-      background-position:
-        0% 50%,
-        50% 100%,
-        100% 0%;
-    }
-    80% {
-      background-position:
-        0% 50%,
-        50% 50%,
-        100% 100%;
-    }
+
+  .mainSection {
+    @apply container mx-auto flex h-[80vh];
+  }
+
+  .mainSidebar {
+    @apply hidden h-[calc(100vh-3.60rem)] w-16 border-r border-gray-300/20 bg-slate-900 p-1 text-center md:block;
+  }
+
+  .main {
+    @apply h-[calc(100vh-3.60rem)] w-full overflow-y-auto;
   }
 }
