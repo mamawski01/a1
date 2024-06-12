@@ -24,6 +24,6 @@
   }
 
   .main {
-    @apply h-[calc(100vh-3.60rem)] w-full overflow-y-auto;
+    @apply h-[calc(100vh-3.60rem)] w-full overflow-y-auto p-2;
   }
 }

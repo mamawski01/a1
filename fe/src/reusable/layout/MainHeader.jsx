@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-import { PlusIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 
 import Logo from "../../ui/Logo";
@@ -16,12 +14,8 @@ export default function MainHeader() {
   return (
     <header className="mainHeader">
       <div className="mainSubHeader">
-        <Link to={"/"}>
-          <Logo></Logo>
-        </Link>
-        <Btn right="right-2" text="Add Employee" onClick={handleShowForm}>
-          <PlusIcon className="h-6 w-6"></PlusIcon>
-        </Btn>
+        <Logo></Logo>
+        <Btn text="Add Employee" onClick={handleShowForm}></Btn>
         {showForm && <UserForm></UserForm>}
       </div>
     </header>
