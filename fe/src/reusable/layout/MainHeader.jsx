@@ -1,22 +1,51 @@
-import { useState } from "react";
+import {
+  Bars4Icon,
+  MagnifyingGlassIcon,
+  PlusIcon,
+  UserIcon,
+} from "@heroicons/react/24/solid";
+import { useLocation } from "react-router-dom";
 
-import Logo from "../../ui/Logo";
-import Btn from "../components/Btn";
-import UserForm from "../../project/UserForm";
+import Logo from "../components/Logo";
+import Links from "../components/Links";
 
 export default function MainHeader() {
-  const [showForm, showFormSet] = useState(false);
-
-  function handleShowForm() {
-    showFormSet((show) => !show);
-  }
+  const location = useLocation();
+  const url = location.pathname;
 
   return (
     <header className="mainHeader">
       <div className="mainSubHeader">
-        <Logo></Logo>
-        <Btn text="Add Employee" onClick={handleShowForm}></Btn>
-        {showForm && <UserForm></UserForm>}
+        {/* children are limited */}
+        <div className="flex gap-2">
+          <Logo text="TEC" imgSrc={"/Asset2.png"}></Logo>
+          <Links
+            text={["Search"]}
+            hidden={[false]}
+            icons={[
+              {
+                icons: (
+                  <MagnifyingGlassIcon className="heroIcons"></MagnifyingGlassIcon>
+                ),
+              },
+            ]}
+          ></Links>
+        </div>
+
+        <Links
+          text={["Options", "Add", "Account"]}
+          hidden={[false, true, true]}
+          onClick={[null, null, null]}
+          to={["/options", "/addUser", "/account"]}
+          url={[url, url, url]}
+          icons={[
+            {
+              icons: <Bars4Icon className="heroIcons"></Bars4Icon>,
+            },
+            { icons: <PlusIcon className="heroIcons"></PlusIcon> },
+            { icons: <UserIcon className="heroIcons"></UserIcon> },
+          ]}
+        ></Links>
       </div>
     </header>
   );

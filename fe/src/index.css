@@ -12,18 +12,30 @@
   }
 
   .mainSubHeader {
-    @apply container mx-auto flex items-center justify-between;
+    @apply container mx-auto flex flex-nowrap items-center justify-between gap-2;
   }
 
   .mainSection {
     @apply container mx-auto flex h-[80vh];
   }
 
+  .height {
+    @apply h-[calc(100vh-3.65rem)];
+  }
+
   .mainSidebar {
-    @apply hidden h-[calc(100vh-3.60rem)] w-16 border-r border-gray-300/20 bg-slate-900 p-1 text-center md:block;
+    @apply hidden h-[calc(100vh-3.65rem)] w-16 border-r border-gray-300/20 p-1 text-center md:block;
   }
 
   .main {
-    @apply h-[calc(100vh-3.60rem)] w-full overflow-y-auto p-2;
+    @apply h-[calc(100vh-3.65rem)] w-full overflow-y-auto p-2;
+  }
+
+  .heroIcons {
+    @apply h-8 w-8 rounded-full bg-gray-800 p-1 text-white hover:bg-gray-400 lg:bg-transparent lg:hover:bg-transparent;
+  }
+
+  .active {
+    @apply bg-green-400;
   }
 }

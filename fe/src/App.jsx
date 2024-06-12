@@ -8,6 +8,7 @@ import PageNotFound from "./Pages/PageNotFound.jsx";
 import DashboardPage from "./Pages/DashboardPage.jsx";
 import HomePage from "./Pages/HomePage.jsx";
 import AppLayout from "./reusable/layout/AppLayout.jsx";
+import UserForm from "./project/UserForm.jsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -33,6 +34,7 @@ export default function App() {
               path="/dashboard"
               element={<DashboardPage></DashboardPage>}
             ></Route>
+            <Route path="/addUser" element={<UserForm></UserForm>}></Route>
           </Route>
           <Route path="/login" element={<LoginPage></LoginPage>}></Route>
           <Route path="*" element={<PageNotFound></PageNotFound>}></Route>

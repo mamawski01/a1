@@ -19,17 +19,13 @@ export default function RowInput({ inputType, inputs, orientation, rowLabel }) {
 }
 
 RowInput.propTypes = {
-  children: PropTypes.any,
-  data: PropTypes.any,
   inputType: PropTypes.any,
   inputs: PropTypes.any,
   rowLabel: PropTypes.any,
-  span: PropTypes.any,
   orientation: PropTypes.any,
 };
 
 function Input({ input = "", inputType = "text" }) {
-  console.log(inputType);
   const font =
     input.charAt(0).toUpperCase() + input.slice(1).replace(/([A-Z])/g, " $1");
 
@@ -59,8 +55,6 @@ function Input({ input = "", inputType = "text" }) {
 }
 
 Input.propTypes = {
-  i: PropTypes.any,
   input: PropTypes.any,
   inputType: PropTypes.any,
-  type: PropTypes.any,
 };

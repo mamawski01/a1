@@ -8,7 +8,7 @@ export default function UserForm() {
   return (
     <form
       action=""
-      className="md:left-16; absolute inset-0 left-0 top-12 z-50 h-[calc(100vh-3.75rem)] overflow-y-auto bg-slate-200/10 p-2 backdrop-blur-sm"
+      className="absolute inset-0 left-0 top-14 z-50 overflow-y-auto bg-slate-200/10 p-2 backdrop-blur-sm"
     >
       <Box>
         {/* <RowInput
