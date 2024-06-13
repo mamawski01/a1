@@ -2,7 +2,7 @@ import axios from "axios";
 import connectWithSocketServer from "../feIo/feIo";
 
 const apiClient = axios.create({
-  baseURL: "http://localhost:7000/api",
+  baseURL: "http://localhost:7000",
   timeout: 10000,
 });
 
@@ -22,18 +22,18 @@ apiClient.interceptors.request.use(
   },
 );
 
-export async function register(data) {
+export async function getUsers() {
   try {
-    return await apiClient.post("/auth/register", data);
+    connectWithSocketServer();
+    return await apiClient.get("api/users");
   } catch (exception) {
     return { error: true, exception };
   }
 }
 
-export async function getUsers() {
+export async function registerUser(data) {
   try {
-    connectWithSocketServer();
-    return await apiClient.get("/users");
+    return await apiClient.post("/api/registerUser", data);
   } catch (exception) {
     return { error: true, exception };
   }

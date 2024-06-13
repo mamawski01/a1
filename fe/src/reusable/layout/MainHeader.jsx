@@ -22,28 +22,28 @@ export default function MainHeader() {
           <Links
             text={["Search"]}
             hidden={[false]}
+            to={["/search"]}
+            url={url}
             icons={[
               {
-                icons: (
-                  <MagnifyingGlassIcon className="heroIcons"></MagnifyingGlassIcon>
-                ),
+                icons: <MagnifyingGlassIcon></MagnifyingGlassIcon>,
               },
             ]}
           ></Links>
         </div>
 
         <Links
-          text={["Options", "Add", "Account"]}
+          text={["Options", "AddUser", "Account"]}
           hidden={[false, true, true]}
           onClick={[null, null, null]}
-          to={["/options", "/addUser", "/account"]}
-          url={[url, url, url]}
+          to={["/options", "/registerUser", "/account"]}
+          url={url}
           icons={[
             {
-              icons: <Bars4Icon className="heroIcons"></Bars4Icon>,
+              icons: <Bars4Icon></Bars4Icon>,
             },
-            { icons: <PlusIcon className="heroIcons"></PlusIcon> },
-            { icons: <UserIcon className="heroIcons"></UserIcon> },
+            { icons: <PlusIcon></PlusIcon> },
+            { icons: <UserIcon></UserIcon> },
           ]}
         ></Links>
       </div>

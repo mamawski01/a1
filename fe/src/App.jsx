@@ -34,7 +34,7 @@ export default function App() {
               path="/dashboard"
               element={<DashboardPage></DashboardPage>}
             ></Route>
-            <Route path="/addUser" element={<UserForm></UserForm>}></Route>
+            <Route path="/registerUser" element={<UserForm></UserForm>}></Route>
           </Route>
           <Route path="/login" element={<LoginPage></LoginPage>}></Route>
           <Route path="*" element={<PageNotFound></PageNotFound>}></Route>

@@ -7,13 +7,22 @@ export default async function postUserRegister(req, res) {
   try {
     const {
       firstName,
+      middleName,
       lastName,
+      position,
       address,
-      cellphoneNumbers,
+      contactNumber1,
+      contactNumber2,
+      contactNumber3,
       password,
-      repeat_password,
       birthdate,
       email,
+      SSS,
+      PagIbig,
+      PhilHealth,
+      TIN,
+      contactPersonNameInEmergency,
+      contactPersonNumberInEmergency,
     } = req.body;
 
     const userEmailExist = await User.exists({ email });
@@ -25,13 +34,22 @@ export default async function postUserRegister(req, res) {
 
     const user = await User.create({
       firstName,
+      middleName,
       lastName,
+      position,
       address,
-      cellphoneNumbers,
+      contactNumber1,
+      contactNumber2,
+      contactNumber3,
       password: encryptedPassword,
-      repeat_password,
       birthdate,
       email,
+      SSS,
+      PagIbig,
+      PhilHealth,
+      TIN,
+      contactPersonNameInEmergency,
+      contactPersonNumberInEmergency,
     });
     console.log(user);
 

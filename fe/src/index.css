@@ -31,11 +31,11 @@
     @apply h-[calc(100vh-3.65rem)] w-full overflow-y-auto p-2;
   }
 
-  .heroIcons {
-    @apply h-8 w-8 rounded-full bg-gray-800 p-1 text-white hover:bg-gray-400 lg:bg-transparent lg:hover:bg-transparent;
+  .active {
+    @apply my-auto h-fit bg-green-800;
   }
 
-  .active {
-    @apply bg-green-400;
+  .redOnHover {
+    @apply bg-red-700;
   }
 }
