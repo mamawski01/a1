@@ -9,6 +9,7 @@ import DashboardPage from "./Pages/DashboardPage.jsx";
 import HomePage from "./Pages/HomePage.jsx";
 import AppLayout from "./reusable/layout/AppLayout.jsx";
 import UserForm from "./project/UserForm.jsx";
+import Test from "./project/Test.jsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -38,6 +39,7 @@ export default function App() {
           </Route>
           <Route path="/login" element={<LoginPage></LoginPage>}></Route>
           <Route path="*" element={<PageNotFound></PageNotFound>}></Route>
+          <Route path="test" element=<Test></Test>></Route>
         </Routes>
       </BrowserRouter>
       <Toaster position="bottom-right"></Toaster>

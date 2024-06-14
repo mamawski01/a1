@@ -8,7 +8,10 @@ export default function HomePage() {
     queryKey: ["users"],
     queryFn: getUsers,
   });
+
   if (data.isLoading || data.data.data === undefined) return <Loader />;
+
+  if (data.isError) return <h1>Something went wrong</h1>;
 
   const { users } = data.data.data;
   return <h1>HomePage</h1>;
