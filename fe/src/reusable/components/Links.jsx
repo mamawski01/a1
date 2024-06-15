@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
+import { formatFontLabel, onHoverBgColor } from "../utils/helpers";
 
 export default function Links({
   hidden,
@@ -10,7 +11,7 @@ export default function Links({
   color = "",
 }) {
   return (
-    <div className="flex gap-2 lg:gap-1">
+    <div className="flex gap-1 md:gap-2 lg:gap-4">
       {text.map((text, i) => (
         <LinkBtn
           key={i}
@@ -20,7 +21,7 @@ export default function Links({
           to={to[i]}
           i={i}
           url={url}
-          color={color}
+          color={color[i]}
         ></LinkBtn>
       ))}
     </div>
@@ -36,20 +37,20 @@ Links.propTypes = {
   color: PropTypes.any,
 };
 
-function LinkBtn({ text, icons, hidden, to, url, color }) {
+function LinkBtn({ text, icons, hidden, to, url, color = [] }) {
   const active = url === to;
 
-  const font =
-    text.charAt(0).toUpperCase() + text.slice(1).replace(/([A-Z])/g, " $1");
+  const font = formatFontLabel(text);
+  const hoverBgColor = onHoverBgColor(color);
 
   return (
     <NavLink
       to={to}
-      className={`${hidden && "hidden"} relative flex items-center gap-1 rounded-full font-bold md:flex lg:rounded lg:p-1 ${color ? "lg:hover:bg-red-700" : "lg:hover:bg-blue-700"}`}
+      className={`${hidden && "hidden"} relative flex items-center gap-1 rounded-full font-bold md:flex lg:rounded lg:p-1 ${hoverBgColor} `}
       title={font}
     >
       <span
-        className={`lg:hover:bg-transparent; h-8 w-8 rounded-full p-1 text-white hover:bg-gray-400 lg:bg-transparent ${color && "hover:bg-red-700"}`}
+        className={`${hoverBgColor} lg:hover:bg-transparent; h-8 w-8 rounded-full p-1 text-white lg:bg-transparent`}
       >
         {icons.icons}
       </span>

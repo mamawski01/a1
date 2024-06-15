@@ -8,8 +8,8 @@ import PageNotFound from "./Pages/PageNotFound.jsx";
 import DashboardPage from "./Pages/DashboardPage.jsx";
 import HomePage from "./Pages/HomePage.jsx";
 import AppLayout from "./reusable/layout/AppLayout.jsx";
-import UserForm from "./project/UserForm.jsx";
-import Test from "./project/Test.jsx";
+import Test from "./reusable/test/Test.jsx";
+import UserForm from "./Pages/UserForm.jsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {

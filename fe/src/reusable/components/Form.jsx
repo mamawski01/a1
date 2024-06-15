@@ -4,6 +4,8 @@ import { useLocation } from "react-router-dom";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 
 import Links from "./Links";
+import { formatFontLabel } from "../utils/helpers";
+import Btn from "./Btn";
 
 export default function Form({
   rowLabels = [],
@@ -23,12 +25,12 @@ export default function Form({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="container mx-auto mt-14 overflow-y-auto rounded-lg bg-slate-200/10 p-2 backdrop-blur-sm md:p-4 lg:p-8"
+      className="container mx-auto overflow-y-auto rounded-lg bg-slate-200/10 p-2 backdrop-blur-sm md:p-4 lg:p-8"
     >
       <div className="sm:flex md:grid">
         <div className="flex justify-end">
           <Links
-            text={["Exit"]}
+            text={["exit"]}
             hidden={[false]}
             to={["/"]}
             url={url}
@@ -40,7 +42,7 @@ export default function Form({
             ]}
           ></Links>
         </div>
-        <div className="[&>*:nth-child(even)]:bg-slate-200/5">
+        <div className="[&>*:nth-child(even)]:bg-slate-500/5">
           {rowLabels.map((rowLabel, i) => (
             <RowInput
               key={i}
@@ -52,10 +54,12 @@ export default function Form({
             ></RowInput>
           ))}
         </div>
-      </div>
-      <div className="flex bg-slate-600">
-        <button> click</button>
-        <button type="reset"> reset</button>
+        <div className="mt-6 flex justify-evenly">
+          <Btn color="blue">Submit</Btn>
+          <Btn color={"yellow"} type="reset">
+            Clear
+          </Btn>
+        </div>
       </div>
     </form>
   );
@@ -73,12 +77,6 @@ function getGridDesign(inputLength) {
   return "";
 }
 
-function formatFont(font) {
-  return (
-    font.charAt(0).toUpperCase() + font.slice(1).replace(/([A-Z])/g, " $1")
-  );
-}
-
 function RowInput({
   rowLabel = "",
   register = "",
@@ -87,11 +85,14 @@ function RowInput({
   options = "",
 }) {
   const gridDesign = getGridDesign(inputs.length);
-  const font = formatFont(rowLabel);
+  const font = formatFontLabel(rowLabel);
 
   return (
     <div className={`${gridDesign} mt-6 items-center gap-x-2`}>
-      <h1 className="col-span-full flex items-center text-xl font-bold">
+      <h1
+        className="col-span-full flex items-center text-xl font-bold"
+        title={font}
+      >
         {font}:
       </h1>
       {inputs.map((input, i) => (
@@ -116,21 +117,29 @@ RowInput.propTypes = {
 };
 
 function Input({ input = "", inputType = "text", options = [], register }) {
-  const font = formatFont(input);
+  const font = formatFontLabel(input);
   return (
     <div className="my-auto h-full w-full">
-      <label htmlFor={input} className="font-bold" title={font}>
+      <label
+        htmlFor={input}
+        className="line-clamp-3 truncate font-bold"
+        title={font}
+      >
         {font}
       </label>
-      {inputType === "textarea" && (
-        <textarea
-          id={input}
-          autoComplete="off"
+      {(inputType === "text" ||
+        inputType === "date" ||
+        inputType === "email" ||
+        inputType === "password") && (
+        <input
+          type={inputType}
           placeholder={font}
-          className="w-full rounded-lg border border-gray-400 bg-slate-700 px-4 py-2 placeholder:text-sky-500 focus:outline-none focus:ring focus:ring-gray-500"
+          id={input}
+          className="w-full rounded-lg border border-gray-400 bg-slate-700 px-4 py-2 placeholder:text-sky-500 hover:ring hover:ring-gray-500 focus:outline-none focus:ring focus:ring-gray-500"
+          autoComplete="off"
           title={font}
           {...register(input)}
-        ></textarea>
+        />
       )}
       {inputType === "option" && (
         <select
@@ -146,19 +155,15 @@ function Input({ input = "", inputType = "text", options = [], register }) {
           ))}
         </select>
       )}
-      {(inputType === "text" ||
-        inputType === "date" ||
-        inputType === "email" ||
-        inputType === "password") && (
-        <input
-          type={inputType}
-          placeholder={font}
+      {inputType === "textarea" && (
+        <textarea
           id={input}
-          className="w-full rounded-lg border border-gray-400 bg-slate-700 px-4 py-2 placeholder:text-sky-500 hover:ring hover:ring-gray-500 focus:outline-none focus:ring focus:ring-gray-500"
           autoComplete="off"
+          placeholder={font}
+          className="w-full rounded-lg border border-gray-400 bg-slate-700 px-4 py-2 placeholder:text-sky-500 focus:outline-none focus:ring focus:ring-gray-500"
           title={font}
           {...register(input)}
-        />
+        ></textarea>
       )}
     </div>
   );
