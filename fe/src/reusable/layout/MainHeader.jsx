@@ -22,7 +22,7 @@ export default function MainHeader() {
           <Links
             text={["Search"]}
             hidden={[false]}
-            to={["/search"]}
+            to={["search"]}
             url={url}
             icons={[
               {
@@ -36,7 +36,7 @@ export default function MainHeader() {
           text={["Options", "AddUser", "Account"]}
           hidden={[false, true, true]}
           onClick={[null, null, null]}
-          to={["/options", "/registerUser", "/account"]}
+          to={["options", "registerUser", "account"]}
           url={url}
           icons={[
             {

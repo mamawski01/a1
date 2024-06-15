@@ -9,10 +9,15 @@ export default function HomePage() {
     queryFn: getUsers,
   });
 
-  if (data.isLoading || data.data.data === undefined) return <Loader />;
+  if (data.isLoading) return <Loader />;
 
-  if (data.isError) return <h1>Something went wrong</h1>;
+  if (data.data.error) return <div>error</div>;
 
   const { users } = data.data.data;
-  return <h1>HomePage</h1>;
+
+  return (
+    <div>
+      <h1>HomePage</h1>
+    </div>
+  );
 }

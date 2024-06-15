@@ -10,7 +10,12 @@ export default async function postUserRegister(req, res) {
       middleName,
       lastName,
       position,
-      address,
+      street,
+      purok,
+      brgy,
+      city,
+      province,
+      country,
       contactNumber1,
       contactNumber2,
       contactNumber3,
@@ -37,11 +42,15 @@ export default async function postUserRegister(req, res) {
       middleName,
       lastName,
       position,
-      address,
+      street,
+      purok,
+      brgy,
+      city,
+      province,
+      country,
       contactNumber1,
       contactNumber2,
       contactNumber3,
-      password: encryptedPassword,
       birthdate,
       email,
       SSS,
@@ -50,8 +59,8 @@ export default async function postUserRegister(req, res) {
       TIN,
       contactPersonNameInEmergency,
       contactPersonNumberInEmergency,
+      password: encryptedPassword,
     });
-    console.log(user);
 
     const token = jwt.sign(
       //user details

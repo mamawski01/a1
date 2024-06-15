@@ -15,7 +15,6 @@ const userSchema = new Schema({
   contactNumber1: { type: String },
   contactNumber2: { type: String },
   contactNumber3: { type: String },
-  password: { type: String },
   birthdate: { type: String },
   email: { type: String, unique: true },
   SSS: { type: String },
@@ -24,6 +23,7 @@ const userSchema = new Schema({
   TIN: { type: String },
   contactPersonNameInEmergency: { type: String },
   contactPersonNumberInEmergency: { type: String },
+  password: { type: String },
 });
 
 export default mongoose.model("User", userSchema);

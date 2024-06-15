@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 
 import Links from "./Links";
@@ -17,8 +17,10 @@ export default function Form({
 
   const location = useLocation();
   const url = location.pathname;
+  const navigate = useNavigate();
 
   function onSubmit(data) {
+    navigate(-1);
     console.log(data);
   }
 
@@ -120,11 +122,7 @@ function Input({ input = "", inputType = "text", options = [], register }) {
   const font = formatFontLabel(input);
   return (
     <div className="my-auto h-full w-full">
-      <label
-        htmlFor={input}
-        className="line-clamp-3 truncate font-bold"
-        title={font}
-      >
+      <label htmlFor={input} className="font-bold" title={font}>
         {font}
       </label>
       {(inputType === "text" ||

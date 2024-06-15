@@ -18,9 +18,8 @@ const server = http.createServer(app);
 
 registerSocketServer(server);
 
-mongoose
-  .set("strictQuery", true)
-  .mongoose.connect(process.env.MONGO_URI)
+mongoose.mongoose
+  .connect(process.env.MONGO_URI)
   .then(() => {
     server.listen(PORT, () => {
       console.log(`http://localhost:` + PORT + " connected to db");

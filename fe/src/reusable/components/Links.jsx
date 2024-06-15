@@ -46,11 +46,11 @@ function LinkBtn({ text, icons, hidden, to, url, color = [] }) {
   return (
     <NavLink
       to={to}
-      className={`${hidden && "hidden"} relative flex items-center gap-1 rounded-full font-bold md:flex lg:rounded lg:p-1 ${hoverBgColor} `}
+      className={`${hidden && "hidden"} relative flex items-center gap-1 rounded-full font-bold md:flex lg:rounded lg:p-1 ${hoverBgColor} my-auto h-fit`}
       title={font}
     >
       <span
-        className={`${hoverBgColor} lg:hover:bg-transparent; h-8 w-8 rounded-full p-1 text-white lg:bg-transparent`}
+        className={`${hoverBgColor} h-8 w-8 rounded-full p-1 text-white lg:bg-transparent lg:hover:bg-transparent`}
       >
         {icons.icons}
       </span>

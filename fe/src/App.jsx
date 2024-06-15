@@ -27,17 +27,17 @@ export default function App() {
         <Routes>
           <Route element={<AppLayout></AppLayout>}>
             <Route
-              path="/"
-              element={<Navigate replace to="/homepage"></Navigate>}
+              index
+              element={<Navigate replace to="homepage"></Navigate>}
             ></Route>
-            <Route path="/homepage" element={<HomePage></HomePage>}></Route>
+            <Route path="homepage" element={<HomePage></HomePage>}></Route>
+            <Route path="registerUser" element={<UserForm></UserForm>}></Route>
             <Route
-              path="/dashboard"
+              path="dashboard"
               element={<DashboardPage></DashboardPage>}
             ></Route>
-            <Route path="/registerUser" element={<UserForm></UserForm>}></Route>
           </Route>
-          <Route path="/login" element={<LoginPage></LoginPage>}></Route>
+          <Route path="login" element={<LoginPage></LoginPage>}></Route>
           <Route path="*" element={<PageNotFound></PageNotFound>}></Route>
           <Route path="test" element=<Test></Test>></Route>
         </Routes>
