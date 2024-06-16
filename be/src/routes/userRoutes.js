@@ -2,52 +2,57 @@ import express from "express";
 import Joi from "joi";
 import ExpressValidation from "express-joi-validation";
 
-import postUserRegister from "./controller/postUserRegister.js";
-import deleteUser from "./controller/deleteUser.js";
-import getUser from "./controller/getUser.js";
-import getUsers from "./controller/getUsers.js";
+import {
+  apiUserDeleteUser,
+  apiUserPatchUser,
+  apiUserPostUser,
+  getUser,
+  getUsers,
+} from "./controller/userRegister.js";
 
 const router = express.Router();
-const validator = ExpressValidation.createValidator({});
+const validator = ExpressValidation.createValidator();
 
-const joi = Joi.string();
+const joi = Joi.string().optional().allow("");
 
 const registerSchema = Joi.object({
-  firstName: joi.required(),
-  middleName: joi.required(),
-  lastName: joi.required(),
-  position: joi.required(),
-  street: joi.optional().allow(""),
-  purok: joi.optional().allow(""),
-  brgy: joi.required(),
-  city: joi.required(),
-  province: joi.required(),
-  country: joi.required(),
-  contactNumber1: joi.required(),
-  contactNumber2: joi.optional().allow(""),
-  contactNumber3: joi.optional().allow(""),
-  birthdate: joi.required(),
-  email: joi.email().required(),
-  SSS: joi.optional().allow(""),
-  PagIbig: joi.optional().allow(""),
-  PhilHealth: joi.optional().allow(""),
-  TIN: joi.optional().allow(""),
-  contactPersonNameInEmergency: joi.required(),
-  contactPersonNumberInEmergency: joi.required(),
+  firstName: joi,
+  middleName: joi,
+  lastName: joi,
+  position: joi,
+  street: joi,
+  purok: joi,
+  brgy: joi,
+  city: joi,
+  province: joi,
+  country: joi,
+  contactNumber1: joi,
+  contactNumber2: joi,
+  contactNumber3: joi,
+  birthdate: joi,
+  email: joi,
+  SSS: joi,
+  PagIbig: joi,
+  PhilHealth: joi,
+  TIN: joi,
+  contactPersonNameInEmergency: joi,
+  contactPersonNumberInEmergency: joi,
   password: joi.required(),
   repeatPassword: joi.required().valid(Joi.ref("password")),
 });
 
-router.get("/api/users", getUsers);
+router.get("/apiUsers", getUsers);
 
-router.get("/api/user/:userId", getUser);
+router.get("/apiUser/:userId", getUser);
 
 router.post(
-  "/api/registerUser",
+  "/apiUserPostUser",
   validator.body(registerSchema),
-  postUserRegister
+  apiUserPostUser
 );
 
-router.delete("/api/deleteUser/:userId", deleteUser);
+router.patch("/apiUserPatchUser/:userId", apiUserPatchUser);
+
+router.delete("/apiUserDeleteUser/:userId", apiUserDeleteUser);
 
 export default router;

@@ -42,7 +42,11 @@ export default function App() {
           <Route path="test" element=<Test></Test>></Route>
         </Routes>
       </BrowserRouter>
-      <Toaster position="bottom-right"></Toaster>
+      <Toaster
+        position="bottom-right"
+        reverseOrder={true}
+        gutter={12}
+      ></Toaster>
     </QueryClientProvider>
   );
 }

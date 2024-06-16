@@ -2,28 +2,39 @@ import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 const userSchema = new Schema({
-  firstName: { type: String },
-  middleName: { type: String },
-  lastName: { type: String },
-  position: { type: String },
+  firstName: { type: String, required: [true, "First Name is required."] },
+  middleName: { type: String, required: [true, "Middle Name is required."] },
+  lastName: { type: String, required: [true, "Last Name is required."] },
+  position: { type: String, required: [true, "Position is required."] },
   street: { type: String },
   purok: { type: String },
-  brgy: { type: String },
-  city: { type: String },
-  province: { type: String },
-  country: { type: String },
-  contactNumber1: { type: String },
+  brgy: { type: String, required: [true, "Barangay is required."] },
+  city: { type: String, required: [true, "City is required."] },
+  province: { type: String, required: [true, "Province is required."] },
+  country: { type: String, required: [true, "Country is required."] },
+  contactNumber1: {
+    type: String,
+    required: [true, "1 Contact Number is required."],
+  },
   contactNumber2: { type: String },
   contactNumber3: { type: String },
-  birthdate: { type: String },
+  birthdate: { type: String, required: [true, "Birthdate is required."] },
   email: { type: String, unique: true },
   SSS: { type: String },
   PagIbig: { type: String },
   PhilHealth: { type: String },
   TIN: { type: String },
-  contactPersonNameInEmergency: { type: String },
-  contactPersonNumberInEmergency: { type: String },
+  contactPersonNameInEmergency: {
+    type: String,
+    required: [true, "Contact Person Name In Emergency is required."],
+  },
+  contactPersonNumberInEmergency: {
+    type: String,
+    required: [true, "Contact Person Number In Emergency is required."],
+  },
   password: { type: String },
 });
 
-export default mongoose.model("User", userSchema);
+const User = mongoose.model("User", userSchema);
+
+export default User;

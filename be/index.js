@@ -18,7 +18,8 @@ const server = http.createServer(app);
 
 registerSocketServer(server);
 
-mongoose.mongoose
+mongoose
+  .set("strictQuery", true)
   .connect(process.env.MONGO_URI)
   .then(() => {
     server.listen(PORT, () => {

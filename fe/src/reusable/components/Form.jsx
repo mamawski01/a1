@@ -27,7 +27,7 @@ export default function Form({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="container mx-auto overflow-y-auto rounded-lg bg-slate-200/10 p-2 backdrop-blur-sm md:p-4 lg:p-8"
+      className="container mx-auto w-fit overflow-y-auto rounded-lg bg-slate-200/10 p-2 backdrop-blur-sm md:w-5/6 md:p-4 lg:w-4/6 lg:p-8"
     >
       <div className="sm:flex md:grid">
         <div className="flex justify-end">
