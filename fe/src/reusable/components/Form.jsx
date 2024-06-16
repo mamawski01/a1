@@ -12,6 +12,9 @@ export default function Form({
   inputs = [],
   inputTypes = [],
   options = [],
+  mutate = null,
+  isPending = false,
+  isRequired = [],
 }) {
   const { register, handleSubmit } = useForm();
 
@@ -21,12 +24,16 @@ export default function Form({
 
   function onSubmit(data) {
     navigate(-1);
-    console.log(data);
+    mutate(data);
+  }
+
+  function onError(errors) {
+    console.log(errors);
   }
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(onSubmit, onError)}
       className="container mx-auto w-fit overflow-y-auto rounded-lg bg-slate-200/10 p-2 backdrop-blur-sm md:w-5/6 md:p-4 lg:w-4/6 lg:p-8"
     >
       <div className="sm:flex md:grid">
@@ -53,11 +60,14 @@ export default function Form({
               inputs={inputs[i]}
               inputTypes={inputTypes[i]}
               options={options[i]}
+              isRequired={isRequired[i]}
             ></RowInput>
           ))}
         </div>
         <div className="mt-6 flex justify-evenly">
-          <Btn color="blue">Submit</Btn>
+          <Btn color="blue" isPending={isPending}>
+            Submit
+          </Btn>
           <Btn color={"yellow"} type="reset">
             Clear
           </Btn>
@@ -72,6 +82,9 @@ Form.propTypes = {
   inputs: PropTypes.any,
   inputTypes: PropTypes.any,
   options: PropTypes.any,
+  mutate: PropTypes.any,
+  isPending: PropTypes.any,
+  isRequired: PropTypes.any,
 };
 
 function getGridDesign(inputLength) {
@@ -85,6 +98,7 @@ function RowInput({
   inputs = "",
   inputTypes = "",
   options = "",
+  isRequired = "",
 }) {
   const gridDesign = getGridDesign(inputs.length);
   const font = formatFontLabel(rowLabel);
@@ -103,6 +117,7 @@ function RowInput({
           input={input}
           inputType={inputTypes[i]}
           options={options[i]}
+          isRequired={isRequired[i]}
           register={register}
         ></Input>
       ))}
@@ -116,10 +131,19 @@ RowInput.propTypes = {
   inputs: PropTypes.any,
   inputTypes: PropTypes.any,
   options: PropTypes.any,
+  isRequired: PropTypes.any,
 };
 
-function Input({ input = "", inputType = "text", options = [], register }) {
+function Input({
+  input = "",
+  inputType = "text",
+  options = [],
+  isRequired = false,
+  register,
+}) {
   const font = formatFontLabel(input);
+  const validate = isRequired ? { required: "This field is required" } : {};
+  console.log(validate);
   return (
     <div className="my-auto h-full w-full">
       <label htmlFor={input} className="font-bold" title={font}>
@@ -172,4 +196,5 @@ Input.propTypes = {
   inputType: PropTypes.any,
   options: PropTypes.array,
   register: PropTypes.any,
+  isRequired: PropTypes.any,
 };

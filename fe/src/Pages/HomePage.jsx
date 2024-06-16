@@ -4,7 +4,6 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Loader from "../reusable/components/Loader.jsx";
 import { apiUserDeleteUser, apiUsers } from "../api/api.js";
 import Btn from "../reusable/components/Btn.jsx";
-import toast from "react-hot-toast";
 
 export default function HomePage() {
   const data = useQuery({

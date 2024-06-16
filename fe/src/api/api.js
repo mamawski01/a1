@@ -18,11 +18,14 @@ export async function apiUsers() {
   }
 }
 
-export async function apiUserPostUser(data) {
+export async function apiUserPostUser(newUser) {
   try {
-    await apiClient.post("/apiUserPostUser", data);
+    const data = await apiClient.post("/apiUserPostUser", newUser);
+    console.log(data);
     toast.success("User created successfully");
+    return data;
   } catch (exception) {
+    console.log(exception);
     toast.error(exception.message);
     return exception.message;
   }
@@ -30,8 +33,9 @@ export async function apiUserPostUser(data) {
 
 export async function apiUserDeleteUser(userId) {
   try {
-    await apiClient.delete(`/apiUserDeleteUser/${userId}`);
+    const data = await apiClient.delete(`/apiUserDeleteUser/${userId}`);
     toast.success("User deleted successfully");
+    return data;
   } catch (exception) {
     toast.error(exception.message);
     return exception.message;

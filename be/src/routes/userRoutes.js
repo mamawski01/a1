@@ -29,6 +29,8 @@ const registerSchema = Joi.object({
   contactNumber1: joi,
   contactNumber2: joi,
   contactNumber3: joi,
+  password: joi.required(),
+  repeatPassword: joi.required().valid(Joi.ref("password")),
   birthdate: joi,
   email: joi,
   SSS: joi,
@@ -37,8 +39,6 @@ const registerSchema = Joi.object({
   TIN: joi,
   contactPersonNameInEmergency: joi,
   contactPersonNumberInEmergency: joi,
-  password: joi.required(),
-  repeatPassword: joi.required().valid(Joi.ref("password")),
 });
 
 router.get("/apiUsers", getUsers);

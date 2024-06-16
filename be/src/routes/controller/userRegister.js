@@ -32,6 +32,8 @@ export async function apiUserPostUser(req, res) {
     middleName,
     lastName,
     position,
+    birthdate,
+    email,
     street,
     purok,
     brgy,
@@ -41,15 +43,13 @@ export async function apiUserPostUser(req, res) {
     contactNumber1,
     contactNumber2,
     contactNumber3,
-    birthdate,
-    email,
+    password,
     SSS,
     PagIbig,
     PhilHealth,
     TIN,
     contactPersonNameInEmergency,
     contactPersonNumberInEmergency,
-    password,
   } = req.body;
   try {
     const userEmailExist = await User.exists({ email });
@@ -64,6 +64,8 @@ export async function apiUserPostUser(req, res) {
       middleName,
       lastName,
       position,
+      birthdate,
+      email,
       street,
       purok,
       brgy,
@@ -73,15 +75,13 @@ export async function apiUserPostUser(req, res) {
       contactNumber1,
       contactNumber2,
       contactNumber3,
-      birthdate,
-      email,
+      password: encryptedPassword,
       SSS,
       PagIbig,
       PhilHealth,
       TIN,
       contactPersonNameInEmergency,
       contactPersonNumberInEmergency,
-      password: encryptedPassword,
     });
 
     const token = jwt.sign(
