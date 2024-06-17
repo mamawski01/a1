@@ -1,13 +1,16 @@
 import PropTypes from "prop-types";
-import { onHoverBgColor } from "../utils/helpers";
+import { formatFontLabel, onHoverBgColor } from "../utils/helpers";
 export default function Btn({
-  children,
-  type,
+  text,
+  type = "button",
   color,
   onClick = null,
   isPending,
+  icons = "",
 }) {
   const hoverBgColor = onHoverBgColor(color);
+  const font = formatFontLabel(text);
+  console.log(icons);
   return (
     <button
       onClick={onClick}
@@ -15,15 +18,17 @@ export default function Btn({
       disabled={isPending}
       className={`${hoverBgColor} rounded-md p-2 font-bold tracking-wider`}
     >
-      {children}
+      {font}
+      <span className="block">{icons && icons[0].icons}</span>
     </button>
   );
 }
 
 Btn.propTypes = {
-  children: PropTypes.any,
   type: PropTypes.any,
   color: PropTypes.any,
   onClick: PropTypes.any,
   isPending: PropTypes.any,
+  icons: PropTypes.any,
+  text: PropTypes.any,
 };

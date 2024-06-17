@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 
-import Links from "./Links";
 import { formatFontLabel } from "../utils/helpers";
 import Btn from "./Btn";
 
@@ -23,8 +22,9 @@ export default function Form({
   const navigate = useNavigate();
 
   function onSubmit(data) {
-    navigate(-1);
+    // navigate(-1);
     mutate(data);
+    console.log(data);
   }
 
   function onError(errors) {
@@ -38,18 +38,16 @@ export default function Form({
     >
       <div className="sm:flex md:grid">
         <div className="flex justify-end">
-          <Links
-            text={["exit"]}
-            hidden={[false]}
-            to={["/"]}
-            url={url}
-            color={["red"]}
+          <Btn
+            text={"exit"}
+            color={"red"}
             icons={[
               {
                 icons: <XMarkIcon></XMarkIcon>,
               },
             ]}
-          ></Links>
+            onClick={() => navigate(-1)}
+          ></Btn>
         </div>
         <div className="[&>*:nth-child(even)]:bg-slate-500/5">
           {rowLabels.map((rowLabel, i) => (
@@ -65,12 +63,8 @@ export default function Form({
           ))}
         </div>
         <div className="mt-6 flex justify-evenly">
-          <Btn color="blue" isPending={isPending}>
-            Submit
-          </Btn>
-          <Btn color={"yellow"} type="reset">
-            Clear
-          </Btn>
+          <Btn color="blue" isPending={isPending} text={"Submit"}></Btn>
+          <Btn color={"yellow"} type="reset" text={"Clear"}></Btn>
         </div>
       </div>
     </form>
@@ -143,7 +137,7 @@ function Input({
 }) {
   const font = formatFontLabel(input);
   const validate = isRequired ? { required: "This field is required" } : {};
-  console.log(validate);
+  // console.log(validate);
   return (
     <div className="my-auto h-full w-full">
       <label htmlFor={input} className="font-bold" title={font}>
