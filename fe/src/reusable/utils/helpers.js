@@ -9,7 +9,7 @@ export function calculateAge(birthdate) {
   return age;
 }
 
-export function formatFontLabel(font) {
+export function formatFontLabel(font = "") {
   return (
     font.charAt(0).toUpperCase() + font.slice(1).replace(/([A-Z])/g, " $1")
   );

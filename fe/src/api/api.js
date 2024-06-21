@@ -21,13 +21,12 @@ export async function apiUsers() {
 export async function apiUserPostUser(newUser) {
   try {
     const data = await apiClient.post("/apiUserPostUser", newUser);
-    console.log(data);
-    toast.success("User created successfully");
+    toast.success("New user created successfully");
     return data;
   } catch (exception) {
     console.log(exception);
-    toast.error(exception.message);
-    return exception.message;
+    toast.error(exception.response.data);
+    return exception.response.data;
   }
 }
 

@@ -10,16 +10,15 @@ export default function Btn({
 }) {
   const hoverBgColor = onHoverBgColor(color);
   const font = formatFontLabel(text);
-  console.log(icons);
   return (
     <button
       onClick={onClick}
       type={type}
       disabled={isPending}
-      className={`${hoverBgColor} rounded-md p-2 font-bold tracking-wider`}
+      className={`${hoverBgColor} flex items-center gap-1 rounded-md p-2 font-bold tracking-wider`}
     >
+      <span className="w-7">{icons && icons[0].icons}</span>
       {font}
-      <span className="block">{icons && icons[0].icons}</span>
     </button>
   );
 }

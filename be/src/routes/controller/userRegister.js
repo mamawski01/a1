@@ -98,7 +98,7 @@ export async function apiUserPostUser(req, res) {
       }
     );
 
-    return res.status(200).json({
+    return res.status(200).send({
       userDetails: {
         firstName: firstName,
         token: token,

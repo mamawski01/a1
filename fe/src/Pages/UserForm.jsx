@@ -1,5 +1,3 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-
 import { apiUserPostUser } from "../api/api";
 import Form from "../reusable/components/Form";
 
@@ -47,23 +45,14 @@ const inputTypes = [
 
 const options = [[], [["Sales", "Cashier", "Optician", "Optometrist"], [], []]];
 export default function UserForm() {
-  const queryClient = useQueryClient();
-
-  const { isPending, mutate } = useMutation({
-    mutationFn: apiUserPostUser,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["users"] });
-    },
-  });
   return (
     <Form
       rowLabels={rowLabels}
       inputs={inputs}
       inputTypes={inputTypes}
       options={options}
-      mutate={mutate}
-      isPending={isPending}
       isRequired={isRequired}
+      dataSave={apiUserPostUser}
     ></Form>
   );
 }

@@ -1,34 +1,39 @@
 import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
-import { useLocation, useNavigate } from "react-router-dom";
-import { XMarkIcon } from "@heroicons/react/24/solid";
+import { useNavigate } from "react-router-dom";
+import { PlusIcon, SparklesIcon, XMarkIcon } from "@heroicons/react/24/solid";
 
 import { formatFontLabel } from "../utils/helpers";
 import Btn from "./Btn";
+import toast from "react-hot-toast";
 
 export default function Form({
   rowLabels = [],
   inputs = [],
   inputTypes = [],
   options = [],
-  mutate = null,
-  isPending = false,
   isRequired = [],
+  dataSave = null,
 }) {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, formState } = useForm();
+  const { errors } = formState;
 
-  const location = useLocation();
-  const url = location.pathname;
   const navigate = useNavigate();
 
-  function onSubmit(data) {
-    // navigate(-1);
-    mutate(data);
-    console.log(data);
+  async function onSubmit(data) {
+    if (data.password !== data.repeatPassword) {
+      toast.error("Passwords do not match");
+      return null;
+    } else if (data.password === data.repeatPassword) {
+      const response = await dataSave(data);
+      if (response.data) {
+        navigate(-1);
+      }
+    }
   }
 
-  function onError(errors) {
-    console.log(errors);
+  function onError() {
+    toast.error("Form submission failed. Missing fields required.");
   }
 
   return (
@@ -59,12 +64,34 @@ export default function Form({
               inputTypes={inputTypes[i]}
               options={options[i]}
               isRequired={isRequired[i]}
+              errors={errors}
             ></RowInput>
           ))}
         </div>
         <div className="mt-6 flex justify-evenly">
-          <Btn color="blue" isPending={isPending} text={"Submit"}></Btn>
-          <Btn color={"yellow"} type="reset" text={"Clear"}></Btn>
+          <Btn
+            color="blue"
+            text={"Save"}
+            icons={[
+              {
+                icons: <PlusIcon></PlusIcon>,
+              },
+            ]}
+            type="submit"
+          ></Btn>
+          <Btn
+            color={"yellow"}
+            type="reset"
+            text={"Clear"}
+            icons={[
+              {
+                icons: <SparklesIcon></SparklesIcon>,
+              },
+            ]}
+            onClick={() => {
+              toast.success("Form cleared successfully");
+            }}
+          ></Btn>
         </div>
       </div>
     </form>
@@ -76,9 +103,8 @@ Form.propTypes = {
   inputs: PropTypes.any,
   inputTypes: PropTypes.any,
   options: PropTypes.any,
-  mutate: PropTypes.any,
-  isPending: PropTypes.any,
   isRequired: PropTypes.any,
+  dataSave: PropTypes.any,
 };
 
 function getGridDesign(inputLength) {
@@ -93,6 +119,7 @@ function RowInput({
   inputTypes = "",
   options = "",
   isRequired = "",
+  errors = "",
 }) {
   const gridDesign = getGridDesign(inputs.length);
   const font = formatFontLabel(rowLabel);
@@ -113,6 +140,7 @@ function RowInput({
           options={options[i]}
           isRequired={isRequired[i]}
           register={register}
+          errors={errors}
         ></Input>
       ))}
     </div>
@@ -126,6 +154,7 @@ RowInput.propTypes = {
   inputTypes: PropTypes.any,
   options: PropTypes.any,
   isRequired: PropTypes.any,
+  errors: PropTypes.any,
 };
 
 function Input({
@@ -134,10 +163,12 @@ function Input({
   options = [],
   isRequired = false,
   register,
+  errors,
 }) {
   const font = formatFontLabel(input);
-  const validate = isRequired ? { required: "This field is required" } : {};
-  // console.log(validate);
+  const validate = isRequired && {
+    required: `This field is required: ${font}`,
+  };
   return (
     <div className="my-auto h-full w-full">
       <label htmlFor={input} className="font-bold" title={font}>
@@ -154,7 +185,7 @@ function Input({
           className="w-full rounded-lg border border-gray-400 bg-slate-700 px-4 py-2 placeholder:text-sky-500 hover:ring hover:ring-gray-500 focus:outline-none focus:ring focus:ring-gray-500"
           autoComplete="off"
           title={font}
-          {...register(input)}
+          {...register(input, validate)}
         />
       )}
       {inputType === "option" && (
@@ -162,7 +193,7 @@ function Input({
           id={input}
           className="w-full rounded-lg border border-gray-400 bg-slate-700 px-4 py-2 text-white hover:border-gray-500 focus:border-gray-500 focus:outline-none focus:ring focus:ring-gray-500"
           title={font}
-          {...register(input)}
+          {...register(input, validate)}
         >
           {options.map((option, i) => (
             <option key={i} value={option}>
@@ -178,8 +209,11 @@ function Input({
           placeholder={font}
           className="w-full rounded-lg border border-gray-400 bg-slate-700 px-4 py-2 placeholder:text-sky-500 focus:outline-none focus:ring focus:ring-gray-500"
           title={font}
-          {...register(input)}
+          {...register(input, validate)}
         ></textarea>
+      )}
+      {errors?.[input]?.message && (
+        <p className="font-bold text-red-500">{errors?.[input]?.message}</p>
       )}
     </div>
   );
@@ -191,4 +225,5 @@ Input.propTypes = {
   options: PropTypes.array,
   register: PropTypes.any,
   isRequired: PropTypes.any,
+  errors: PropTypes.any,
 };
