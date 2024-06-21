@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 import User from "./models/User.js";
+import Test from "./models/Test.js";
 
 export async function getUsers(req, res) {
   try {
@@ -131,5 +132,16 @@ export async function apiUserDeleteUser(req, res) {
   } catch (error) {
     console.log(error);
     return res.status(500).send("deleteUser Error");
+  }
+}
+
+export async function apiTest(req, res) {
+  try {
+    const test = await Test.create(req.body);
+
+    return res.status(200).send(test);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send(error.message);
   }
 }

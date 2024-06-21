@@ -1,67 +1,62 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { apiTest } from "../../api/api";
+import Form from "../components/Form";
+
+const rowLabels = [
+  // "name",
+  // "workInfo",
+  // "address",
+  // "contactInfo",
+  // "governmentInfo",
+  // "emergencyInfo",
+  "selectImage",
+];
+
+const inputs = [
+  // ["firstName", "middleName", "lastName"],
+  // ["position", "birthdate", "email"],
+  // ["street", "purok", "brgy", "city", "province", "country"],
+  // [
+  //   "contactNumber1",
+  //   "contactNumber2",
+  //   "contactNumber3",
+  //   "password",
+  //   "repeatPassword",
+  // ],
+  // ["SSS", "PagIbig", "PhilHealth", "TIN"],
+  // ["contactPersonNameInEmergency", "contactPersonNumberInEmergency"],
+  ["image"],
+];
+
+const isRequired = [
+  // [true, true, true],
+  // [true, true, true],
+  // [false, false, true, true, true, true],
+  // [true, false, false, true, true],
+  // [false, false, false, false],
+  // [true, true],
+  [true],
+];
+
+const inputTypes = [
+  // [],
+  // ["option", "date", "email"],
+  // [],
+  // ["text", "text", "text", "password", "password"],
+  // [],
+  // [],
+  ["file"],
+];
+
+// const options = [[], [["Sales", "Cashier", "Optician", "Optometrist"], [], []]];
 
 export default function Test() {
-  const [isLoading, isLoadingSet] = useState(false);
-  const [error, errorSet] = useState([]);
-  const [data, dataSet] = useState([]);
-
-  useEffect(() => {
-    async function fetchTodo() {
-      try {
-        isLoadingSet(true);
-        const data = await axios.post(
-          " http://localhost:7000/api/registerUser",
-          {
-            firstName: "test",
-            middleName: "test",
-            lastName: "test",
-            position: "test",
-            street: "test",
-            purok: "test",
-            brgy: "test",
-            city: "test",
-            province: "test",
-            country: "test",
-            contactNumber1: "test",
-            contactNumber2: "test",
-            contactNumber3: "test",
-            birthdate: "test",
-            email: "test@g.com",
-            SSS: "test",
-            PagIbig: "test",
-            PhilHealth: "test",
-            TIN: "test",
-            contactPersonNameInEmergency: "test",
-          },
-        );
-        console.log(data);
-        dataSet(data.data.users);
-        return data;
-      } catch (error) {
-        console.log(error);
-        errorSet(error.message);
-      } finally {
-        isLoadingSet(false);
-      }
-    }
-    fetchTodo();
-    //cleaning
-    return () => {};
-  }, []);
-
-  function getTodos() {
-    return;
-  }
-
   return (
-    <div>
-      <button onClick={getTodos}>getTodos</button>
-      <div>
-        {data.map((data, i) => (
-          <div key={i}>{data.firstName}</div>
-        ))}
-      </div>
-    </div>
+    <Form
+      rowLabels={rowLabels}
+      inputs={inputs}
+      inputTypes={inputTypes}
+      isRequired={isRequired}
+      dataSave={apiTest}
+    ></Form>
   );
 }

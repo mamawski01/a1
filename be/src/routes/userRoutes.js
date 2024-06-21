@@ -8,6 +8,7 @@ import {
   apiUserPostUser,
   getUser,
   getUsers,
+  apiTest,
 } from "./controller/userRegister.js";
 
 const router = express.Router();
@@ -54,5 +55,10 @@ router.post(
 router.patch("/apiUserPatchUser/:userId", apiUserPatchUser);
 
 router.delete("/apiUserDeleteUser/:userId", apiUserDeleteUser);
+
+const testSchema = Joi.object({
+  image: joi,
+});
+router.post("/apiTest", validator.body(testSchema), apiTest);
 
 export default router;

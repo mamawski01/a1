@@ -2,10 +2,10 @@ import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { PlusIcon, SparklesIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import toast from "react-hot-toast";
 
 import { formatFontLabel } from "../utils/helpers";
 import Btn from "./Btn";
-import toast from "react-hot-toast";
 
 export default function Form({
   rowLabels = [],
@@ -25,10 +25,11 @@ export default function Form({
       toast.error("Passwords do not match");
       return null;
     } else if (data.password === data.repeatPassword) {
-      const response = await dataSave(data);
-      if (response.data) {
-        navigate(-1);
-      }
+      // const response = await dataSave(data);
+      // if (response.data) {
+      //   navigate(-1);
+      // }
+      console.log(data);
     }
   }
 
@@ -177,6 +178,7 @@ function Input({
       {(inputType === "text" ||
         inputType === "date" ||
         inputType === "email" ||
+        inputType === "file" ||
         inputType === "password") && (
         <input
           type={inputType}

@@ -1,5 +1,5 @@
 import axios from "axios";
-import connectWithSocketServer from "../feIo/feIo";
+import connectWithSocketServer, { updateRealtime } from "../feIo/feIo";
 import toast from "react-hot-toast";
 
 const apiClient = axios.create({
@@ -11,6 +11,7 @@ export async function apiUsers() {
   try {
     connectWithSocketServer();
     const data = await apiClient.get("/apiUsers");
+    updateRealtime(data.data.users);
     toast.success("Users fetched successfully");
     return data;
   } catch (exception) {
@@ -34,9 +35,22 @@ export async function apiUserDeleteUser(userId) {
   try {
     const data = await apiClient.delete(`/apiUserDeleteUser/${userId}`);
     toast.success("User deleted successfully");
+    apiUsers();
     return data;
   } catch (exception) {
     toast.error(exception.message);
     return exception.message;
+  }
+}
+
+export async function apiTest(newUser) {
+  try {
+    const data = await apiClient.post("/apiTest", newUser);
+    toast.success("New test created successfully");
+    return data;
+  } catch (exception) {
+    console.log(exception);
+    toast.error(exception.response.data);
+    return exception.response.data;
   }
 }

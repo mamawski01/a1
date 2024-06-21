@@ -44,6 +44,7 @@ const inputTypes = [
 ];
 
 const options = [[], [["Sales", "Cashier", "Optician", "Optometrist"], [], []]];
+
 export default function UserForm() {
   return (
     <Form

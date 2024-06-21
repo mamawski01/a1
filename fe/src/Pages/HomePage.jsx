@@ -1,45 +1,48 @@
 import PropTypes from "prop-types";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-import Loader from "../reusable/components/Loader.jsx";
-import { apiUserDeleteUser, apiUsers } from "../api/api.js";
 import Btn from "../reusable/components/Btn.jsx";
+import { feSocket } from "../feIo/feIo.js";
+import { useEffect, useState } from "react";
+import { apiUserDeleteUser, apiUsers } from "../api/api.js";
 
 export default function HomePage() {
-  const data = useQuery({
-    queryKey: ["users"],
-    queryFn: apiUsers,
+  const [users, usersSet] = useState([]);
+  console.log(users);
+
+  feSocket.on("dataReceived", (data) => {
+    usersSet(data);
   });
 
-  const queryClient = useQueryClient();
-
-  const { isPending, mutate } = useMutation({
-    mutationFn: apiUserDeleteUser,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["users"] });
-    },
-  });
-
-  if (data.isLoading) return <Loader />;
-
-  if (data.data.error) return <div>error</div>;
-  const { users } = data.data.data;
+  useEffect(() => {
+    async function fetchUsers() {
+      const response = await apiUsers();
+      return response;
+    }
+    fetchUsers();
+    //cleaning
+    return () => {};
+  }, []);
 
   return (
     <div>
       <h1>
         {users.map((user, i) => (
-          <Sample key={i} user={user} mutate={mutate}></Sample>
+          <Sample
+            key={i}
+            user={user}
+            apiUserDeleteUser={apiUserDeleteUser}
+          ></Sample>
         ))}
       </h1>
     </div>
   );
 }
 
-function Sample({ user, mutate }) {
+function Sample({ user, apiUserDeleteUser }) {
   return (
     <div>
-      {user.firstName} <Btn onClick={() => mutate(user._id)}>delete</Btn>
+      {user.firstName}{" "}
+      <Btn onClick={() => apiUserDeleteUser(user._id)} text={"delete"}></Btn>
       {user._id}
     </div>
   );
@@ -48,4 +51,5 @@ function Sample({ user, mutate }) {
 Sample.propTypes = {
   mutate: PropTypes.any,
   user: PropTypes.any,
+  apiUserDeleteUser: PropTypes.any,
 };
