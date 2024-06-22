@@ -25,11 +25,10 @@ export default function Form({
       toast.error("Passwords do not match");
       return null;
     } else if (data.password === data.repeatPassword) {
-      // const response = await dataSave(data);
-      // if (response.data) {
-      //   navigate(-1);
-      // }
-      console.log(data);
+      const response = await dataSave(data);
+      if (response.data) {
+        // navigate(-1);
+      }
     }
   }
 
@@ -39,6 +38,7 @@ export default function Form({
 
   return (
     <form
+      encType="multipart/form-data"
       onSubmit={handleSubmit(onSubmit, onError)}
       className="container mx-auto w-fit overflow-y-auto rounded-lg bg-slate-200/10 p-2 backdrop-blur-sm md:w-5/6 md:p-4 lg:w-4/6 lg:p-8"
     >
@@ -184,6 +184,7 @@ function Input({
           type={inputType}
           placeholder={font}
           id={input}
+          name={input}
           className="w-full rounded-lg border border-gray-400 bg-slate-700 px-4 py-2 placeholder:text-sky-500 hover:ring hover:ring-gray-500 focus:outline-none focus:ring focus:ring-gray-500"
           autoComplete="off"
           title={font}

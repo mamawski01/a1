@@ -5,6 +5,9 @@ import toast from "react-hot-toast";
 const apiClient = axios.create({
   baseURL: "http://localhost:7000",
   timeout: 10000,
+  headers: {
+    "Content-Type": "application/x-www-form-urlencoded",
+  },
 });
 
 export async function apiUsers() {
@@ -44,8 +47,13 @@ export async function apiUserDeleteUser(userId) {
 }
 
 export async function apiTest(newUser) {
+  console.log(newUser);
+  const form = new FormData();
+  form.append("image", newUser.image[0]);
+  form.append("name", newUser.name);
+
   try {
-    const data = await apiClient.post("/apiTest", newUser);
+    const data = await apiClient.post("/apiTest", form);
     toast.success("New test created successfully");
     return data;
   } catch (exception) {

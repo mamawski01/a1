@@ -136,10 +136,16 @@ export async function apiUserDeleteUser(req, res) {
 }
 
 export async function apiTest(req, res) {
-  try {
-    const test = await Test.create(req.body);
+  console.log(req.file);
+  const { name } = req.body;
 
-    return res.status(200).send(test);
+  try {
+    const test = await Test.create({
+      image: req.file.originalname,
+      name,
+    });
+    console.log(test);
+    return res.status(200).send(req.file);
   } catch (error) {
     console.log(error);
     return res.status(500).send(error.message);

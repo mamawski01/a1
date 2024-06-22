@@ -1,6 +1,15 @@
 import { apiTest } from "../../api/api";
 import Form from "../components/Form";
 
+import Uppy from "@uppy/core";
+import AwsS3 from "@uppy/xhr-upload";
+import Dashboard from "@uppy/dashboard";
+import Webcam from "@uppy/webcam";
+
+import "@uppy/core/dist/style.min.css";
+import "@uppy/dashboard/dist/style.min.css";
+import XHRUpload from "@uppy/xhr-upload";
+
 const rowLabels = [
   // "name",
   // "workInfo",
@@ -24,7 +33,7 @@ const inputs = [
   // ],
   // ["SSS", "PagIbig", "PhilHealth", "TIN"],
   // ["contactPersonNameInEmergency", "contactPersonNumberInEmergency"],
-  ["image"],
+  ["image", "name"],
 ];
 
 const isRequired = [
@@ -34,7 +43,7 @@ const isRequired = [
   // [true, false, false, true, true],
   // [false, false, false, false],
   // [true, true],
-  [true],
+  [true, false],
 ];
 
 const inputTypes = [
@@ -44,19 +53,32 @@ const inputTypes = [
   // ["text", "text", "text", "password", "password"],
   // [],
   // [],
-  ["file"],
+  ["file", "text"],
 ];
 
 // const options = [[], [["Sales", "Cashier", "Optician", "Optometrist"], [], []]];
 
+// const uppy = new Uppy()
+//   .use(Dashboard, { inline: true, target: "body" })
+//   .use(XHRUpload, {
+//     endpoint: "http://localhost:7000/apiTest",
+//     fieldName: "image",
+//     formData: true,
+//   })
+//   .use(Webcam, { target: Dashboard });
+
 export default function Test() {
   return (
-    <Form
-      rowLabels={rowLabels}
-      inputs={inputs}
-      inputTypes={inputTypes}
-      isRequired={isRequired}
-      dataSave={apiTest}
-    ></Form>
+    <>
+      {/* <div className="bg-slate-500" id="drag"></div> */}
+      <Form
+        rowLabels={rowLabels}
+        inputs={inputs}
+        inputTypes={inputTypes}
+        isRequired={isRequired}
+        dataSave={apiTest}
+      ></Form>
+      <img src="/Asset1.png" alt="" />
+    </>
   );
 }

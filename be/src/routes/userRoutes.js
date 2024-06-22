@@ -10,6 +10,7 @@ import {
   getUsers,
   apiTest,
 } from "./controller/userRegister.js";
+import { upload } from "./multer.js";
 
 const router = express.Router();
 const validator = ExpressValidation.createValidator();
@@ -58,7 +59,14 @@ router.delete("/apiUserDeleteUser/:userId", apiUserDeleteUser);
 
 const testSchema = Joi.object({
   image: joi,
+  name: joi,
 });
-router.post("/apiTest", validator.body(testSchema), apiTest);
+
+router.post(
+  "/apiTest",
+  validator.body(testSchema),
+  upload.single("image"),
+  apiTest
+);
 
 export default router;
