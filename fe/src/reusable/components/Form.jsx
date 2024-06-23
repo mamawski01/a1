@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 
 import { formatFontLabel } from "../utils/helpers";
 import Btn from "./Btn";
+import { useState } from "react";
 
 export default function Form({
   rowLabels = [],
@@ -170,6 +171,12 @@ function Input({
   const validate = isRequired && {
     required: `This field is required: ${font}`,
   };
+  const [image, imageSet] = useState("");
+  function getImagePreview(e) {
+    if (inputType === "file" && e.target.files[0]) {
+      return imageSet(URL.createObjectURL(e.target.files[0]));
+    }
+  }
   return (
     <div className="my-auto h-full w-full">
       <label htmlFor={input} className="font-bold" title={font}>
@@ -180,16 +187,23 @@ function Input({
         inputType === "email" ||
         inputType === "file" ||
         inputType === "password") && (
-        <input
-          type={inputType}
-          placeholder={font}
-          id={input}
-          name={input}
-          className="w-full rounded-lg border border-gray-400 bg-slate-700 px-4 py-2 placeholder:text-sky-500 hover:ring hover:ring-gray-500 focus:outline-none focus:ring focus:ring-gray-500"
-          autoComplete="off"
-          title={font}
-          {...register(input, validate)}
-        />
+        <>
+          <input
+            type={inputType}
+            placeholder={font}
+            id={input}
+            name={input}
+            className={`w-full rounded-lg border border-gray-400 bg-slate-700 px-4 py-2 placeholder:text-sky-500 hover:ring hover:ring-gray-500 focus:outline-none focus:ring focus:ring-gray-500 ${inputType === "file" && "cursor-pointer"}`}
+            autoComplete="off"
+            title={font}
+            {...register(input, validate)}
+            onChange={(e) => getImagePreview(e)}
+            accept=".png,.jpg,.jpeg"
+          />
+          {inputType === "file" && (
+            <img src={image} alt="" className="mx-auto mt-2 h-auto w-2/6" />
+          )}
+        </>
       )}
       {inputType === "option" && (
         <select

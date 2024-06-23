@@ -41,6 +41,7 @@ const registerSchema = Joi.object({
   TIN: joi,
   contactPersonNameInEmergency: joi,
   contactPersonNumberInEmergency: joi,
+  image: joi,
 });
 
 router.get("/apiUsers", getUsers);
@@ -49,6 +50,7 @@ router.get("/apiUser/:userId", getUser);
 
 router.post(
   "/apiUserPostUser",
+  upload.single("image"),
   validator.body(registerSchema),
   apiUserPostUser
 );
@@ -64,8 +66,8 @@ const testSchema = Joi.object({
 
 router.post(
   "/apiTest",
-  validator.body(testSchema),
   upload.single("image"),
+  validator.body(testSchema),
   apiTest
 );
 

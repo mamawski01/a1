@@ -23,10 +23,19 @@ export async function apiUsers() {
 }
 
 export async function apiUserPostUser(newUser) {
+  const form = new FormData();
+  for (const key in newUser) {
+    console.log(key, newUser[key]);
+    if (key === "image") {
+      form.append(key, newUser[key][0]);
+    } else {
+      form.append(key, newUser[key]);
+    }
+  }
   try {
-    const data = await apiClient.post("/apiUserPostUser", newUser);
+    // const data = await apiClient.post("/apiUserPostUser", form);
     toast.success("New user created successfully");
-    return data;
+    // return data;
   } catch (exception) {
     console.log(exception);
     toast.error(exception.response.data);
@@ -47,10 +56,16 @@ export async function apiUserDeleteUser(userId) {
 }
 
 export async function apiTest(newUser) {
-  console.log(newUser);
   const form = new FormData();
-  form.append("image", newUser.image[0]);
-  form.append("name", newUser.name);
+  // form.append("image", newUser.image[0]);
+  // form.append("name", newUser.name);
+  for (const key in newUser) {
+    if (key === "image") {
+      form.append(key, newUser[key][0]);
+    } else {
+      form.append(key, newUser[key]);
+    }
+  }
 
   try {
     const data = await apiClient.post("/apiTest", form);

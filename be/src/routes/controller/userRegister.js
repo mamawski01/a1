@@ -1,5 +1,6 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import fs from "fs";
 
 import User from "./models/User.js";
 import Test from "./models/Test.js";
@@ -19,6 +20,7 @@ export async function getUser(req, res) {
   const { userId } = req.params;
   try {
     const user = await User.findById(userId);
+    console.log(user.firstName);
     if (!user) return res.status(404).send("User not found");
     return res.status(200).json({ user });
   } catch (error) {
@@ -55,6 +57,13 @@ export async function apiUserPostUser(req, res) {
   try {
     const userEmailExist = await User.exists({ email });
     if (userEmailExist) {
+      fs.unlink(req.file.path, (err) => {
+        if (err) {
+          console.error(err);
+        } else {
+          console.log("File deleted successfully.");
+        }
+      });
       return res.status(409).send("Email already exists");
     }
 
@@ -83,10 +92,11 @@ export async function apiUserPostUser(req, res) {
       TIN,
       contactPersonNameInEmergency,
       contactPersonNumberInEmergency,
+      image: "http://localhost:8000/uploads/images/" + req.file.filename,
     });
 
     const token = jwt.sign(
-      //user details
+      // user details
       {
         userId: user._id,
         firstName: user.firstName,
@@ -106,6 +116,13 @@ export async function apiUserPostUser(req, res) {
       },
     });
   } catch (error) {
+    fs.unlink(req.file.path, (err) => {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log("File deleted successfully.");
+      }
+    });
     return res.status(500).send(error.message);
   }
 }
@@ -114,6 +131,15 @@ export async function apiUserPatchUser(req, res) {
   const { userId } = req.params;
 
   try {
+    const userPrevImg = await User.findById(userId);
+    console.log(userPrevImg.image);
+    fs.unlink(userPrevImg.image, (err) => {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log("File deleted successfully.");
+      }
+    });
     const user = await User.findByIdAndUpdate(userId, req.body, { new: true });
     if (!user) return res.status(404).send("User not found");
     return res.status(200).send({ message: "User updated", user });
@@ -136,18 +162,23 @@ export async function apiUserDeleteUser(req, res) {
 }
 
 export async function apiTest(req, res) {
-  console.log(req.file);
   const { name } = req.body;
-
+  console.log(req.file);
   try {
     const test = await Test.create({
-      image: req.file.originalname,
+      image: "http://localhost:8000/uploads/images/" + req.file.filename,
       name,
     });
     console.log(test);
     return res.status(200).send(req.file);
   } catch (error) {
-    console.log(error);
+    fs.unlink(req.file.path, (err) => {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log("File deleted successfully.");
+      }
+    });
     return res.status(500).send(error.message);
   }
 }

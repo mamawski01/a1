@@ -1,26 +1,37 @@
 import multer from "multer";
 import path from "path";
-import { v4 as uuid } from "uuid";
 import fs from "fs";
 
-const fileLocation = "../images";
+const MIME_TYPE_MAP = {
+  "image/png": "png",
+  "image/jpeg": "jpeg",
+  "image/jpg": "jpg",
+};
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, fileLocation);
-  },
-  filename: function (req, file, cb) {
-    cb(null, fileLocation + "-" + uuid() + path.extname(file.originalname));
+const location = "../n/uploads/images";
+
+export const upload = multer({
+  limits: 50000,
+  storage: multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, location);
+    },
+    filename: function (req, file, cb) {
+      cb(null, Date.now() + path.extname(file.originalname));
+    },
+  }),
+  fileFilter: (req, file, cb) => {
+    const isValid = !!MIME_TYPE_MAP[file.mimetype];
+    let error = isValid ? null : new Error("Invalid mime type!");
+    cb(error, isValid);
   },
 });
-
-export const upload = multer({ storage: storage });
 
 // Create the folder
-fs.mkdir("../images", (err) => {
-  if (err) {
-    console.error(err);
-    return;
-  }
-  console.log("Folder created successfully");
-});
+// fs.mkdir("../n/uploads/images", (err) => {
+//   if (err) {
+//     console.error(err);
+//     return;
+//   }
+//   console.log("Folder created");
+// });

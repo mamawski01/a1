@@ -33,6 +33,7 @@ const userSchema = new Schema({
     type: String,
     required: [true, "Contact Person Number In Emergency is required."],
   },
+  image: { type: String, required: [true, "Image is required."] },
 });
 
 const User = mongoose.model("User", userSchema);

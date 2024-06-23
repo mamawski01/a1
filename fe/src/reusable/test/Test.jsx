@@ -1,15 +1,6 @@
 import { apiTest } from "../../api/api";
 import Form from "../components/Form";
 
-import Uppy from "@uppy/core";
-import AwsS3 from "@uppy/xhr-upload";
-import Dashboard from "@uppy/dashboard";
-import Webcam from "@uppy/webcam";
-
-import "@uppy/core/dist/style.min.css";
-import "@uppy/dashboard/dist/style.min.css";
-import XHRUpload from "@uppy/xhr-upload";
-
 const rowLabels = [
   // "name",
   // "workInfo",
@@ -78,7 +69,10 @@ export default function Test() {
         isRequired={isRequired}
         dataSave={apiTest}
       ></Form>
-      <img src="/Asset1.png" alt="" />
+      <img
+        src="http://localhost:8000/uploads/images/1719133848056.jpg"
+        alt=""
+      />
     </>
   );
 }

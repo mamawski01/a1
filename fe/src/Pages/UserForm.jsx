@@ -8,6 +8,7 @@ const rowLabels = [
   "contactInfo",
   "governmentInfo",
   "emergencyInfo",
+  "selectImage",
 ];
 
 const inputs = [
@@ -23,6 +24,7 @@ const inputs = [
   ],
   ["SSS", "PagIbig", "PhilHealth", "TIN"],
   ["contactPersonNameInEmergency", "contactPersonNumberInEmergency"],
+  ["image"],
 ];
 
 const isRequired = [
@@ -32,6 +34,7 @@ const isRequired = [
   [true, false, false, true, true],
   [false, false, false, false],
   [true, true],
+  [true],
 ];
 
 const inputTypes = [
@@ -41,6 +44,7 @@ const inputTypes = [
   ["text", "text", "text", "password", "password"],
   [],
   [],
+  ["file"],
 ];
 
 const options = [[], [["Sales", "Cashier", "Optician", "Optometrist"], [], []]];
