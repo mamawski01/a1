@@ -20,13 +20,23 @@ export default function Form({
   const { errors } = formState;
 
   const navigate = useNavigate();
+  const [image, imageSet] = useState("");
 
   async function onSubmit(data) {
     if (data.password !== data.repeatPassword) {
       toast.error("Passwords do not match");
       return null;
     } else if (data.password === data.repeatPassword) {
-      const response = await dataSave(data);
+      const finalData = data;
+      for (const key in finalData) {
+        if (typeof finalData[key] === "string") {
+          finalData[key] = finalData[key].trim();
+        }
+        if (key === "firstName" || key === "middleName" || key === "lastName") {
+          finalData[key] = formatFontLabel(finalData[key]);
+        }
+      }
+      const response = await dataSave(finalData);
       if (response.data) {
         // navigate(-1);
       }
@@ -41,7 +51,7 @@ export default function Form({
     <form
       encType="multipart/form-data"
       onSubmit={handleSubmit(onSubmit, onError)}
-      className="container mx-auto w-fit overflow-y-auto rounded-lg bg-slate-200/10 p-2 backdrop-blur-sm md:w-5/6 md:p-4 lg:w-4/6 lg:p-8"
+      className="container2"
     >
       <div className="sm:flex md:grid">
         <div className="flex justify-end">
@@ -67,6 +77,8 @@ export default function Form({
               options={options[i]}
               isRequired={isRequired[i]}
               errors={errors}
+              image={image}
+              imageSet={imageSet}
             ></RowInput>
           ))}
         </div>
@@ -92,6 +104,7 @@ export default function Form({
             ]}
             onClick={() => {
               toast.success("Form cleared successfully");
+              imageSet("");
             }}
           ></Btn>
         </div>
@@ -122,6 +135,8 @@ function RowInput({
   options = "",
   isRequired = "",
   errors = "",
+  image = "",
+  imageSet = "",
 }) {
   const gridDesign = getGridDesign(inputs.length);
   const font = formatFontLabel(rowLabel);
@@ -143,6 +158,8 @@ function RowInput({
           isRequired={isRequired[i]}
           register={register}
           errors={errors}
+          image={image}
+          imageSet={imageSet}
         ></Input>
       ))}
     </div>
@@ -157,6 +174,8 @@ RowInput.propTypes = {
   options: PropTypes.any,
   isRequired: PropTypes.any,
   errors: PropTypes.any,
+  image: PropTypes.any,
+  imageSet: PropTypes.any,
 };
 
 function Input({
@@ -166,12 +185,13 @@ function Input({
   isRequired = false,
   register,
   errors,
+  image,
+  imageSet,
 }) {
   const font = formatFontLabel(input);
   const validate = isRequired && {
     required: `This field is required: ${font}`,
   };
-  const [image, imageSet] = useState("");
   function getImagePreview(e) {
     if (inputType === "file" && e.target.files[0]) {
       return imageSet(URL.createObjectURL(e.target.files[0]));
@@ -243,4 +263,6 @@ Input.propTypes = {
   register: PropTypes.any,
   isRequired: PropTypes.any,
   errors: PropTypes.any,
+  image: PropTypes.any,
+  imageSet: PropTypes.any,
 };

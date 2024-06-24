@@ -19,5 +19,6 @@ export function onHoverBgColor(color) {
   if (color === "red") return "hover:bg-red-700";
   if (color === "blue") return "hover:bg-blue-700";
   if (color === "yellow") return "hover:bg-yellow-600";
+  if (color === "green") return "hover:bg-green-600";
   return "hover:bg-gray-700";
 }

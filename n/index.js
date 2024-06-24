@@ -7,6 +7,9 @@ const PORT = 8000;
 const localhost2 = `http://localhost:${PORT}/`;
 
 app.use("/uploads/images", express.static(path.join("uploads", "images")));
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
 
 app.use(express.json());
 const server = http.createServer(app);

@@ -8,7 +8,7 @@ const MIME_TYPE_MAP = {
   "image/jpg": "jpg",
 };
 
-const location = "../n/uploads/images";
+export const location = "../n/uploads/images";
 
 export const upload = multer({
   limits: 50000,

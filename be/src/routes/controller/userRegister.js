@@ -4,6 +4,17 @@ import fs from "fs";
 
 import User from "./models/User.js";
 import Test from "./models/Test.js";
+import { location } from "../multer.js";
+
+function deleteImage(path) {
+  return fs.unlink(path, (err) => {
+    if (err) {
+      console.error(err);
+    } else {
+      console.log("File deleted successfully.");
+    }
+  });
+}
 
 export async function getUsers(req, res) {
   try {
@@ -57,13 +68,7 @@ export async function apiUserPostUser(req, res) {
   try {
     const userEmailExist = await User.exists({ email });
     if (userEmailExist) {
-      fs.unlink(req.file.path, (err) => {
-        if (err) {
-          console.error(err);
-        } else {
-          console.log("File deleted successfully.");
-        }
-      });
+      deleteImage(req.file.path);
       return res.status(409).send("Email already exists");
     }
 
@@ -116,13 +121,7 @@ export async function apiUserPostUser(req, res) {
       },
     });
   } catch (error) {
-    fs.unlink(req.file.path, (err) => {
-      if (err) {
-        console.error(err);
-      } else {
-        console.log("File deleted successfully.");
-      }
-    });
+    deleteImage(req.file.path);
     return res.status(500).send(error.message);
   }
 }
@@ -133,13 +132,8 @@ export async function apiUserPatchUser(req, res) {
   try {
     const userPrevImg = await User.findById(userId);
     console.log(userPrevImg.image);
-    fs.unlink(userPrevImg.image, (err) => {
-      if (err) {
-        console.error(err);
-      } else {
-        console.log("File deleted successfully.");
-      }
-    });
+
+    // deleteImage(userPrevImg.image);
     const user = await User.findByIdAndUpdate(userId, req.body, { new: true });
     if (!user) return res.status(404).send("User not found");
     return res.status(200).send({ message: "User updated", user });
@@ -152,6 +146,11 @@ export async function apiUserPatchUser(req, res) {
 export async function apiUserDeleteUser(req, res) {
   const { userId } = req.params;
   try {
+    const userPrevImg = await User.findById(userId);
+    const imageUrl = userPrevImg.image.substring(
+      userPrevImg.image.lastIndexOf("/") + 1
+    );
+    deleteImage(location + "/" + imageUrl);
     const user = await User.findByIdAndDelete(userId);
     if (!user) return res.status(404).send("User not found");
     return res.status(200).send({ message: "User deleted", user });
@@ -172,13 +171,7 @@ export async function apiTest(req, res) {
     console.log(test);
     return res.status(200).send(req.file);
   } catch (error) {
-    fs.unlink(req.file.path, (err) => {
-      if (err) {
-        console.error(err);
-      } else {
-        console.log("File deleted successfully.");
-      }
-    });
+    deleteImage(req.file.path);
     return res.status(500).send(error.message);
   }
 }

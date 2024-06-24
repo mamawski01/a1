@@ -1,9 +1,7 @@
-import PropTypes from "prop-types";
-
-import Btn from "../reusable/components/Btn.jsx";
 import { feSocket } from "../feIo/feIo.js";
 import { useEffect, useState } from "react";
 import { apiUserDeleteUser, apiUsers } from "../api/api.js";
+import Card from "../reusable/components/Card.jsx";
 
 export default function HomePage() {
   const [users, usersSet] = useState([]);
@@ -25,31 +23,15 @@ export default function HomePage() {
 
   return (
     <div>
-      <h1>
+      <div className="flex flex-col gap-6">
         {users.map((user, i) => (
-          <Sample
+          <Card
             key={i}
             user={user}
             apiUserDeleteUser={apiUserDeleteUser}
-          ></Sample>
+          ></Card>
         ))}
-      </h1>
+      </div>
     </div>
   );
 }
-
-function Sample({ user, apiUserDeleteUser }) {
-  return (
-    <div>
-      {user.firstName}{" "}
-      <Btn onClick={() => apiUserDeleteUser(user._id)} text={"delete"}></Btn>
-      {user._id}
-    </div>
-  );
-}
-
-Sample.propTypes = {
-  mutate: PropTypes.any,
-  user: PropTypes.any,
-  apiUserDeleteUser: PropTypes.any,
-};
