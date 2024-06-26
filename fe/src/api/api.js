@@ -22,6 +22,16 @@ export async function apiUsers() {
   }
 }
 
+export async function apiUser(userId) {
+  try {
+    const data = await apiClient.get(`/apiUser/${userId}`);
+    toast.success("User fetched successfully");
+    return data;
+  } catch (exception) {
+    return { error: true, exception };
+  }
+}
+
 export async function apiUserPostUser(newUser) {
   const form = new FormData();
   for (const key in newUser) {
@@ -47,6 +57,18 @@ export async function apiUserDeleteUser(userId) {
   try {
     const data = await apiClient.delete(`/apiUserDeleteUser/${userId}`);
     toast.success("User deleted successfully");
+    apiUsers();
+    return data;
+  } catch (exception) {
+    toast.error(exception.message);
+    return exception.message;
+  }
+}
+
+export async function apiUserPatchUser(userId) {
+  try {
+    const data = await apiClient.patch(`/apiUserPatchUser/${userId}`);
+    toast.success("User updated successfully");
     apiUsers();
     return data;
   } catch (exception) {

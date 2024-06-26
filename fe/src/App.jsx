@@ -20,7 +20,14 @@ export default function App() {
               element={<Navigate replace to="homepage"></Navigate>}
             ></Route>
             <Route path="homepage" element={<HomePage></HomePage>}></Route>
-            <Route path="registerUser" element={<UserForm></UserForm>}></Route>
+            <Route
+              path="homepage/registerUser"
+              element={<UserForm></UserForm>}
+            ></Route>
+            <Route
+              path="homepage/registerUser/:id"
+              element={<UserForm></UserForm>}
+            ></Route>
             <Route
               path="dashboard"
               element={<DashboardPage></DashboardPage>}

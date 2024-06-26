@@ -36,14 +36,18 @@ export default function MainHeader() {
           text={["Options", "AddUser", "Account"]}
           hidden={[false, true, true]}
           onClick={[null, null, null]}
-          to={["options", "registerUser", "account"]}
+          to={["homepage/options", "homepage/registerUser", "homepage/account"]}
           url={url}
           icons={[
             {
-              icons: <Bars4Icon></Bars4Icon>,
+              icons: <Bars4Icon />,
             },
-            { icons: <PlusIcon></PlusIcon> },
-            { icons: <UserIcon></UserIcon> },
+            {
+              icons: <PlusIcon />,
+            },
+            {
+              icons: <UserIcon />,
+            },
           ]}
         ></Links>
       </div>

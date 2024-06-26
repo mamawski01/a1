@@ -1,12 +1,13 @@
 import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { PlusIcon, SparklesIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import toast from "react-hot-toast";
 
 import { formatFontLabel } from "../utils/helpers";
 import Btn from "./Btn";
 import { useState } from "react";
+import { apiUser } from "../../api/api";
 
 export default function Form({
   rowLabels = [],
@@ -16,6 +17,8 @@ export default function Form({
   isRequired = [],
   dataSave = null,
 }) {
+  const { id } = useParams();
+  console.log(apiUser(id));
   const { register, handleSubmit, formState } = useForm();
   const { errors } = formState;
 
@@ -53,14 +56,15 @@ export default function Form({
       onSubmit={handleSubmit(onSubmit, onError)}
       className="container2"
     >
-      <div className="sm:flex md:grid">
+      <div className="flex flex-col md:grid">
         <div className="flex justify-end">
           <Btn
             text={"exit"}
             color={"red"}
-            icons={[
+            type="button"
+            icon={[
               {
-                icons: <XMarkIcon></XMarkIcon>,
+                icon: <XMarkIcon></XMarkIcon>,
               },
             ]}
             onClick={() => navigate(-1)}
@@ -86,9 +90,9 @@ export default function Form({
           <Btn
             color="blue"
             text={"Save"}
-            icons={[
+            icon={[
               {
-                icons: <PlusIcon></PlusIcon>,
+                icon: <PlusIcon></PlusIcon>,
               },
             ]}
             type="submit"
@@ -97,9 +101,9 @@ export default function Form({
             color={"yellow"}
             type="reset"
             text={"Clear"}
-            icons={[
+            icon={[
               {
-                icons: <SparklesIcon></SparklesIcon>,
+                icon: <SparklesIcon></SparklesIcon>,
               },
             ]}
             onClick={() => {

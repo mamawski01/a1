@@ -128,12 +128,12 @@ export async function apiUserPostUser(req, res) {
 
 export async function apiUserPatchUser(req, res) {
   const { userId } = req.params;
-
   try {
     const userPrevImg = await User.findById(userId);
-    console.log(userPrevImg.image);
-
-    // deleteImage(userPrevImg.image);
+    const imageUrl = userPrevImg.image.substring(
+      userPrevImg.image.lastIndexOf("/") + 1
+    );
+    deleteImage(location + "/" + imageUrl);
     const user = await User.findByIdAndUpdate(userId, req.body, { new: true });
     if (!user) return res.status(404).send("User not found");
     return res.status(200).send({ message: "User updated", user });
