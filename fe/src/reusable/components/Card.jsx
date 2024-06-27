@@ -85,6 +85,7 @@ Card.propTypes = {
   iconsDetails: PropTypes.any,
   onclick: PropTypes.any,
   editShowForm: PropTypes.any,
+  dataId: PropTypes.any,
 };
 
 function Content({ icon = [], iconsDetails = [] }) {

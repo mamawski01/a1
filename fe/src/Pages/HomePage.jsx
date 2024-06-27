@@ -15,6 +15,7 @@ import { calculateAge } from "../reusable/utils/helpers.js";
 
 export default function HomePage() {
   const [users, usersSet] = useState([]);
+  console.log(users);
 
   feSocket.on("dataReceived", (data) => {
     usersSet(data);
@@ -40,7 +41,6 @@ export default function HomePage() {
             .map((user, i) => (
               <Card
                 key={i}
-                user={user}
                 imgSrc={user.image}
                 mainTitle={[user.firstName, user.middleName, user.lastName]}
                 mainDescription={[

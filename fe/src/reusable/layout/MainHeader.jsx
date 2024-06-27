@@ -36,7 +36,11 @@ export default function MainHeader() {
           text={["Options", "AddUser", "Account"]}
           hidden={[false, true, true]}
           onClick={[null, null, null]}
-          to={["homepage/options", "homepage/registerUser", "homepage/account"]}
+          to={[
+            "/homepage/options",
+            "/homepage/registerUser",
+            "/homepage/account",
+          ]}
           url={url}
           icons={[
             {

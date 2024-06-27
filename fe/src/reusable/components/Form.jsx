@@ -6,20 +6,36 @@ import toast from "react-hot-toast";
 
 import { formatFontLabel } from "../utils/helpers";
 import Btn from "./Btn";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { apiUser } from "../../api/api";
 
-export default function Form({
-  rowLabels = [],
-  inputs = [],
-  inputTypes = [],
-  options = [],
-  isRequired = [],
-  dataSave = null,
-}) {
+export default function Form({ data = [], dataSave = null }) {
   const { id } = useParams();
-  console.log(apiUser(id));
-  const { register, handleSubmit, formState } = useForm();
+  const [editData, editDataSet] = useState({});
+
+  const { register, handleSubmit, formState, reset } = useForm();
+
+  useEffect(() => {
+    async function fetchUser() {
+      const response = await apiUser(id);
+      const finalData = response?.data?.user;
+      for (const key in finalData) {
+        if (key === "password") {
+          key, (finalData[key] = null);
+        }
+        if (key === "__v" || key === "_id") {
+          delete finalData[key];
+        }
+      }
+      editDataSet(finalData);
+      reset(finalData);
+      return response;
+    }
+    fetchUser();
+    //cleaning
+    return () => {};
+  }, [id, reset]);
+
   const { errors } = formState;
 
   const navigate = useNavigate();
@@ -49,7 +65,6 @@ export default function Form({
   function onError() {
     toast.error("Form submission failed. Missing fields required.");
   }
-
   return (
     <form
       encType="multipart/form-data"
@@ -71,18 +86,19 @@ export default function Form({
           ></Btn>
         </div>
         <div className="[&>*:nth-child(even)]:bg-slate-500/5">
-          {rowLabels.map((rowLabel, i) => (
+          {data.map((rowLabel, i) => (
             <RowInput
               key={i}
-              rowLabel={rowLabel}
+              rowLabel={data[i].label.rowLabels}
+              inputs={data[i].label.inputs}
+              inputTypes={data[i].label.inputTypes}
+              options={data[i].label.options}
+              isRequired={data[i].label.isRequired}
               register={register}
-              inputs={inputs[i]}
-              inputTypes={inputTypes[i]}
-              options={options[i]}
-              isRequired={isRequired[i]}
               errors={errors}
               image={image}
               imageSet={imageSet}
+              editData={editData}
             ></RowInput>
           ))}
         </div>
@@ -109,6 +125,7 @@ export default function Form({
             onClick={() => {
               toast.success("Form cleared successfully");
               imageSet("");
+              reset({});
             }}
           ></Btn>
         </div>
@@ -118,11 +135,7 @@ export default function Form({
 }
 
 Form.propTypes = {
-  rowLabels: PropTypes.any,
-  inputs: PropTypes.any,
-  inputTypes: PropTypes.any,
-  options: PropTypes.any,
-  isRequired: PropTypes.any,
+  data: PropTypes.any,
   dataSave: PropTypes.any,
 };
 
@@ -141,6 +154,7 @@ function RowInput({
   errors = "",
   image = "",
   imageSet = "",
+  editData = "",
 }) {
   const gridDesign = getGridDesign(inputs.length);
   const font = formatFontLabel(rowLabel);
@@ -164,6 +178,7 @@ function RowInput({
           errors={errors}
           image={image}
           imageSet={imageSet}
+          editData={editData[input]}
         ></Input>
       ))}
     </div>
@@ -191,6 +206,7 @@ function Input({
   errors,
   image,
   imageSet,
+  editData = "",
 }) {
   const font = formatFontLabel(input);
   const validate = isRequired && {
@@ -198,9 +214,10 @@ function Input({
   };
   function getImagePreview(e) {
     if (inputType === "file" && e.target.files[0]) {
-      return imageSet(URL.createObjectURL(e.target.files[0]));
+      return imageSet(URL.createObjectURL(e.target.files[0]) || editData);
     }
   }
+  console.log(image);
   return (
     <div className="my-auto h-full w-full">
       <label htmlFor={input} className="font-bold" title={font}>
@@ -225,7 +242,11 @@ function Input({
             accept=".png,.jpg,.jpeg"
           />
           {inputType === "file" && (
-            <img src={image} alt="" className="mx-auto mt-2 h-auto w-2/6" />
+            <img
+              src={image || editData || "/Asset2.png"}
+              alt=""
+              className="mx-auto mt-2 h-auto w-2/6"
+            />
           )}
         </>
       )}

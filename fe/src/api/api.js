@@ -24,10 +24,13 @@ export async function apiUsers() {
 
 export async function apiUser(userId) {
   try {
+    if (!userId) return null;
     const data = await apiClient.get(`/apiUser/${userId}`);
     toast.success("User fetched successfully");
+    apiUsers();
     return data;
   } catch (exception) {
+    toast.error(exception.message);
     return { error: true, exception };
   }
 }

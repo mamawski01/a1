@@ -1,63 +1,75 @@
 import { apiUserPostUser } from "../api/api";
 import Form from "../reusable/components/Form";
 
-const rowLabels = [
-  "name",
-  "workInfo",
-  "address",
-  "contactInfo",
-  "governmentInfo",
-  "emergencyInfo",
-  "selectImage",
-];
-
-const inputs = [
-  ["firstName", "middleName", "lastName"],
-  ["position", "birthdate", "email"],
-  ["street", "purok", "brgy", "city", "province", "country"],
-  [
-    "contactNumber1",
-    "contactNumber2",
-    "contactNumber3",
-    "password",
-    "repeatPassword",
-  ],
-  ["SSS", "PagIbig", "PhilHealth", "TIN"],
-  ["contactPersonNameInEmergency", "contactPersonNumberInEmergency"],
-  ["image"],
-];
-
-const isRequired = [
-  [true, true, true],
-  [true, true, true],
-  [false, false, true, true, true, true],
-  [true, false, false, true, true],
-  [false, false, false, false],
-  [true, true],
-  [true],
-];
-
-const inputTypes = [
-  [],
-  ["option", "date", "email"],
-  [],
-  ["text", "text", "text", "password", "password"],
-  [],
-  [],
-  ["file"],
-];
-
-const options = [[], [["Sales", "Cashier", "Optician", "Optometrist"], [], []]];
-
 export default function UserForm() {
   return (
     <Form
-      rowLabels={rowLabels}
-      inputs={inputs}
-      inputTypes={inputTypes}
-      options={options}
-      isRequired={isRequired}
       dataSave={apiUserPostUser}
+      data={[
+        {
+          label: {
+            rowLabels: "name",
+            inputs: ["firstName", "middleName", "lastName"],
+            isRequired: [true, true, true],
+          },
+        },
+        {
+          label: {
+            rowLabels: "workInfo",
+            inputs: ["position", "birthdate", "email"],
+            isRequired: [true, true, true],
+            inputTypes: ["option", "date", "email"],
+            options: [["Sales", "Cashier", "Optician", "Optometrist"], [], []],
+          },
+        },
+        {
+          label: {
+            rowLabels: "address",
+            inputs: ["street", "purok", "brgy", "city", "province", "country"],
+            isRequired: [false, false, true, true, true, true],
+          },
+        },
+        {
+          label: {
+            rowLabels: "contactInfo",
+            inputs: [
+              "contactNumber1",
+              "contactNumber2",
+              "contactNumber3",
+              "password",
+              "repeatPassword",
+            ],
+            isRequired: [true, false, false, true, true],
+            inputTypes: ["text", "text", "text", "password", "password"],
+          },
+        },
+        {
+          label: {
+            rowLabels: "governmentInfo",
+            inputs: ["SSS", "PagIbig", "PhilHealth", "TIN"],
+            isRequired: [false, false, false, false],
+          },
+        },
+        {
+          label: {
+            rowLabels: "emergencyInfo",
+            inputs: [
+              "contactPersonNameInEmergency",
+              "contactPersonNumberInEmergency",
+            ],
+            isRequired: [true, true],
+            options: [["Sales", "Cashier", "Optician", "Optometrist"], [], []],
+          },
+        },
+        {
+          label: {
+            rowLabels: "selectImage",
+            inputs: ["image"],
+            isRequired: [true],
+            inputTypes: ["file"],
+          },
+        },
+      ]}
     ></Form>
   );
 }
