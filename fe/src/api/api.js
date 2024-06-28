@@ -1,6 +1,8 @@
 import axios from "axios";
-import connectWithSocketServer, { updateRealtime } from "../feIo/feIo";
+import Swal from "sweetalert2";
 import toast from "react-hot-toast";
+
+import connectWithSocketServer, { updateRealtime } from "../feIo/feIo";
 
 const apiClient = axios.create({
   baseURL: "http://localhost:7000",
@@ -18,6 +20,7 @@ export async function apiUsers() {
     toast.success("Users fetched successfully");
     return data;
   } catch (exception) {
+    toast.error(exception.message);
     return { error: true, exception };
   }
 }
@@ -58,19 +61,45 @@ export async function apiUserPostUser(newUser) {
 
 export async function apiUserDeleteUser(userId) {
   try {
-    const data = await apiClient.delete(`/apiUserDeleteUser/${userId}`);
-    toast.success("User deleted successfully");
-    apiUsers();
-    return data;
+    const confirmDelete = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+      customClass: {
+        popup: "bg-slate-100/80 backdrop-blur-sm",
+      },
+    });
+
+    if (confirmDelete.isConfirmed) {
+      const data = await apiClient.delete(`/apiUserDeleteUser/${userId}`);
+      toast.success("User deleted successfully");
+      apiUsers();
+      return data;
+    } else {
+      return toast.success("Deletion canceled");
+    }
   } catch (exception) {
     toast.error(exception.message);
     return exception.message;
   }
 }
 
-export async function apiUserPatchUser(userId) {
+export async function apiUserPatchUser(userId, newUser) {
+  const form = new FormData();
+  for (const key in newUser) {
+    if (key === "image") {
+      form.append(key, newUser[key][0]);
+    } else {
+      form.append(key, newUser[key]);
+    }
+  }
+  console.log(userId, newUser);
   try {
-    const data = await apiClient.patch(`/apiUserPatchUser/${userId}`);
+    const data = await apiClient.patch(`/apiUserPatchUser/${userId}`, form);
     toast.success("User updated successfully");
     apiUsers();
     return data;
@@ -82,8 +111,6 @@ export async function apiUserPatchUser(userId) {
 
 export async function apiTest(newUser) {
   const form = new FormData();
-  // form.append("image", newUser.image[0]);
-  // form.append("name", newUser.name);
   for (const key in newUser) {
     if (key === "image") {
       form.append(key, newUser[key][0]);

@@ -15,6 +15,12 @@ export function formatFontLabel(font = "") {
   );
 }
 
+export function formatFontInput(font = "") {
+  return (
+    font.charAt(0).toUpperCase() + font.slice(1).replace(/([A-Z])/g, " $1")
+  );
+}
+
 export function onHoverBgColor(color) {
   if (color === "red") return "hover:bg-red-700";
   if (color === "blue") return "hover:bg-blue-700";

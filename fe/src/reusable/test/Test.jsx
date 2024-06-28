@@ -63,16 +63,20 @@ export default function Test() {
     <>
       {/* <div className="bg-slate-500" id="drag"></div> */}
       <Form
-        rowLabels={rowLabels}
-        inputs={inputs}
-        inputTypes={inputTypes}
-        isRequired={isRequired}
-        dataSave={apiTest}
+        // dataSave={apiUserPostUser}
+        // dataEdit={apiUserPatchUser}
+        // dataDefaultVal={apiUser}
+        data={[
+          {
+            label: {
+              rowLabels: "selectImage",
+              inputs: ["image", "name"],
+              isRequired: [true, true],
+              inputTypes: ["file"],
+            },
+          },
+        ]}
       ></Form>
-      <img
-        src="http://localhost:8000/uploads/images/1719133848056.jpg"
-        alt=""
-      />
     </>
   );
 }

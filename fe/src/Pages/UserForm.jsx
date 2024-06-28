@@ -1,10 +1,18 @@
-import { apiUserPostUser } from "../api/api";
+import {
+  apiUser,
+  apiUserDeleteUser,
+  apiUserPatchUser,
+  apiUserPostUser,
+} from "../api/api";
 import Form from "../reusable/components/Form";
 
 export default function UserForm() {
   return (
     <Form
       dataSave={apiUserPostUser}
+      dataEdit={apiUserPatchUser}
+      dataDelete={apiUserDeleteUser}
+      dataDefaultVal={apiUser}
       data={[
         {
           label: {
@@ -19,7 +27,7 @@ export default function UserForm() {
             inputs: ["position", "birthdate", "email"],
             isRequired: [true, true, true],
             inputTypes: ["option", "date", "email"],
-            options: [["Sales", "Cashier", "Optician", "Optometrist"], [], []],
+            options: [["sales", "cashier", "optician", "optometrist"], [], []],
           },
         },
         {

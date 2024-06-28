@@ -8,9 +8,10 @@ import {
   apiUserPostUser,
   getUser,
   getUsers,
-  apiTest,
+  apiPostTest,
 } from "./controller/userRegister.js";
-import { upload } from "./multer.js";
+import { upload } from "../utils/multer.js";
+import { getConfirmUser, getConfirmUsers } from "./controller/confirmUser.js";
 
 const router = express.Router();
 const validator = ExpressValidation.createValidator();
@@ -18,6 +19,8 @@ const validator = ExpressValidation.createValidator();
 const joi = Joi.string().optional().allow("");
 
 const registerSchema = Joi.object({
+  _id: joi,
+  __v: joi,
   firstName: joi,
   middleName: joi,
   lastName: joi,
@@ -55,9 +58,20 @@ router.post(
   apiUserPostUser
 );
 
-router.patch("/apiUserPatchUser/:userId", apiUserPatchUser);
+router.patch(
+  "/apiUserPatchUser/:userId",
+  upload.single("image"),
+  validator.body(registerSchema),
+  apiUserPatchUser
+);
 
 router.delete("/apiUserDeleteUser/:userId", apiUserDeleteUser);
+
+///////////////////////////////////////////////
+
+router.get("/apiConfirmUsers", getConfirmUsers);
+
+router.get("/apiConfirmUser/:userId", getConfirmUser);
 
 const testSchema = Joi.object({
   image: joi,
@@ -65,10 +79,17 @@ const testSchema = Joi.object({
 });
 
 router.post(
-  "/apiTest",
+  "/apiPostTest",
   upload.single("image"),
   validator.body(testSchema),
-  apiTest
+  apiPostTest
+);
+
+router.patch(
+  "/apiPatchTest/:userId",
+  upload.single("image"),
+  validator.body(testSchema),
+  apiPostTest
 );
 
 export default router;

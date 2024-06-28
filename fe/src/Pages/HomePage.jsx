@@ -9,7 +9,7 @@ import {
   HomeModernIcon,
   PencilIcon,
   PhoneIcon,
-  XMarkIcon,
+  TrashIcon,
 } from "@heroicons/react/24/solid";
 import { calculateAge } from "../reusable/utils/helpers.js";
 
@@ -33,35 +33,27 @@ export default function HomePage() {
 
   return (
     <>
-      <div>
-        <div className="flex flex-col gap-6 [&>*:nth-child(even)]:bg-slate-500/10">
-          {users
-            .slice()
-            .reverse()
-            .map((user, i) => (
-              <Card
-                key={i}
-                imgSrc={user.image}
-                mainTitle={[user.firstName, user.middleName, user.lastName]}
-                mainDescription={[
-                  user.position,
-                  "Birthday " + user.birthdate + ",",
-                  "Age " + calculateAge(user.birthdate),
-                ]}
-                apiUserDeleteUser={apiUserDeleteUser}
-                icons={[
-                  {
-                    icons: <HomeModernIcon />,
-                  },
-                  {
-                    icons: <PhoneIcon />,
-                  },
-                  {
-                    icons: <BookOpenIcon />,
-                  },
-                ]}
-                iconsDetails={[
-                  [
+      <div className="">
+        {users.length === 0 && "No Users for registration"}
+      </div>
+      <div className="flex flex-col gap-6 [&>*:nth-child(even)]:bg-slate-500/10">
+        {users
+          .slice()
+          .reverse()
+          .map((user, i) => (
+            <Card
+              key={i}
+              imgSrc={user.image}
+              mainTitle={[user.firstName, user.middleName, user.lastName]}
+              mainDescription={[
+                user.position,
+                "Birthday " + user.birthdate + ",",
+                "Age " + calculateAge(user.birthdate),
+              ]}
+              icons={[
+                {
+                  icons: <HomeModernIcon />,
+                  iconsDetails: [
                     user.street + " St.",
                     "Purok " + user.purok,
                     "Brgy. " + user.brgy,
@@ -69,49 +61,57 @@ export default function HomePage() {
                     user.province,
                     user.country,
                   ],
-                  [
+                },
+                {
+                  icons: <PhoneIcon />,
+                  iconsDetails: [
                     user.contactNumber1,
                     user.contactNumber2,
                     user.contactNumber3,
                     user.email,
                   ],
-                  [
+                },
+                {
+                  icons: <BookOpenIcon />,
+                  iconsDetails: [
                     "SSS: " + user.SSS,
                     "Pag-Ibig: " + user.PagIbig,
                     "PhilHealth: " + user.PhilHealth,
                     "TIN: " + user.TIN,
                   ],
-                ]}
-                onclick={[
-                  {
-                    btn: {
-                      text: "confirm",
-                      color: "green",
-                      icon: { icon: <CheckIcon></CheckIcon> },
-                    },
+                },
+              ]}
+              btn={[
+                {
+                  btn: {
+                    function: () => window.open(user.image, "_blank"),
+
+                    text: "confirm",
+                    color: "green",
+                    icon: { icon: <CheckIcon></CheckIcon> },
                   },
-                  {
-                    btn: {
-                      function: () => apiUserPatchUser(user._id),
-                      to: "registerUser/" + user._id,
-                      text: "edit",
-                      color: "yellow",
-                      type: "link",
-                      icon: { icon: <PencilIcon></PencilIcon> },
-                    },
+                },
+                {
+                  btn: {
+                    function: () => apiUserPatchUser(user._id),
+                    to: "registerUser/" + user._id,
+                    text: "edit",
+                    color: "yellow",
+                    type: "link",
+                    icon: { icon: <PencilIcon></PencilIcon> },
                   },
-                  {
-                    btn: {
-                      function: () => apiUserDeleteUser(user._id),
-                      text: "delete",
-                      color: "red",
-                      icon: { icon: <XMarkIcon></XMarkIcon> },
-                    },
+                },
+                {
+                  btn: {
+                    function: () => apiUserDeleteUser(user._id),
+                    text: "delete",
+                    color: "red",
+                    icon: { icon: <TrashIcon></TrashIcon> },
                   },
-                ]}
-              ></Card>
-            ))}
-        </div>
+                },
+              ]}
+            ></Card>
+          ))}
       </div>
     </>
   );

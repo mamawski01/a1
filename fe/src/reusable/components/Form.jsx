@@ -1,32 +1,37 @@
 import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
-import { PlusIcon, SparklesIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import {
+  PlusIcon,
+  SparklesIcon,
+  TrashIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/solid";
 import toast from "react-hot-toast";
 
-import { formatFontLabel } from "../utils/helpers";
+import { formatFontInput, formatFontLabel } from "../utils/helpers";
 import Btn from "./Btn";
 import { useEffect, useState } from "react";
-import { apiUser } from "../../api/api";
 
-export default function Form({ data = [], dataSave = null }) {
+export default function Form({
+  data = [],
+  dataSave = null,
+  dataEdit = null,
+  dataDelete = null,
+  dataDefaultVal = null,
+}) {
   const { id } = useParams();
   const [editData, editDataSet] = useState({});
+
+  const edit = Boolean(editData?._id);
+  console.log(edit);
 
   const { register, handleSubmit, formState, reset } = useForm();
 
   useEffect(() => {
     async function fetchUser() {
-      const response = await apiUser(id);
+      const response = await dataDefaultVal(id);
       const finalData = response?.data?.user;
-      for (const key in finalData) {
-        if (key === "password") {
-          key, (finalData[key] = null);
-        }
-        if (key === "__v" || key === "_id") {
-          delete finalData[key];
-        }
-      }
       editDataSet(finalData);
       reset(finalData);
       return response;
@@ -34,7 +39,7 @@ export default function Form({ data = [], dataSave = null }) {
     fetchUser();
     //cleaning
     return () => {};
-  }, [id, reset]);
+  }, [id, reset, dataDefaultVal]);
 
   const { errors } = formState;
 
@@ -52,12 +57,14 @@ export default function Form({ data = [], dataSave = null }) {
           finalData[key] = finalData[key].trim();
         }
         if (key === "firstName" || key === "middleName" || key === "lastName") {
-          finalData[key] = formatFontLabel(finalData[key]);
+          finalData[key] = formatFontInput(finalData[key]);
         }
       }
-      const response = await dataSave(finalData);
+      const response = edit
+        ? await dataEdit(editData._id, finalData)
+        : await dataSave(finalData);
       if (response.data) {
-        // navigate(-1);
+        navigate(-1);
       }
     }
   }
@@ -128,6 +135,30 @@ export default function Form({ data = [], dataSave = null }) {
               reset({});
             }}
           ></Btn>
+          {edit && (
+            <Btn
+              text={"delete"}
+              color={"red"}
+              type="button"
+              icon={[
+                {
+                  icon: <TrashIcon></TrashIcon>,
+                },
+              ]}
+              onClick={() => dataDelete(editData._id)}
+            ></Btn>
+          )}
+          <Btn
+            text={"exit"}
+            color={"red"}
+            type="button"
+            icon={[
+              {
+                icon: <XMarkIcon></XMarkIcon>,
+              },
+            ]}
+            onClick={() => navigate(-1)}
+          ></Btn>
         </div>
       </div>
     </form>
@@ -137,6 +168,9 @@ export default function Form({ data = [], dataSave = null }) {
 Form.propTypes = {
   data: PropTypes.any,
   dataSave: PropTypes.any,
+  dataEdit: PropTypes.any,
+  dataDefaultVal: PropTypes.any,
+  dataDelete: PropTypes.any,
 };
 
 function getGridDesign(inputLength) {
@@ -195,6 +229,7 @@ RowInput.propTypes = {
   errors: PropTypes.any,
   image: PropTypes.any,
   imageSet: PropTypes.any,
+  editData: PropTypes.any,
 };
 
 function Input({
@@ -213,11 +248,10 @@ function Input({
     required: `This field is required: ${font}`,
   };
   function getImagePreview(e) {
-    if (inputType === "file" && e.target.files[0]) {
+    if (inputType === "file" && e?.target?.files[0]) {
       return imageSet(URL.createObjectURL(e.target.files[0]) || editData);
     }
   }
-  console.log(image);
   return (
     <div className="my-auto h-full w-full">
       <label htmlFor={input} className="font-bold" title={font}>
@@ -290,4 +324,5 @@ Input.propTypes = {
   errors: PropTypes.any,
   image: PropTypes.any,
   imageSet: PropTypes.any,
+  editData: PropTypes.any,
 };

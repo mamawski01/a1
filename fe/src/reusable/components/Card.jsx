@@ -7,8 +7,7 @@ export default function Card({
   mainTitle = [],
   mainDescription = [],
   icons = [],
-  iconsDetails = [],
-  onclick = [],
+  btn = [],
 }) {
   const [expand, expandSet] = useState(false);
   return (
@@ -55,11 +54,11 @@ export default function Card({
             <Content
               key={i}
               icon={icon}
-              iconsDetails={iconsDetails[i]}
+              iconsDetails={icons[i].iconsDetails}
             ></Content>
           ))}
         <div className="mt-6 flex flex-wrap justify-evenly">
-          {onclick.map((onclick, i) => (
+          {btn.map((onclick, i) => (
             <Btn
               key={i}
               onClick={onclick.btn.function}
@@ -77,15 +76,11 @@ export default function Card({
 }
 
 Card.propTypes = {
-  apiUserDeleteUser: PropTypes.any,
   icons: PropTypes.any,
   imgSrc: PropTypes.any,
   mainTitle: PropTypes.any,
   mainDescription: PropTypes.any,
-  iconsDetails: PropTypes.any,
-  onclick: PropTypes.any,
-  editShowForm: PropTypes.any,
-  dataId: PropTypes.any,
+  btn: PropTypes.any,
 };
 
 function Content({ icon = [], iconsDetails = [] }) {
@@ -95,8 +90,8 @@ function Content({ icon = [], iconsDetails = [] }) {
         <span className="w-5">{icon.icons}</span>
         {iconsDetails.map((text, i) => (
           <span key={i}>
-            {text}
-            {i === iconsDetails.length - 1 ? "" : ","}
+            {text && text}
+            {i === iconsDetails.length - 1 ? null : text ? "," : ""}
           </span>
         ))}
       </div>

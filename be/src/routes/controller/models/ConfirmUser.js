@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const { Schema } = mongoose;
-const userSchema = new Schema({
+const confirmUserSchema = new Schema({
   firstName: { type: String, required: [true, "First Name is required."] },
   middleName: { type: String, required: [true, "Middle Name is required."] },
   lastName: { type: String, required: [true, "Last Name is required."] },
@@ -37,6 +37,6 @@ const userSchema = new Schema({
   image: { type: String, required: [true, "Image is required."] },
 });
 
-const User = mongoose.model("User", userSchema);
+const ConfirmUser = mongoose.model("ConfirmUser", confirmUserSchema);
 
-export default User;
+export default ConfirmUser;
