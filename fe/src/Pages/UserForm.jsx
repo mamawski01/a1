@@ -24,9 +24,9 @@ export default function UserForm() {
         {
           label: {
             rowLabels: "workInfo",
-            inputs: ["position", "birthdate", "email"],
-            isRequired: [true, true, true],
-            inputTypes: ["option", "date", "email"],
+            inputs: ["position", "birthdate", "email", "employmentDate"],
+            isRequired: [true, true, true, true],
+            inputTypes: ["option", "date", "email", "date"],
             options: [["sales", "cashier", "optician", "optometrist"], [], []],
           },
         },

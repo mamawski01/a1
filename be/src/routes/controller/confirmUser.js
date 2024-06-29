@@ -1,3 +1,5 @@
+import { deleteImage } from "../../utils/beHelpers.js";
+import { location } from "../../utils/multer.js";
 import ConfirmUser from "./models/ConfirmUser.js";
 import User from "./models/User.js";
 
@@ -43,17 +45,80 @@ export async function apiConfirmUserPost(req, res) {
 }
 
 export async function apiConfirmUserPatchUser(req, res) {
-  const { email } = req.body;
+  const {
+    firstName,
+    middleName,
+    lastName,
+    position,
+    birthdate,
+    email,
+    street,
+    purok,
+    brgy,
+    city,
+    province,
+    country,
+    contactNumber1,
+    contactNumber2,
+    contactNumber3,
+    password,
+    repeatPasswordpassword,
+    SSS,
+    PagIbig,
+    PhilHealth,
+    TIN,
+    contactPersonNameInEmergency,
+    contactPersonNumberInEmergency,
+  } = req.body;
   const { confirmUserId } = req.params;
   try {
     const confirmUserEmailExist = await ConfirmUser.exists({ email });
     if (confirmUserEmailExist) {
+      deleteImage(req.file.path);
       return res.status(409).send("Email already exists");
     }
 
+    const userPrevImg = await ConfirmUser.findById(confirmUserId);
+
+    if (!userPrevImg) {
+      deleteImage(req.file.path);
+      return res.status(404).send("User not found");
+    }
+
+    const imageUrl = userPrevImg.image.substring(
+      userPrevImg.image.lastIndexOf("/") + 1
+    );
+
+    deleteImage(location + "/" + imageUrl);
+
     const confirmUser = await ConfirmUser.findByIdAndUpdate(
       confirmUserId,
-      req.body,
+      {
+        firstName,
+        middleName,
+        lastName,
+        position,
+        birthdate,
+        email,
+        street,
+        purok,
+        brgy,
+        city,
+        province,
+        country,
+        contactNumber1,
+        contactNumber2,
+        contactNumber3,
+        password,
+        repeatPasswordpassword,
+        SSS,
+        PagIbig,
+        PhilHealth,
+        TIN,
+        contactPersonNameInEmergency,
+        contactPersonNumberInEmergency,
+        image: "http://localhost:8000/uploads/images/" + req.file.filename,
+      },
       {
         new: true,
       }
@@ -64,5 +129,22 @@ export async function apiConfirmUserPatchUser(req, res) {
   } catch (error) {
     console.log(error);
     return res.status(500).send("apiConfirmUserPatchUser Error");
+  }
+}
+
+export async function apiConfirmUserDelete(req, res) {
+  const { confirmUserId } = req.params;
+  try {
+    const userPrevImg = await ConfirmUser.findById(confirmUserId);
+    const imageUrl = userPrevImg.image.substring(
+      userPrevImg.image.lastIndexOf("/") + 1
+    );
+    deleteImage(location + "/" + imageUrl);
+    const confirmUser = await ConfirmUser.findByIdAndDelete(confirmUserId);
+    if (!ConfirmUser) return res.status(404).send("User not found");
+    return res.status(200).send({ message: "User deleted", confirmUser });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send("deleteUser Error");
   }
 }

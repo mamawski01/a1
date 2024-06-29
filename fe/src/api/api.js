@@ -1,7 +1,10 @@
 import axios from "axios";
 import toast from "react-hot-toast";
 
-import connectWithSocketServer, { updateRealtime } from "../feIo/feIo";
+import connectWithSocketServer, {
+  updateRealtime,
+  updateRealtimeConfirmUser,
+} from "../feIo/feIo";
 import { swalAlert } from "../reusable/utils/helpers";
 import Swal from "sweetalert2";
 
@@ -14,12 +17,12 @@ export async function apiUsers() {
   try {
     connectWithSocketServer();
     const data = await apiClient.get("/apiUsers");
-    updateRealtime(data.data.users);
+    updateRealtime(data.data.data);
     toast.success("Users fetched successfully");
     return data;
   } catch (exception) {
-    toast.error(exception.message);
-    return { error: true, exception };
+    toast.error(exception.response.data);
+    return exception.response.data;
   }
 }
 
@@ -31,8 +34,8 @@ export async function apiUser(userId) {
     apiUsers();
     return data;
   } catch (exception) {
-    toast.error(exception.message);
-    return { error: true, exception };
+    toast.error(exception.response.data);
+    return exception.response.data;
   }
 }
 
@@ -51,7 +54,6 @@ export async function apiUserPostUser(newUser) {
     apiUsers();
     return data;
   } catch (exception) {
-    console.log(exception);
     toast.error(exception.response.data);
     return exception.response.data;
   }
@@ -67,8 +69,8 @@ export async function apiUserDeleteUser(userId) {
       return data;
     }
   } catch (exception) {
-    toast.error(exception.message);
-    return exception.message;
+    toast.error(exception.response.data);
+    return exception.response.data;
   }
 }
 
@@ -81,15 +83,14 @@ export async function apiUserPatchUser(userId, newUser) {
       form.append(key, newUser[key]);
     }
   }
-  console.log(userId, newUser);
   try {
     const data = await apiClient.patch(`/apiUserPatchUser/${userId}`, form);
     toast.success("User updated successfully");
     apiUsers();
     return data;
   } catch (exception) {
-    toast.error(exception.message);
-    return exception.message;
+    toast.error(exception.response.data);
+    return exception.response.data;
   }
 }
 
@@ -117,14 +118,13 @@ export async function apiTest(newUser) {
 
 export async function getConfirmUsers() {
   try {
-    connectWithSocketServer();
     const data = await apiClient.get("/apiConfirmUsers");
-    updateRealtime(data.data.users);
+    updateRealtimeConfirmUser(data.data.data);
     toast.success("Users fetched successfully");
     return data;
   } catch (exception) {
-    toast.error(exception.message);
-    return { error: true, exception };
+    toast.error(exception.response.data);
+    return exception.response.data;
   }
 }
 
@@ -133,11 +133,11 @@ export async function getConfirmUser(userId) {
     if (!userId) return null;
     const data = await apiClient.get(`/apiConfirmUser/${userId}`);
     toast.success("User fetched successfully");
-    apiUsers();
+    getConfirmUsers();
     return data;
   } catch (exception) {
-    toast.error(exception.message);
-    return { error: true, exception };
+    toast.error(exception.response.data);
+    return exception.response.data;
   }
 }
 
@@ -158,6 +158,7 @@ export async function apiConfirmUserPost(confirmUser) {
     if (confirmDelete.isConfirmed) {
       const data = await apiClient.post("/apiConfirmUserPost", confirmUser);
       toast.success("New confirmUser created successfully");
+      getConfirmUsers();
       apiUsers();
       return data;
     }
@@ -169,16 +170,39 @@ export async function apiConfirmUserPost(confirmUser) {
 }
 
 export async function apiConfirmUserPatchUser(userId, newUser) {
+  const form = new FormData();
+  for (const key in newUser) {
+    if (key === "image") {
+      form.append(key, newUser[key][0]);
+    } else {
+      form.append(key, newUser[key]);
+    }
+  }
   try {
     const data = await apiClient.patch(
       `/apiConfirmUserPatchUser/${userId}`,
-      newUser,
+      form,
     );
     toast.success("User updated successfully");
-    apiUsers();
+    getConfirmUsers();
     return data;
   } catch (exception) {
-    toast.error(exception.message);
-    return exception.message;
+    toast.error(exception.response.data);
+    return exception.response.data;
+  }
+}
+
+export async function apiConfirmUserDelete(userId) {
+  try {
+    const confirmDelete = await swalAlert();
+    if (confirmDelete.isConfirmed) {
+      const data = await apiClient.delete(`/apiConfirmUserDelete/${userId}`);
+      toast.success("User deleted successfully");
+      getConfirmUsers();
+      return data;
+    }
+  } catch (exception) {
+    toast.error(exception.response.data);
+    return exception.response.data;
   }
 }

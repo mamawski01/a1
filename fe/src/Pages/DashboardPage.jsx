@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import {
-  apiUserDeleteUser,
-  apiUserPatchUser,
+  apiConfirmUserDelete,
+  apiConfirmUserPatchUser,
   getConfirmUsers,
 } from "../api/api";
 import Card from "../reusable/components/Card";
@@ -13,25 +13,29 @@ import {
   PhoneIcon,
   TrashIcon,
 } from "@heroicons/react/24/solid";
+import { feSocket } from "../feIo/feIo";
 
 export default function DashboardPage() {
   const [confirmUsers, confirmUsersSet] = useState([]);
-  console.log(confirmUsers);
+
+  feSocket.on("dataReceivedConfirmUser", (data) => {
+    confirmUsersSet(data);
+  });
 
   useEffect(() => {
     async function fetchConfirmUsers() {
       const response = await getConfirmUsers();
-      confirmUsersSet(response.data.data);
       return response;
     }
     fetchConfirmUsers();
     //cleaning
     return () => {};
   }, []);
+
   return (
     <>
       <div className="">
-        {confirmUsers.length === 0 && "No Users for registration"}
+        {confirmUsers.length === 0 && "No Confirmed Users"}
       </div>
       <div className="flex flex-col gap-6 [&>*:nth-child(even)]:bg-slate-500/10">
         {confirmUsers
@@ -81,7 +85,7 @@ export default function DashboardPage() {
               btn={[
                 {
                   btn: {
-                    function: () => apiUserPatchUser(user._id),
+                    function: () => apiConfirmUserPatchUser(user._id),
                     to: "confirmUser/" + user._id,
                     text: "edit",
                     color: "yellow",
@@ -91,7 +95,7 @@ export default function DashboardPage() {
                 },
                 {
                   btn: {
-                    function: () => apiUserDeleteUser(user._id),
+                    function: () => apiConfirmUserDelete(user._id),
                     text: "delete",
                     color: "red",
                     icon: { icon: <TrashIcon></TrashIcon> },

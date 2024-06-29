@@ -8,3 +8,14 @@ export async function emitDataReceived(io, data) {
     });
   }
 }
+
+export async function emitDataReceivedConfirmUser(io, data) {
+  try {
+    io.emit("dataReceivedConfirmUser", data);
+  } catch (err) {
+    console.log(err);
+    io.emit("dataReceivedConfirmUser", {
+      errorOccurred: err,
+    });
+  }
+}

@@ -11,3 +11,7 @@ export default function connectWithSocketServer() {
 export function updateRealtime(data) {
   return feSocket.emit("sendData", data);
 }
+
+export function updateRealtimeConfirmUser(data) {
+  return feSocket.emit("sendDataConfirmUser", data);
+}

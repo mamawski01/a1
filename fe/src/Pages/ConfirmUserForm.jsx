@@ -1,6 +1,6 @@
 import {
+  apiConfirmUserDelete,
   apiConfirmUserPatchUser,
-  apiUserDeleteUser,
   getConfirmUser,
 } from "../api/api";
 import Form from "../reusable/components/Form";
@@ -9,7 +9,7 @@ export default function ConfirmUserForm() {
   return (
     <Form
       dataEdit={apiConfirmUserPatchUser}
-      dataDelete={apiUserDeleteUser}
+      dataDelete={apiConfirmUserDelete}
       dataDefaultVal={getConfirmUser}
       data={[
         {
