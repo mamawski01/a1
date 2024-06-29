@@ -31,7 +31,7 @@ export default function Form({
   useEffect(() => {
     async function fetchUser() {
       const response = await dataDefaultVal(id);
-      const finalData = response?.data?.user;
+      const finalData = response?.data?.data;
       editDataSet(finalData);
       reset(finalData);
       return response;
@@ -64,7 +64,7 @@ export default function Form({
         ? await dataEdit(editData._id, finalData)
         : await dataSave(finalData);
       if (response.data) {
-        navigate(-1);
+        // navigate(-1);
       }
     }
   }
@@ -112,7 +112,7 @@ export default function Form({
         <div className="mt-6 flex justify-evenly">
           <Btn
             color="blue"
-            text={"Save"}
+            text={edit ? "update" : "Save"}
             icon={[
               {
                 icon: <PlusIcon></PlusIcon>,

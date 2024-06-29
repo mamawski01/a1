@@ -5,6 +5,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 
 import User from "./src/routes/controller/models/User.js";
+import ConfirmUser from "./src/routes/controller/models/ConfirmUser.js";
 
 import userRoutes from "./src/routes/userRoutes.js";
 import { registerSocketServer } from "./src/beIo/beIo.js";

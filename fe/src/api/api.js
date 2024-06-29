@@ -1,15 +1,13 @@
 import axios from "axios";
-import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 
 import connectWithSocketServer, { updateRealtime } from "../feIo/feIo";
+import { swalAlert } from "../reusable/utils/helpers";
+import Swal from "sweetalert2";
 
 const apiClient = axios.create({
   baseURL: "http://localhost:7000",
   timeout: 10000,
-  headers: {
-    "Content-Type": "application/x-www-form-urlencoded",
-  },
 });
 
 export async function apiUsers() {
@@ -61,26 +59,12 @@ export async function apiUserPostUser(newUser) {
 
 export async function apiUserDeleteUser(userId) {
   try {
-    const confirmDelete = await Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-      customClass: {
-        popup: "bg-slate-100/80 backdrop-blur-sm",
-      },
-    });
-
+    const confirmDelete = await swalAlert();
     if (confirmDelete.isConfirmed) {
       const data = await apiClient.delete(`/apiUserDeleteUser/${userId}`);
       toast.success("User deleted successfully");
       apiUsers();
       return data;
-    } else {
-      return toast.success("Deletion canceled");
     }
   } catch (exception) {
     toast.error(exception.message);
@@ -126,5 +110,75 @@ export async function apiTest(newUser) {
     console.log(exception);
     toast.error(exception.response.data);
     return exception.response.data;
+  }
+}
+
+////////////////////////////////////
+
+export async function getConfirmUsers() {
+  try {
+    connectWithSocketServer();
+    const data = await apiClient.get("/apiConfirmUsers");
+    updateRealtime(data.data.users);
+    toast.success("Users fetched successfully");
+    return data;
+  } catch (exception) {
+    toast.error(exception.message);
+    return { error: true, exception };
+  }
+}
+
+export async function getConfirmUser(userId) {
+  try {
+    if (!userId) return null;
+    const data = await apiClient.get(`/apiConfirmUser/${userId}`);
+    toast.success("User fetched successfully");
+    apiUsers();
+    return data;
+  } catch (exception) {
+    toast.error(exception.message);
+    return { error: true, exception };
+  }
+}
+
+export async function apiConfirmUserPost(confirmUser) {
+  try {
+    const confirmDelete = await Swal.fire({
+      title: "Are you sure to confirm this user?",
+      text: "User will be move to confirmed list",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, move to confirmed list!",
+      customClass: {
+        popup: "bg-slate-100/80 backdrop-blur-sm",
+      },
+    });
+    if (confirmDelete.isConfirmed) {
+      const data = await apiClient.post("/apiConfirmUserPost", confirmUser);
+      toast.success("New confirmUser created successfully");
+      apiUsers();
+      return data;
+    }
+  } catch (exception) {
+    console.log(exception);
+    toast.error(exception.response.data);
+    return exception.response.data;
+  }
+}
+
+export async function apiConfirmUserPatchUser(userId, newUser) {
+  try {
+    const data = await apiClient.patch(
+      `/apiConfirmUserPatchUser/${userId}`,
+      newUser,
+    );
+    toast.success("User updated successfully");
+    apiUsers();
+    return data;
+  } catch (exception) {
+    toast.error(exception.message);
+    return exception.message;
   }
 }

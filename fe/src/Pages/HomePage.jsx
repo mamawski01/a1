@@ -1,7 +1,12 @@
 import { feSocket } from "../feIo/feIo.js";
 import { useEffect, useState } from "react";
 
-import { apiUserDeleteUser, apiUserPatchUser, apiUsers } from "../api/api.js";
+import {
+  apiConfirmUserPost,
+  apiUserDeleteUser,
+  apiUserPatchUser,
+  apiUsers,
+} from "../api/api.js";
 import Card from "../reusable/components/Card.jsx";
 import {
   BookOpenIcon,
@@ -15,7 +20,6 @@ import { calculateAge } from "../reusable/utils/helpers.js";
 
 export default function HomePage() {
   const [users, usersSet] = useState([]);
-  console.log(users);
 
   feSocket.on("dataReceived", (data) => {
     usersSet(data);
@@ -84,8 +88,7 @@ export default function HomePage() {
               btn={[
                 {
                   btn: {
-                    function: () => window.open(user.image, "_blank"),
-
+                    function: () => apiConfirmUserPost(user),
                     text: "confirm",
                     color: "green",
                     icon: { icon: <CheckIcon></CheckIcon> },

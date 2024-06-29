@@ -1,3 +1,21 @@
+import Swal from "sweetalert2";
+
+export function swalAlert() {
+  const confirmDelete = Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
+    customClass: {
+      popup: "bg-slate-100/80 backdrop-blur-sm",
+    },
+  });
+  return confirmDelete;
+}
+
 export function calculateAge(birthdate) {
   const birthDate = new Date(birthdate);
   const today = new Date();

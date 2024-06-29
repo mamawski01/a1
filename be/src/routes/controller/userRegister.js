@@ -143,7 +143,14 @@ export async function apiUserPatchUser(req, res) {
     contactPersonNumberInEmergency,
   } = req.body;
   const { userId } = req.params;
+
   try {
+    const userEmailExist = await User.exists({ email });
+    if (userEmailExist) {
+      deleteImage(req.file.path);
+      return res.status(409).send("Email already exists");
+    }
+
     const userPrevImg = await User.findById(userId);
 
     if (!userPrevImg) {
@@ -216,7 +223,6 @@ export async function apiUserDeleteUser(req, res) {
 
 export async function apiPostTest(req, res) {
   const { name } = req.body;
-  console.log(req.file);
   try {
     const test = await Test.create({
       image: "http://localhost:8000/uploads/images/" + req.file.filename,
@@ -232,7 +238,6 @@ export async function apiPostTest(req, res) {
 export async function apiPatchTest(req, res) {
   const { name } = req.body;
   const { userId } = req.params;
-  console.log(req.file);
   try {
     const userPrevImg = await Test.findById(userId);
 

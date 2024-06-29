@@ -25,12 +25,3 @@ export const upload = multer({
     cb(error, isValid);
   },
 });
-
-// Create the folder
-// fs.mkdir("../n/uploads/images", (err) => {
-//   if (err) {
-//     console.error(err);
-//     return;
-//   }
-//   console.log("Folder created");
-// });
