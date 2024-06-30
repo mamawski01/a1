@@ -5,24 +5,24 @@ import {
   apiUserDeleteUser,
   apiUserPatchUser,
   apiUserPostUser,
-  getUser,
-  getUsers,
   apiPostTest,
+  apiUsers,
+  apiUser,
 } from "./controller/userRegister.js";
 import {
+  apiConfirmUser,
   apiConfirmUserDelete,
   apiConfirmUserPatchUser,
   apiConfirmUserPost,
-  getConfirmUser,
-  getConfirmUsers,
+  apiConfirmUsers,
 } from "./controller/confirmUser.js";
 import { joiValidator, registerSchema, testSchema } from "../utils/joi.js";
 
 const router = express.Router();
 
-router.get("/apiUsers", getUsers);
+router.get("/apiUsers", apiUsers);
 
-router.get("/apiUser/:id", getUser);
+router.get("/apiUser/:id", apiUser);
 
 router.post(
   "/apiUserPostUser",
@@ -42,9 +42,9 @@ router.delete("/apiUserDeleteUser/:id", apiUserDeleteUser);
 
 //confirm user routes
 
-router.get("/apiConfirmUsers", getConfirmUsers);
+router.get("/apiConfirmUsers", apiConfirmUsers);
 
-router.get("/apiConfirmUser/:id", getConfirmUser);
+router.get("/apiConfirmUser/:id", apiConfirmUser);
 
 router.post(
   "/apiConfirmUserPost",

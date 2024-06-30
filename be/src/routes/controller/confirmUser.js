@@ -7,11 +7,11 @@ import {
 import ConfirmUser from "./models/ConfirmUser.js";
 import User from "./models/User.js";
 
-export async function getConfirmUsers(req, res) {
+export async function apiConfirmUsers(req, res) {
   getters(res, ConfirmUser, "ConfirmUsers");
 }
 
-export async function getConfirmUser(req, res) {
+export async function apiConfirmUser(req, res) {
   getter(req, res, ConfirmUser, "ConfirmUser");
 }
 
@@ -19,15 +19,12 @@ export async function apiConfirmUserPost(req, res) {
   const { email, _id } = req.body;
   try {
     //check if email exist and delete image
-    const { conflict, conflictMess } = await userEmailAndDelImage(
+    const { conflict, confMess } = await userEmailAndDelImage(
       req,
       email,
-      ConfirmUser,
-      false
+      ConfirmUser
     );
-    if (conflict) {
-      return res.status(409).send(conflictMess);
-    }
+    if (conflict) return res.status(409).send(confMess);
     //check if email exist and delete image
 
     const user = await User.findByIdAndDelete(_id);
@@ -44,20 +41,18 @@ export async function apiConfirmUserPatchUser(req, res) {
   const { id } = req.params;
   try {
     //check if email exist and delete image
-    const { conflict, conflictMess } = await userEmailAndDelImage(
+    const { conflict, confMess } = await userEmailAndDelImage(
       req,
       email,
       ConfirmUser,
       true
     );
-    if (conflict) {
-      return res.status(409).send(conflictMess);
-    }
+    if (conflict) return res.status(409).send(confMess);
     //check if email exist and delete image
 
     //userPrevImg
-    const { success, mess } = prevImgAndDelImg(req, ConfirmUser, id);
-    if (success) return res.status(404).send(mess);
+    const { success, sucMess } = prevImgAndDelImg(req, ConfirmUser, id);
+    if (success) return res.status(404).send(sucMess);
     //userPrevImg
 
     const data = await ConfirmUser.findByIdAndUpdate(
@@ -69,7 +64,7 @@ export async function apiConfirmUserPatchUser(req, res) {
       { new: true }
     );
     if (!data) return res.status(404).send("User not found");
-    return res.status(200).send({ message: "User updated", confirmUser });
+    return res.status(200).send({ message: "User updated", data });
   } catch (error) {
     console.log(error);
     return res.status(500).send("apiConfirmUserPatchUser Error");
@@ -80,8 +75,8 @@ export async function apiConfirmUserDelete(req, res) {
   const { id } = req.params;
   try {
     //userPrevImg
-    const { success, mess } = prevImgAndDelImg(req, ConfirmUser, id, false);
-    if (success) return res.status(404).send(mess);
+    const { success, sucMess } = prevImgAndDelImg(req, ConfirmUser, id, false);
+    if (success) return res.status(404).send(sucMess);
     //userPrevImg
 
     const data = await ConfirmUser.findByIdAndDelete(id);

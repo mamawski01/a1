@@ -8,6 +8,7 @@ import Card from "../reusable/components/Card";
 import { calculateAge } from "../reusable/utils/helpers";
 import {
   BookOpenIcon,
+  BookmarkSquareIcon,
   HomeModernIcon,
   PencilIcon,
   PhoneIcon,
@@ -91,6 +92,16 @@ export default function DashboardPage() {
                     color: "yellow",
                     type: "link",
                     icon: { icon: <PencilIcon></PencilIcon> },
+                  },
+                },
+                {
+                  btn: {
+                    function: () => apiConfirmUserPatchUser(user._id),
+                    to: "confirmUser/attendance/" + user._id,
+                    text: "attendanceForm",
+                    color: "yellow",
+                    type: "link",
+                    icon: { icon: <BookmarkSquareIcon></BookmarkSquareIcon> },
                   },
                 },
                 {

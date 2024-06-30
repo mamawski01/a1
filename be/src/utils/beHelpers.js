@@ -72,7 +72,7 @@ export async function userEmailAndDelImage(
   const userEmailExist = await model.exists({ email });
   if (userEmailExist) {
     delImgPath && deleteImage(req.file.path);
-    return { conflict: true, conflictMess: "Email already exists" };
+    return { conflict: true, confMess: "Email already exists" };
   }
   return { conflict: false };
 }
@@ -81,7 +81,7 @@ export async function prevImgAndDelImg(req, model, id, delImgPath = true) {
   const prevImg = await model.findById(id);
   if (!prevImg) {
     delImgPath && deleteImage(req.file.path);
-    return { success: false, mess: "User not found" };
+    return { success: false, sucMess: "User not found" };
   }
   const imageUrl = prevImg.image.substring(prevImg.image.lastIndexOf("/") + 1);
   deleteImage(location + "/" + imageUrl);

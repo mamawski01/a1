@@ -10,11 +10,11 @@ import {
   userEmailAndDelImage,
 } from "../../utils/beHelpers.js";
 
-export function getUsers(req, res) {
+export function apiUsers(req, res) {
   getters(res, User, "Users");
 }
 
-export function getUser(req, res) {
+export function apiUser(req, res) {
   getter(req, res, User, "User");
 }
 
@@ -22,18 +22,13 @@ export async function apiUserPostUser(req, res) {
   const { email, password } = req.body;
   try {
     //check if email exist and delete image
-    const { conflict, conflictMess } = await userEmailAndDelImage(
-      req,
-      email,
-      User,
-      true
-    );
-    if (conflict) {
-      return res.status(409).send(conflictMess);
-    }
+    const { conflict, confMess } = await userEmailAndDelImage(req, email, User);
+    if (conflict) return res.status(409).send(confMess);
+    //check if email exist and delete image
 
     //encrypt password
     const encryptedPassword = await passwordEncrypt(password);
+    //encrypt password
 
     const data = await User.create({
       ...req.body,
@@ -53,15 +48,8 @@ export async function apiUserPatchUser(req, res) {
   const { id } = req.params;
   try {
     //check if email exist and delete image
-    const { conflict, conflictMess } = await userEmailAndDelImage(
-      req,
-      email,
-      User,
-      true
-    );
-    if (conflict) {
-      return res.status(409).send(conflictMess);
-    }
+    const { conflict, confMess } = await userEmailAndDelImage(req, email, User);
+    if (conflict) return res.status(409).send(confMess);
     //check if email exist and delete image
 
     //encrypt password
@@ -69,8 +57,8 @@ export async function apiUserPatchUser(req, res) {
     //encrypt password
 
     //userPrevImg
-    const { success, mess } = prevImgAndDelImg(req, User, id, true);
-    if (success) return res.status(404).send(mess);
+    const { success, sucMess } = prevImgAndDelImg(req, User, id, true);
+    if (success) return res.status(404).send(sucMess);
     //userPrevImg
 
     const data = await User.findByIdAndUpdate(
@@ -95,20 +83,13 @@ export async function apiUserDeleteUser(req, res) {
   const { id } = req.params;
   try {
     //check if email exist and delete image
-    const { conflict, conflictMess } = await userEmailAndDelImage(
-      req,
-      email,
-      User,
-      true
-    );
-    if (conflict) {
-      return res.status(409).send(conflictMess);
-    }
+    const { conflict, confMess } = await userEmailAndDelImage(req, false, User);
+    if (conflict) return res.status(409).send(confMess);
     //check if email exist and delete image
 
     //userPrevImg
-    const { success, mess } = prevImgAndDelImg(req, User, id, true);
-    if (success) return res.status(404).send(mess);
+    const { success, sucMess } = prevImgAndDelImg(req, User, id, true);
+    if (success) return res.status(404).send(sucMess);
     //userPrevImg
 
     const data = await User.findByIdAndDelete(id);
@@ -138,14 +119,10 @@ export async function apiPatchTest(req, res) {
   const { name } = req.body;
   const { userId } = req.params;
   try {
-    const userPrevImg = await Test.findById(userId);
-
-    if (!userPrevImg) return res.status(404).send("User not found");
-
-    const imageUrl = userPrevImg.image.substring(
-      userPrevImg.image.lastIndexOf("/") + 1
-    );
-    deleteImage(location + "/" + imageUrl);
+    //userPrevImg
+    const { success, sucMess } = prevImgAndDelImg(req, User, id, true);
+    if (success) return res.status(404).send(sucMess);
+    //userPrevImg
 
     const test = await Test.findByIdAndUpdate(userId, {
       image: "http://localhost:8000/uploads/images/" + req.file.filename,

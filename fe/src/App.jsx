@@ -8,7 +8,8 @@ import HomePage from "./Pages/HomePage.jsx";
 import AppLayout from "./reusable/layout/AppLayout.jsx";
 import Test from "./reusable/test/Test.jsx";
 import UserForm from "./Pages/UserForm.jsx";
-import ConfirmUserForm from "./Pages/ConfirmUserForm.jsx";
+import ConfirmUserPage from "./Pages/ConfirmUserPage.jsx";
+import AttendancePage from "./Pages/AttendancePage.jsx/index.js";
 
 export default function App() {
   return (
@@ -35,7 +36,11 @@ export default function App() {
             ></Route>
             <Route
               path="dashboard/confirmUser/:id"
-              element={<ConfirmUserForm></ConfirmUserForm>}
+              element={<ConfirmUserPage></ConfirmUserPage>}
+            ></Route>
+            <Route
+              path="dashboard/confirmUser/attendance/:id"
+              element={<AttendancePage></AttendancePage>}
             ></Route>
           </Route>
           <Route path="login" element={<LoginPage></LoginPage>}></Route>
