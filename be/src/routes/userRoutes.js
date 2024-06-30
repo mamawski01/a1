@@ -44,7 +44,7 @@ router.delete("/apiUserDeleteUser/:id", apiUserDeleteUser);
 
 router.get("/apiConfirmUsers", getConfirmUsers);
 
-router.get("/apiConfirmUser/:confirmUserId", getConfirmUser);
+router.get("/apiConfirmUser/:id", getConfirmUser);
 
 router.post(
   "/apiConfirmUserPost",
@@ -53,13 +53,13 @@ router.post(
 );
 
 router.patch(
-  "/apiConfirmUserPatchUser/:confirmUserId",
+  "/apiConfirmUserPatchUser/:id",
   upload.single("image"),
   joiValidator(registerSchema),
   apiConfirmUserPatchUser
 );
 
-router.delete("/apiConfirmUserDelete/:confirmUserId", apiConfirmUserDelete);
+router.delete("/apiConfirmUserDelete/:id", apiConfirmUserDelete);
 
 //test routes
 
@@ -71,7 +71,7 @@ router.post(
 );
 
 router.patch(
-  "/apiPatchTest/:userId",
+  "/apiPatchTest/:id",
   upload.single("image"),
   joiValidator(testSchema),
   apiPostTest

@@ -1,6 +1,8 @@
 import fs from "fs";
 import bcrypt from "bcryptjs";
 
+import { location } from "./multer.js";
+
 export function deleteImage(path) {
   return fs.unlink(path, (err) => {
     if (err) {
@@ -53,10 +55,37 @@ export function schemaModel() {
   };
 }
 
-const url = "http://localhost:8000/uploads/images/";
+export const url = "http://localhost:8000/uploads/images/";
 
 export async function passwordEncrypt(password) {
   return await bcrypt.hash(password, 10);
+}
+
+export async function userEmailAndDelImage(
+  req,
+  email,
+  model,
+  delImgPath = true
+) {
+  if (!email) return { conflict: false };
+
+  const userEmailExist = await model.exists({ email });
+  if (userEmailExist) {
+    delImgPath && deleteImage(req.file.path);
+    return { conflict: true, conflictMess: "Email already exists" };
+  }
+  return { conflict: false };
+}
+
+export async function prevImgAndDelImg(req, model, id, delImgPath = true) {
+  const prevImg = await model.findById(id);
+  if (!prevImg) {
+    delImgPath && deleteImage(req.file.path);
+    return { success: false, mess: "User not found" };
+  }
+  const imageUrl = prevImg.image.substring(prevImg.image.lastIndexOf("/") + 1);
+  deleteImage(location + "/" + imageUrl);
+  return { success: true };
 }
 
 export async function getters(res, model, mess) {
@@ -77,86 +106,5 @@ export async function getter(req, res, model, mess) {
     return res.status(200).send({ data });
   } catch (error) {
     return res.status(500).send(error.message + mess);
-  }
-}
-
-export async function poster(req, res, model, mess) {
-  const { email, password } = req.body;
-  try {
-    // userEmailExist
-    const userEmailExist = await model.exists({ email });
-    if (userEmailExist) {
-      deleteImage(req.file.path);
-      return res.status(409).send("Email already exists");
-    }
-    const encryptedPassword = await passwordEncrypt(password);
-    //userEmailExist
-    const data = await model.create({
-      ...req.body,
-      password: encryptedPassword,
-      repeatPassword: encryptedPassword,
-      image: url + req.file.filename,
-    });
-    return res.status(200).send({ data });
-  } catch (error) {
-    deleteImage(req.file.path);
-    return res.status(500).send(error.message + mess);
-  }
-}
-
-export async function patcher(req, res, model, mess) {
-  const { email, password } = req.body;
-  const { id } = req.params;
-  try {
-    const userEmailExist = await model.exists({ email });
-    if (userEmailExist) {
-      deleteImage(req.file.path);
-      return res.status(409).send("Email already exists");
-    }
-    const encryptedPassword = await passwordEncrypt(password);
-    //userPrevImg
-    const userPrevImg = await model.findById(id);
-    if (!userPrevImg) {
-      deleteImage(req.file.path);
-      return res.status(404).send("User not found");
-    }
-    const imageUrl = userPrevImg.image.substring(
-      userPrevImg.image.lastIndexOf("/") + 1
-    );
-    deleteImage(location + "/" + imageUrl);
-    //userPrevImg
-
-    const user = await model.findByIdAndUpdate(
-      id,
-      {
-        ...req.body,
-        password: encryptedPassword,
-        repeatPassword: encryptedPassword,
-        image: url + req.file.filename,
-      },
-      { new: true }
-    );
-
-    if (!user) return res.status(404).send("User not found");
-    return res.status(200).send({ message: "User updated", user });
-  } catch (error) {
-    return res.status(500).send(error.message + mess);
-  }
-}
-
-export async function deleter() {
-  const { id } = req.params;
-  try {
-    const userPrevImg = await User.findById(id);
-    const imageUrl = userPrevImg.image.substring(
-      userPrevImg.image.lastIndexOf("/") + 1
-    );
-    deleteImage(location + "/" + imageUrl);
-    const user = await User.findByIdAndDelete(id);
-    if (!user) return res.status(404).send("User not found");
-    return res.status(200).send({ message: "User deleted", user });
-  } catch (error) {
-    console.log(error);
-    return res.status(500).send("deleteUser Error");
   }
 }

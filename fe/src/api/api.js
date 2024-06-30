@@ -89,6 +89,7 @@ export async function apiUserPatchUser(userId, newUser) {
     apiUsers();
     return data;
   } catch (exception) {
+    console.log(exception);
     toast.error(exception.response.data);
     return exception.response.data;
   }
@@ -120,7 +121,7 @@ export async function getConfirmUsers() {
   try {
     const data = await apiClient.get("/apiConfirmUsers");
     updateRealtimeConfirmUser(data.data.data);
-    toast.success("Users fetched successfully");
+    toast.success("ConfirmUsers fetched successfully");
     return data;
   } catch (exception) {
     toast.error(exception.response.data);
@@ -197,7 +198,7 @@ export async function apiConfirmUserDelete(userId) {
     const confirmDelete = await swalAlert();
     if (confirmDelete.isConfirmed) {
       const data = await apiClient.delete(`/apiConfirmUserDelete/${userId}`);
-      toast.success("User deleted successfully");
+      toast.success("Confirmser deleted successfully");
       getConfirmUsers();
       return data;
     }

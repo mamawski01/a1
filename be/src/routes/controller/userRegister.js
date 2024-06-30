@@ -1,12 +1,13 @@
 import User from "./models/User.js";
 import Test from "./models/Test.js";
-import { location } from "../../utils/multer.js";
 import {
-  deleter,
+  deleteImage,
   getter,
   getters,
-  patcher,
-  poster,
+  passwordEncrypt,
+  prevImgAndDelImg,
+  url,
+  userEmailAndDelImage,
 } from "../../utils/beHelpers.js";
 
 export function getUsers(req, res) {
@@ -17,16 +18,106 @@ export function getUser(req, res) {
   getter(req, res, User, "User");
 }
 
-export function apiUserPostUser(req, res) {
-  poster(req, res, User, "User");
+export async function apiUserPostUser(req, res) {
+  const { email, password } = req.body;
+  try {
+    //check if email exist and delete image
+    const { conflict, conflictMess } = await userEmailAndDelImage(
+      req,
+      email,
+      User,
+      true
+    );
+    if (conflict) {
+      return res.status(409).send(conflictMess);
+    }
+
+    //encrypt password
+    const encryptedPassword = await passwordEncrypt(password);
+
+    const data = await User.create({
+      ...req.body,
+      password: encryptedPassword,
+      repeatPassword: encryptedPassword,
+      image: url + req.file.filename,
+    });
+    return res.status(200).send({ data });
+  } catch (error) {
+    deleteImage(req.file.path);
+    return res.status(500).send(error.message);
+  }
 }
 
 export async function apiUserPatchUser(req, res) {
-  patcher(req, res, User, "User");
+  const { email, password } = req.body;
+  const { id } = req.params;
+  try {
+    //check if email exist and delete image
+    const { conflict, conflictMess } = await userEmailAndDelImage(
+      req,
+      email,
+      User,
+      true
+    );
+    if (conflict) {
+      return res.status(409).send(conflictMess);
+    }
+    //check if email exist and delete image
+
+    //encrypt password
+    const encryptedPassword = await passwordEncrypt(password);
+    //encrypt password
+
+    //userPrevImg
+    const { success, mess } = prevImgAndDelImg(req, User, id, true);
+    if (success) return res.status(404).send(mess);
+    //userPrevImg
+
+    const data = await User.findByIdAndUpdate(
+      id,
+      {
+        ...req.body,
+        password: encryptedPassword,
+        repeatPassword: encryptedPassword,
+        image: url + req.file.filename,
+      },
+      { new: true }
+    );
+
+    if (!data) return res.status(404).send("User not found");
+    return res.status(200).send({ message: "User updated", data });
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
 }
 
 export async function apiUserDeleteUser(req, res) {
-  deleter();
+  const { id } = req.params;
+  try {
+    //check if email exist and delete image
+    const { conflict, conflictMess } = await userEmailAndDelImage(
+      req,
+      email,
+      User,
+      true
+    );
+    if (conflict) {
+      return res.status(409).send(conflictMess);
+    }
+    //check if email exist and delete image
+
+    //userPrevImg
+    const { success, mess } = prevImgAndDelImg(req, User, id, true);
+    if (success) return res.status(404).send(mess);
+    //userPrevImg
+
+    const data = await User.findByIdAndDelete(id);
+    if (!data) return res.status(404).send("User not found");
+    return res.status(200).send({ message: "User deleted", data });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send("deleteUser Error");
+  }
 }
 
 export async function apiPostTest(req, res) {
