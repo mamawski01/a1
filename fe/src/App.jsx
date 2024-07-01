@@ -9,7 +9,7 @@ import AppLayout from "./reusable/layout/AppLayout.jsx";
 import Test from "./reusable/test/Test.jsx";
 import UserForm from "./Pages/UserForm.jsx";
 import ConfirmUserPage from "./Pages/ConfirmUserPage.jsx";
-import AttendancePage from "./Pages/AttendancePage.jsx/index.js";
+import AttendancePage from "./Pages/AttendancePage.jsx";
 
 export default function App() {
   return (
