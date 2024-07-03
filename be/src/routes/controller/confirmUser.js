@@ -29,8 +29,8 @@ export async function apiConfirmUserPost(req, res) {
 
     const user = await User.findByIdAndDelete(_id);
     if (!user) return res.status(404).send("User not found");
-    const confirmUser = await ConfirmUser.create(req.body);
-    return res.status(200).send(confirmUser._id);
+    const data = await ConfirmUser.create(req.body);
+    return res.status(200).send(data._id);
   } catch (error) {
     return res.status(500).send(error.message);
   }

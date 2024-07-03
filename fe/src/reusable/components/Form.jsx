@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import {
+  PencilIcon,
   PlusIcon,
   SparklesIcon,
   TrashIcon,
@@ -9,7 +10,11 @@ import {
 } from "@heroicons/react/24/solid";
 import toast from "react-hot-toast";
 
-import { formatFontInput, formatFontLabel } from "../utils/helpers";
+import {
+  convertToJson,
+  formatFontInput,
+  formatFontLabel,
+} from "../utils/helpers";
 import Btn from "./Btn";
 import { useEffect, useState } from "react";
 
@@ -24,17 +29,18 @@ export default function Form({
   const [editData, editDataSet] = useState({});
 
   const edit = Boolean(editData?._id);
-  console.log(edit);
 
   const { register, handleSubmit, formState, reset } = useForm();
 
   useEffect(() => {
     async function fetchUser() {
-      const response = await dataDefaultVal(id);
-      const finalData = response?.data?.data;
-      editDataSet(finalData);
-      reset(finalData);
-      return response;
+      if (id) {
+        const response = await dataDefaultVal(id);
+        const finalData = response?.data?.data;
+        editDataSet(finalData);
+        reset(finalData);
+        return response;
+      }
     }
     fetchUser();
     //cleaning
@@ -60,12 +66,14 @@ export default function Form({
           finalData[key] = formatFontInput(finalData[key]);
         }
       }
-      const response = edit
-        ? await dataEdit(editData._id, finalData)
-        : await dataSave(finalData);
-      if (response.data) {
-        // navigate(-1);
-      }
+      // const response = edit
+      //   ? await dataEdit(editData._id, finalData)
+      //   : await dataSave(finalData);
+      // if (response.data) {
+      //   // navigate(-1);
+      // }
+
+      convertToJson(data.file[0]);
     }
   }
 
@@ -96,11 +104,12 @@ export default function Form({
           {data.map((rowLabel, i) => (
             <RowInput
               key={i}
-              rowLabel={data[i].label.rowLabels}
-              inputs={data[i].label.inputs}
-              inputTypes={data[i].label.inputTypes}
-              options={data[i].label.options}
-              isRequired={data[i].label.isRequired}
+              rowLabel={rowLabel.label.rowLabels}
+              inputs={rowLabel.label.inputs}
+              inputTypes={rowLabel.label.inputTypes}
+              specifyFile={rowLabel.label.specifyFile}
+              options={rowLabel.label.options}
+              isRequired={rowLabel.label.isRequired}
               register={register}
               errors={errors}
               image={image}
@@ -113,11 +122,19 @@ export default function Form({
           <Btn
             color="blue"
             text={edit ? "update" : "Save"}
-            icon={[
-              {
-                icon: <PlusIcon></PlusIcon>,
-              },
-            ]}
+            icon={
+              edit
+                ? [
+                    {
+                      icon: <PencilIcon></PencilIcon>,
+                    },
+                  ]
+                : [
+                    {
+                      icon: <PlusIcon></PlusIcon>,
+                    },
+                  ]
+            }
             type="submit"
           ></Btn>
           <Btn
@@ -183,6 +200,7 @@ function RowInput({
   register = "",
   inputs = "",
   inputTypes = "",
+  specifyFile = "",
   options = "",
   isRequired = "",
   errors = "",
@@ -206,6 +224,7 @@ function RowInput({
           key={i}
           input={input}
           inputType={inputTypes[i]}
+          specifyFile={specifyFile[i]}
           options={options[i]}
           isRequired={isRequired[i]}
           register={register}
@@ -230,11 +249,13 @@ RowInput.propTypes = {
   image: PropTypes.any,
   imageSet: PropTypes.any,
   editData: PropTypes.any,
+  specifyFile: PropTypes.any,
 };
 
 function Input({
   input = "",
   inputType = "text",
+  specifyFile = "",
   options = [],
   isRequired = false,
   register,
@@ -252,6 +273,9 @@ function Input({
       return imageSet(URL.createObjectURL(e.target.files[0]) || editData);
     }
   }
+  const style =
+    "w-full rounded-lg border border-gray-400 bg-slate-700 px-4 py-2 placeholder:text-sky-500 hover:ring hover:ring-gray-500 focus:outline-none focus:ring focus:ring-gray-500";
+
   return (
     <div className="my-auto h-full w-full">
       <label htmlFor={input} className="font-bold" title={font}>
@@ -260,7 +284,6 @@ function Input({
       {(inputType === "text" ||
         inputType === "date" ||
         inputType === "email" ||
-        inputType === "file" ||
         inputType === "password") && (
         <>
           <input
@@ -268,21 +291,46 @@ function Input({
             placeholder={font}
             id={input}
             name={input}
-            className={`w-full rounded-lg border border-gray-400 bg-slate-700 px-4 py-2 placeholder:text-sky-500 hover:ring hover:ring-gray-500 focus:outline-none focus:ring focus:ring-gray-500 ${inputType === "file" && "cursor-pointer"}`}
+            className={`${style} ${inputType === "file" && "cursor-pointer"}`}
             autoComplete="off"
             title={font}
             {...register(input, validate)}
-            onChange={(e) => getImagePreview(e)}
-            accept=".png,.jpg,.jpeg"
           />
-          {inputType === "file" && (
-            <img
-              src={image || editData || "/Asset2.png"}
-              alt=""
-              className="mx-auto mt-2 h-auto w-2/6"
-            />
-          )}
+
+          {specifyFile === "file" && <input></input>}
         </>
+      )}
+      {specifyFile === "image" && (
+        <>
+          <input
+            type={inputType}
+            placeholder={font}
+            id={input}
+            name={input}
+            className={`${style} ${inputType === "file" && "cursor-pointer"}`}
+            title={font}
+            {...register(input, validate)}
+            onChange={(e) => getImagePreview(e)}
+            accept={".png,.jpg,.jpeg"}
+          ></input>
+          <img
+            src={image || editData || "/Asset2.png"}
+            alt=""
+            className="mx-auto mt-2 h-auto w-2/6"
+          />
+        </>
+      )}
+      {specifyFile === "file" && (
+        <input
+          type={inputType}
+          placeholder={font}
+          id={input}
+          name={input}
+          className={`${style} ${inputType === "file" && "cursor-pointer"}`}
+          title={font}
+          {...register(input, validate)}
+          accept={".txt"}
+        ></input>
       )}
       {inputType === "option" && (
         <select
@@ -325,4 +373,5 @@ Input.propTypes = {
   image: PropTypes.any,
   imageSet: PropTypes.any,
   editData: PropTypes.any,
+  specifyFile: PropTypes.any,
 };

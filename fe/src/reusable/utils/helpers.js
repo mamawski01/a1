@@ -46,3 +46,26 @@ export function onHoverBgColor(color) {
   if (color === "green") return "hover:bg-green-600";
   return "hover:bg-gray-700";
 }
+
+export function convertToJson(file) {
+  const reader = new FileReader();
+
+  reader.onload = function (e) {
+    const content = e.target.result;
+    const lines = content.split("\n");
+    const newArray = lines.map((element) => element.replace("\r", ""));
+    const headers = newArray.map((element) => element.split("\t"));
+    const jsonData = headers.map((row) => {
+      const obj = {};
+      row.forEach((value, i) => {
+        const key = headers[0][i];
+        obj[key] = value;
+      });
+      return obj;
+    });
+    const data = jsonData.filter((item) => item.No !== "");
+    console.log(data);
+    return data;
+  };
+  reader.readAsText(file);
+}

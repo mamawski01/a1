@@ -9,7 +9,9 @@ import AppLayout from "./reusable/layout/AppLayout.jsx";
 import Test from "./reusable/test/Test.jsx";
 import UserForm from "./Pages/UserForm.jsx";
 import ConfirmUserPage from "./Pages/ConfirmUserPage.jsx";
-import AttendancePage from "./Pages/AttendancePage.jsx";
+import Upload from "./Pages/Upload.jsx";
+import UserAttendance from "./reusable/components/UserAttendance.jsx";
+import Attendance from "./Pages/Attendance.jsx";
 
 export default function App() {
   return (
@@ -39,8 +41,13 @@ export default function App() {
               element={<ConfirmUserPage></ConfirmUserPage>}
             ></Route>
             <Route
-              path="dashboard/confirmUser/attendance/:id"
-              element={<AttendancePage></AttendancePage>}
+              path="dashboard/confirmUser/userAttendance/:id"
+              element={<UserAttendance></UserAttendance>}
+            ></Route>
+            <Route path="dashboard/upload" element={<Upload></Upload>}></Route>
+            <Route
+              path="dashboard/attendance"
+              element={<Attendance></Attendance>}
             ></Route>
           </Route>
           <Route path="login" element={<LoginPage></LoginPage>}></Route>

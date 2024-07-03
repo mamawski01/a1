@@ -19,3 +19,14 @@ export async function emitDataReceivedConfirmUser(io, data) {
     });
   }
 }
+
+export async function emitDataReceivedAttendance(io, data) {
+  try {
+    io.emit("dataReceivedAttendance", data);
+  } catch (err) {
+    console.log(err);
+    io.emit("dataReceivedAttendance", {
+      errorOccurred: err,
+    });
+  }
+}

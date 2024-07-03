@@ -2,6 +2,7 @@ import { Server } from "socket.io";
 
 import {
   emitDataReceived,
+  emitDataReceivedAttendance,
   emitDataReceivedConfirmUser,
 } from "./emit/emitDataReceived.js";
 
@@ -21,6 +22,9 @@ export function registerSocketServer(server) {
     });
     socket.on("sendDataConfirmUser", (data) => {
       emitDataReceivedConfirmUser(io, data);
+    });
+    socket.on("sendAttendance", (data) => {
+      emitDataReceivedAttendance(io, data);
     });
   });
 }

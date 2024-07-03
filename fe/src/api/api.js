@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 
 import connectWithSocketServer, {
   updateRealtime,
+  updateRealtimeAttendance,
   updateRealtimeConfirmUser,
 } from "../feIo/feIo";
 import { swalAlert } from "../reusable/utils/helpers";
@@ -203,6 +204,35 @@ export async function apiConfirmUserDelete(userId) {
       return data;
     }
   } catch (exception) {
+    toast.error(exception.response.data);
+    return exception.response.data;
+  }
+}
+
+//attendance
+export async function apiAttendances() {
+  try {
+    const data = await apiClient.get("/apiAttendances");
+    updateRealtimeAttendance(data.data.data);
+    toast.success("Attendances fetched successfully");
+    return data;
+  } catch (exception) {
+    toast.error(exception.response.data);
+    return exception.response.data;
+  }
+}
+
+export async function apiAttendancesPost(attendance) {
+  console.log(attendance);
+  try {
+    const data = await apiClient.post("/apiAttendancesPost", attendance);
+    toast.success("New attendance created successfully");
+    apiAttendances();
+    getConfirmUsers();
+    apiUsers();
+    return data;
+  } catch (exception) {
+    console.log(exception);
     toast.error(exception.response.data);
     return exception.response.data;
   }

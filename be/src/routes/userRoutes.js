@@ -17,11 +17,9 @@ import {
   apiConfirmUsers,
 } from "./controller/confirmUser.js";
 import { joiValidator, registerSchema, testSchema } from "../utils/joi.js";
-import { convertToJson } from "../utils/txtConverter.js";
+import { apiAttendances, apiAttendancesPost } from "./controller/attendance.js";
 
 const router = express.Router();
-
-convertToJson();
 
 router.get("/apiUsers", apiUsers);
 
@@ -64,8 +62,12 @@ router.patch(
 
 router.delete("/apiConfirmUserDelete/:id", apiConfirmUserDelete);
 
-//test routes
+//attendance routes
+router.get("/apiAttendances", apiAttendances);
 
+router.post("/apiAttendancesPost", apiAttendancesPost);
+
+//test routes
 router.post(
   "/apiPostTest",
   upload.single("image"),

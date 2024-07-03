@@ -61,6 +61,7 @@ export function registerModel() {
         inputs: ["image"],
         isRequired: [true],
         inputTypes: ["file"],
+        specifyFile: ["image"],
       },
     },
   ];

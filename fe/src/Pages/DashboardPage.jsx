@@ -97,7 +97,7 @@ export default function DashboardPage() {
                 {
                   btn: {
                     function: () => apiConfirmUserPatchUser(user._id),
-                    to: "confirmUser/attendance/" + user._id,
+                    to: "confirmUser/userAttendance/" + user._id,
                     text: "attendanceForm",
                     color: "yellow",
                     type: "link",
