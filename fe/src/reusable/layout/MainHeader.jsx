@@ -3,6 +3,7 @@ import {
   MagnifyingGlassIcon,
   PaperClipIcon,
   PlusIcon,
+  UserGroupIcon,
   UserIcon,
 } from "@heroicons/react/24/solid";
 import { useEffect, useRef, useState } from "react";
@@ -76,6 +77,16 @@ export default function MainHeader() {
                 <Links
                   flexCol={true}
                   data={[
+                    {
+                      link: {
+                        text: "attendance",
+                        hidden: true,
+                        to: "/dashboard/attendance",
+                        url: url,
+                        icon: <UserGroupIcon />,
+                        onClick: null,
+                      },
+                    },
                     {
                       link: {
                         text: "UploadAttendance",

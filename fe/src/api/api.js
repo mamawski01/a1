@@ -144,6 +144,7 @@ export async function getConfirmUser(userId) {
 }
 
 export async function apiConfirmUserPost(confirmUser) {
+  console.log(confirmUser);
   try {
     const confirmDelete = await Swal.fire({
       title: "Are you sure to confirm this user?",

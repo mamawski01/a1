@@ -5,7 +5,6 @@ import {
   apiUserDeleteUser,
   apiUserPatchUser,
   apiUserPostUser,
-  apiPostTest,
   apiUsers,
   apiUser,
 } from "./controller/userRegister.js";
@@ -16,7 +15,7 @@ import {
   apiConfirmUserPost,
   apiConfirmUsers,
 } from "./controller/confirmUser.js";
-import { joiValidator, registerSchema, testSchema } from "../utils/joi.js";
+import { joiValidator, registerSchema } from "../utils/joi.js";
 import { apiAttendances, apiAttendancesPost } from "./controller/attendance.js";
 
 const router = express.Router();
@@ -66,20 +65,5 @@ router.delete("/apiConfirmUserDelete/:id", apiConfirmUserDelete);
 router.get("/apiAttendances", apiAttendances);
 
 router.post("/apiAttendancesPost", apiAttendancesPost);
-
-//test routes
-router.post(
-  "/apiPostTest",
-  upload.single("image"),
-  joiValidator(testSchema),
-  apiPostTest
-);
-
-router.patch(
-  "/apiPatchTest/:id",
-  upload.single("image"),
-  joiValidator(testSchema),
-  apiPostTest
-);
 
 export default router;

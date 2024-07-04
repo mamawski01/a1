@@ -1,16 +1,19 @@
 import PropTypes from "prop-types";
-export default function UserAttendance({ attendance }) {
+export default function UserAttendance({ data }) {
+  console.log(data.data.name);
   return (
     <div className="flex gap-2">
-      <span>{attendance.No}</span>
-      <span>{attendance.UserId}</span>
-      <span>{attendance.Name}</span>
-      <span>{attendance.Mode}</span>
-      <span>{attendance.DateTime}</span>
+      <div>
+        <span>{data.data.no}</span>
+        <span>{data.data.userId}</span>
+        <span>{data.data.name}</span>
+        <span>{data.data.mode}</span>
+        <span>{data.data.date}</span>
+      </div>
     </div>
   );
 }
 
 UserAttendance.propTypes = {
-  attendance: PropTypes.any,
+  data: PropTypes.any,
 };

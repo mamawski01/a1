@@ -5,10 +5,15 @@ import {
   getConfirmUsers,
 } from "../api/api";
 import Card from "../reusable/components/Card";
-import { calculateAge } from "../reusable/utils/helpers";
+import {
+  calculateAge,
+  capitalizeFirstLetter,
+  capitalizeFirstLetterEachWord,
+} from "../reusable/utils/helpers";
 import {
   BookOpenIcon,
   BookmarkSquareIcon,
+  ExclamationTriangleIcon,
   HomeModernIcon,
   PencilIcon,
   PhoneIcon,
@@ -18,6 +23,7 @@ import { feSocket } from "../feIo/feIo";
 
 export default function DashboardPage() {
   const [confirmUsers, confirmUsersSet] = useState([]);
+  // console.log(confirmUsers);
 
   feSocket.on("dataReceivedConfirmUser", (data) => {
     confirmUsersSet(data);
@@ -56,30 +62,47 @@ export default function DashboardPage() {
                 {
                   icons: <HomeModernIcon />,
                   iconsDetails: [
-                    user.street + " St.",
-                    "Purok " + user.purok,
-                    "Brgy. " + user.brgy,
-                    user.city + " City",
-                    user.province,
-                    user.country,
+                    user.street &&
+                      "St: " + capitalizeFirstLetterEachWord(user.street),
+                    user.purok &&
+                      "Purok: " + capitalizeFirstLetterEachWord(user.purok),
+                    user.brgy &&
+                      "Brgy: " + capitalizeFirstLetterEachWord(user.brgy),
+                    user.city &&
+                      " City: " + capitalizeFirstLetterEachWord(user.city),
+                    capitalizeFirstLetterEachWord(user.province),
+                    capitalizeFirstLetterEachWord(user.country),
                   ],
                 },
                 {
                   icons: <PhoneIcon />,
                   iconsDetails: [
-                    user.contactNumber1,
-                    user.contactNumber2,
-                    user.contactNumber3,
-                    user.email,
+                    user.contactNumber1 && user.contactNumber1,
+                    user.contactNumber2 && user.contactNumber2,
+                    user.contactNumber3 && user.contactNumber3,
+                    user.email && user.email,
                   ],
                 },
                 {
                   icons: <BookOpenIcon />,
                   iconsDetails: [
-                    "SSS: " + user.SSS,
-                    "Pag-Ibig: " + user.PagIbig,
-                    "PhilHealth: " + user.PhilHealth,
-                    "TIN: " + user.TIN,
+                    user.SSS && "SSS: " + user.SSS,
+                    user.PagIbig && "Pag-Ibig: " + user.PagIbig,
+                    user.PhilHealth && "PhilHealth: " + user.PhilHealth,
+                    user.TIN && "TIN: " + user.TIN,
+                  ],
+                },
+                {
+                  icons: <ExclamationTriangleIcon />,
+                  iconsDetails: [
+                    user.contactPersonNameInEmergency &&
+                      "Contact Person In Emergency: " +
+                        capitalizeFirstLetterEachWord(
+                          user.contactPersonNameInEmergency,
+                        ),
+                    user.contactPersonNumberInEmergency &&
+                      "Contact Person Number In Emergency: " +
+                        user.contactPersonNumberInEmergency,
                   ],
                 },
               ]}

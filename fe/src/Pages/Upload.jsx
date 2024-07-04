@@ -1,9 +1,10 @@
+import { apiAttendancesPost } from "../api/api";
 import Form from "../reusable/components/Form";
 
 export default function Upload() {
   return (
     <Form
-      dataSave={null}
+      dataSave={apiAttendancesPost}
       data={[
         {
           label: {
@@ -12,6 +13,7 @@ export default function Upload() {
             isRequired: [false],
             inputTypes: ["file"],
             specifyFile: ["file"],
+            specialIns: ["attendance"],
           },
         },
       ]}

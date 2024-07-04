@@ -10,10 +10,21 @@ export function registerModel() {
     {
       label: {
         rowLabels: "workInfo",
-        inputs: ["position", "birthdate", "email", "employmentDate"],
-        isRequired: [true, true, true, true],
-        inputTypes: ["option", "date", "email", "date"],
-        options: [["sales", "cashier", "optician", "optometrist"], [], []],
+        inputs: [
+          "position",
+          "status",
+          "birthdate",
+          "email",
+          "employmentDate",
+          "wage",
+        ],
+        isRequired: [true, true, true, true, true, true],
+        inputTypes: ["option", "option", "date", "email", "date", "text"],
+        options: [
+          ["sales", "cashier", "optician", "optometrist"],
+          ["single", "married", "widowed", "divorced"],
+          [],
+        ],
       },
     },
     {

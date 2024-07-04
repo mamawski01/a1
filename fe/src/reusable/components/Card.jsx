@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import Btn from "./Btn";
 import { useState } from "react";
+import { capitalizeFirstLetter } from "../utils/helpers";
 
 export default function Card({
   imgSrc = "",
@@ -32,7 +33,7 @@ export default function Card({
             <h1 className="flex flex-wrap justify-center gap-x-1 text-lg font-semibold tracking-wide md:text-3xl">
               {mainTitle.map((text, i) => (
                 <span key={i} className="text-nowrap">
-                  {text}
+                  {capitalizeFirstLetter(text)}
                 </span>
               ))}
             </h1>
@@ -40,7 +41,7 @@ export default function Card({
               {mainDescription.map((text, i) => (
                 <span
                   key={i}
-                  className="text-nowrap first:w-full first:font-bold first:tracking-wide"
+                  className="text-nowrap capitalize first:w-full first:font-bold first:tracking-wide"
                 >
                   {text}
                 </span>
@@ -84,16 +85,20 @@ Card.propTypes = {
 };
 
 function Content({ icon = [], iconsDetails = [] }) {
+  if (iconsDetails.filter((element) => element !== "").length === 0)
+    return null;
   return (
     <div className="flex flex-col gap-2">
       <div className="mt-3 flex flex-wrap justify-center gap-1">
         <span className="w-5">{icon.icons}</span>
-        {iconsDetails.map((text, i) => (
-          <span key={i}>
-            {text && text}
-            {i === iconsDetails.length - 1 ? null : text ? "," : ""}
-          </span>
-        ))}
+        {iconsDetails
+          .filter((element) => element !== "")
+          .map((text, i) => (
+            <span key={i} className="">
+              {text && text}
+              {i === iconsDetails.length - 1 ? null : text ? "," : ""}
+            </span>
+          ))}
       </div>
     </div>
   );

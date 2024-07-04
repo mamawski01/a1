@@ -22,7 +22,8 @@ export async function apiConfirmUserPost(req, res) {
     const { conflict, confMess } = await userEmailAndDelImage(
       req,
       email,
-      ConfirmUser
+      ConfirmUser,
+      false
     );
     if (conflict) return res.status(409).send(confMess);
     //check if email exist and delete image
@@ -37,19 +38,8 @@ export async function apiConfirmUserPost(req, res) {
 }
 
 export async function apiConfirmUserPatchUser(req, res) {
-  const { email } = req.body;
   const { id } = req.params;
   try {
-    //check if email exist and delete image
-    const { conflict, confMess } = await userEmailAndDelImage(
-      req,
-      email,
-      ConfirmUser,
-      true
-    );
-    if (conflict) return res.status(409).send(confMess);
-    //check if email exist and delete image
-
     //userPrevImg
     const { success, sucMess } = prevImgAndDelImg(req, ConfirmUser, id);
     if (success) return res.status(404).send(sucMess);

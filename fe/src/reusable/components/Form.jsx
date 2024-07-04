@@ -25,6 +25,7 @@ export default function Form({
   dataDelete = null,
   dataDefaultVal = null,
 }) {
+  const specialIns = data[0].label?.specialIns?.[0];
   const { id } = useParams();
   const [editData, editDataSet] = useState({});
 
@@ -56,24 +57,27 @@ export default function Form({
     if (data.password !== data.repeatPassword) {
       toast.error("Passwords do not match");
       return null;
-    } else if (data.password === data.repeatPassword) {
-      const finalData = data;
-      for (const key in finalData) {
-        if (typeof finalData[key] === "string") {
-          finalData[key] = finalData[key].trim();
+    }
+    if (data.password === data.repeatPassword) {
+      if (specialIns === "attendance") {
+        const response = await dataSave(await convertToJson(data.file[0]));
+        if (response.data) {
+          // navigate(-1);
         }
-        if (key === "firstName" || key === "middleName" || key === "lastName") {
-          finalData[key] = formatFontInput(finalData[key]);
+      } else {
+        const finalData = data;
+        for (const key in finalData) {
+          if (typeof finalData[key] === "string") {
+            finalData[key] = finalData[key].trim();
+          }
+        }
+        const response = edit
+          ? await dataEdit(editData._id, finalData)
+          : await dataSave(finalData);
+        if (response.data) {
+          navigate(-1);
         }
       }
-      // const response = edit
-      //   ? await dataEdit(editData._id, finalData)
-      //   : await dataSave(finalData);
-      // if (response.data) {
-      //   // navigate(-1);
-      // }
-
-      convertToJson(data.file[0]);
     }
   }
 

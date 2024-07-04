@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 const attendanceSchema = new Schema({
-  No: { type: String },
+  No: { type: String, unique: true },
   DevNo: { type: String },
   UserId: { type: String },
   Name: { type: String },

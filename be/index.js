@@ -3,13 +3,13 @@ import dotenv from "dotenv";
 import http from "http";
 import cors from "cors";
 import mongoose from "mongoose";
+import path from "path";
 
 import User from "./src/routes/controller/models/User.js";
 import ConfirmUser from "./src/routes/controller/models/ConfirmUser.js";
 
-import userRoutes from "./src/routes/userRoutes.js";
+import routes from "./src/routes/routes.js";
 import { registerSocketServer } from "./src/beIo/beIo.js";
-import path from "path";
 
 dotenv.config();
 const PORT = process.env.PORT || process.env.API_PORT;
@@ -40,4 +40,4 @@ app.get("/", (req, res) => {
   return res.json("Hello Earth");
 });
 
-app.use("/", userRoutes);
+app.use("/", routes);
