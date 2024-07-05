@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
+
 import { feSocket } from "../feIo/feIo";
 import { apiAttendances } from "../api/api";
 import UserAttendance from "../reusable/components/UserAttendance";
+
+import Datepicker from "react-tailwindcss-datepicker";
 
 export default function Attendance() {
   const [attendance, attendanceSet] = useState([]);
@@ -18,11 +21,23 @@ export default function Attendance() {
     //cleaning
     return () => {};
   }, []);
+
+  const [value, setValue] = useState({
+    startDate: new Date(),
+    endDate: new Date().setMonth(11),
+  });
+  const handleValueChange = (newValue) => {
+    console.log("newValue:", newValue);
+    setValue(newValue);
+  };
   return (
     <div>
       <div className="flex items-center justify-evenly">
         <h1 className="text-5xl">Employee Attendance Record</h1>
-        <div id="date-range-picker" className="flex items-center"></div>
+        <div className="flex w-3/5 flex-nowrap items-center">
+          <p className="">Attendance Date</p>
+          <Datepicker value={value} onChange={handleValueChange} />
+        </div>
       </div>
 
       {attendance.slice().map((attendance, i) => (
