@@ -23,7 +23,6 @@ import { feSocket } from "../feIo/feIo";
 
 export default function DashboardPage() {
   const [confirmUsers, confirmUsersSet] = useState([]);
-  // console.log(confirmUsers);
 
   feSocket.on("dataReceivedConfirmUser", (data) => {
     confirmUsersSet(data);

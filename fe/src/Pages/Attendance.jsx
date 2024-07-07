@@ -1,15 +1,38 @@
 import { useEffect, useState } from "react";
+import Datepicker from "react-tailwindcss-datepicker";
+import dayjs from "dayjs";
 
 import { feSocket } from "../feIo/feIo";
-import { apiAttendances } from "../api/api";
-import UserAttendance from "../reusable/components/UserAttendance";
+import { apiAttendances, getConfirmUsers } from "../api/api";
 
-import Datepicker from "react-tailwindcss-datepicker";
+import Table from "../reusable/components/Table";
 
 export default function Attendance() {
-  const [attendance, attendanceSet] = useState([]);
+  const [confirmUsers, confirmUsersSet] = useState([]);
+
+  feSocket.on("dataReceivedConfirmUser", (data) => {
+    confirmUsersSet(data);
+  });
+
+  useEffect(() => {
+    async function fetchConfirmUsers() {
+      const response = await getConfirmUsers();
+      return response;
+    }
+    fetchConfirmUsers();
+    //cleaning
+    return () => {};
+  }, []);
+
   feSocket.on("dataReceivedAttendance", (data) => {
     attendanceSet(data);
+  });
+
+  const [attendance, attendanceSet] = useState([]);
+
+  const [value, setValue] = useState({
+    startDate: dayjs().startOf("month").format("YYYY-MM-DD"),
+    endDate: dayjs().endOf("month").format("YYYY-MM-DD"),
   });
 
   useEffect(() => {
@@ -22,38 +45,81 @@ export default function Attendance() {
     return () => {};
   }, []);
 
-  const [value, setValue] = useState({
-    startDate: new Date(),
-    endDate: new Date().setMonth(11),
-  });
-  const handleValueChange = (newValue) => {
-    console.log("newValue:", newValue);
+  const [daysArr, daysArrSet] = useState(defaultDates());
+
+  function handleValueChange(newValue) {
     setValue(newValue);
-  };
+
+    const startDate = new Date(newValue.startDate);
+    const endDate = new Date(newValue.endDate);
+
+    const dateStrings = [];
+    let currentDate = new Date(startDate);
+    while (currentDate <= endDate) {
+      const dateString = dayjs(currentDate).format("YY-MM-DD ddd");
+      dateStrings.push(dateString);
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+    daysArrSet(dateStrings);
+  }
+
+  function defaultDates() {
+    const startDate = value.startDate;
+    const endDate = dayjs().endOf("month").$d;
+    const dateStrings = [];
+    let currentDate = new Date(startDate);
+    while (currentDate <= endDate) {
+      const dateString = dayjs(currentDate).format("YY-MM-DD ddd");
+      dateStrings.push(dateString);
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+    return dateStrings;
+  }
+
   return (
     <div>
-      <div className="flex items-center justify-evenly">
-        <h1 className="text-5xl">Employee Attendance Record</h1>
-        <div className="flex w-3/5 flex-nowrap items-center">
-          <p className="">Attendance Date</p>
+      <div className="mb-5 flex items-center justify-evenly">
+        <h1 className="flex text-center text-lg md:text-5xl">
+          Employee Attendance Record
+        </h1>
+        <div className="flex items-center gap-2 text-nowrap px-4">
+          <p className="">Attendance Date:</p>
           <Datepicker value={value} onChange={handleValueChange} />
         </div>
       </div>
-
-      {attendance.slice().map((attendance, i) => (
-        <UserAttendance
-          key={i}
-          data={{
-            data: {
-              no: attendance.No,
-              name: attendance.Name,
-              userId: attendance.UserId,
-              mode: attendance.Mode,
-              date: attendance.DateTime,
-            },
-          }}
-        ></UserAttendance>
-      ))}
+      <h1 className="pb-6 text-center text-lg font-bold">
+        Start date: {value.startDate} / End date: {value.endDate}
+      </h1>
+      <div className="flex flex-col gap-2 [&>*:nth-child(even)]:bg-slate-500/10">
+        {confirmUsers
+          .slice()
+          .reverse()
+          .map((confirmUser, i) => (
+            <Table
+              key={i}
+              data={{
+                data: {
+                  details: [
+                    {
+                      detailsLabel: "Name: ",
+                      detailsData:
+                        confirmUser.firstName + " " + confirmUser.lastName,
+                    },
+                    {
+                      detailsLabel: "User Id: ",
+                      detailsData: confirmUser._id,
+                    },
+                  ],
+                  content: [
+                    {
+                      contentLabels: daysArr,
+                    },
+                  ],
+                },
+              }}
+            ></Table>
+          ))}
+      </div>
     </div>
   );
 }

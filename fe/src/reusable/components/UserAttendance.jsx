@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 export default function UserAttendance({ data }) {
-  console.log(data.data.name);
   return (
     <div className="flex gap-2">
       <div>
