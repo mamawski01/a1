@@ -1,4 +1,5 @@
 import {
+  deleteImage,
   getter,
   getters,
   prevImgAndDelImg,
@@ -54,9 +55,11 @@ export async function apiConfirmUserPatchUser(req, res) {
       { new: true }
     );
     if (!data) return res.status(404).send("User not found");
+
     return res.status(200).send({ message: "User updated", data });
   } catch (error) {
     console.log(error);
+    deleteImage(req.file.path);
     return res.status(500).send("apiConfirmUserPatchUser Error");
   }
 }

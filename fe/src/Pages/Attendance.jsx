@@ -9,6 +9,7 @@ import Table from "../reusable/components/Table";
 
 export default function Attendance() {
   const [confirmUsers, confirmUsersSet] = useState([]);
+  console.log(confirmUsers);
 
   feSocket.on("dataReceivedConfirmUser", (data) => {
     confirmUsersSet(data);
@@ -47,33 +48,31 @@ export default function Attendance() {
 
   const [daysArr, daysArrSet] = useState(defaultDates());
 
+  function whileDate(startDate, endDate) {
+    const dateStrings = [];
+    let currentDate = new Date(startDate);
+    while (currentDate <= endDate) {
+      const dateString = dayjs(currentDate).format("YY-MM-DD ddd DD");
+      dateStrings.push(dateString);
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+    return dateStrings;
+  }
+
   function handleValueChange(newValue) {
     setValue(newValue);
 
     const startDate = new Date(newValue.startDate);
     const endDate = new Date(newValue.endDate);
 
-    const dateStrings = [];
-    let currentDate = new Date(startDate);
-    while (currentDate <= endDate) {
-      const dateString = dayjs(currentDate).format("YY-MM-DD ddd");
-      dateStrings.push(dateString);
-      currentDate.setDate(currentDate.getDate() + 1);
-    }
-    daysArrSet(dateStrings);
+    daysArrSet(whileDate(startDate, endDate));
   }
 
   function defaultDates() {
     const startDate = value.startDate;
     const endDate = dayjs().endOf("month").$d;
-    const dateStrings = [];
-    let currentDate = new Date(startDate);
-    while (currentDate <= endDate) {
-      const dateString = dayjs(currentDate).format("YY-MM-DD ddd");
-      dateStrings.push(dateString);
-      currentDate.setDate(currentDate.getDate() + 1);
-    }
-    return dateStrings;
+
+    return whileDate(startDate, endDate);
   }
 
   return (
@@ -84,7 +83,14 @@ export default function Attendance() {
         </h1>
         <div className="flex items-center gap-2 text-nowrap px-4">
           <p className="">Attendance Date:</p>
-          <Datepicker value={value} onChange={handleValueChange} />
+          <div className="w-60">
+            <label htmlFor="datePicker"></label>
+            <Datepicker
+              value={value}
+              onChange={handleValueChange}
+              inputId="datePicker"
+            />
+          </div>
         </div>
       </div>
       <h1 className="pb-6 text-center text-lg font-bold">
@@ -101,13 +107,17 @@ export default function Attendance() {
                 data: {
                   details: [
                     {
+                      detailsData: confirmUser.id,
+                      userId: confirmUser.attendanceId,
+                    },
+                    {
+                      detailsLabel: "User id: ",
+                      detailsData: confirmUser._id,
+                    },
+                    {
                       detailsLabel: "Name: ",
                       detailsData:
                         confirmUser.firstName + " " + confirmUser.lastName,
-                    },
-                    {
-                      detailsLabel: "User Id: ",
-                      detailsData: confirmUser._id,
                     },
                   ],
                   content: [

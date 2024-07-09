@@ -4,7 +4,7 @@ import ExpressValidation from "express-joi-validation";
 const validator = ExpressValidation.createValidator();
 const joi = Joi.optional().allow("");
 
-export const registerSchema = Joi.object({
+const initialSchema = {
   _id: joi,
   __v: Joi.number().optional().allow(""),
   firstName: joi,
@@ -34,13 +34,15 @@ export const registerSchema = Joi.object({
   contactPersonNameInEmergency: joi,
   contactPersonNumberInEmergency: joi,
   image: joi,
+};
+
+export const registerSchema = Joi.object(initialSchema);
+
+export const confirmSchema = Joi.object({
+  ...initialSchema,
+  attendanceId: joi,
 });
 
-export const testSchema = Joi.object({
-  image: joi,
-  name: joi,
-});
-
-export function joiValidator() {
-  return validator.body(registerSchema);
+export function joiValidator(schema) {
+  return validator.body(schema);
 }

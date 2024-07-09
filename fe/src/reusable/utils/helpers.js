@@ -40,7 +40,7 @@ export function formatFontInput(font = "") {
 }
 
 export function capitalizeFirstLetterEachWord(str) {
-  return str.replace(/\b\w/g, (char) => char.toUpperCase());
+  return str?.replace(/\b\w/g, (char) => char.toUpperCase());
 }
 
 export function capitalizeFirstLetter(str) {

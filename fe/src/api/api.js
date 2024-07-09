@@ -238,3 +238,30 @@ export async function apiAttendancesPost(attendance) {
     return exception.response.data;
   }
 }
+
+//attendanceId
+export async function apiAttendanceId(userId) {
+  try {
+    if (!userId) return null;
+    const data = await apiClient.get(`/apiAttendanceId/${userId}`);
+    toast.success("UserId fetched successfully");
+    return data;
+  } catch (exception) {
+    toast.error(exception.response.data);
+    return exception.response.data;
+  }
+}
+
+export async function apiAttendanceIdPatch(userId, newUser) {
+  try {
+    const data = await apiClient.patch(
+      `/apiAttendanceIdPatch/${userId}`,
+      newUser,
+    );
+    toast.success("UserId updated successfully");
+    return data;
+  } catch (exception) {
+    toast.error(exception.response.data);
+    return exception.response.data;
+  }
+}

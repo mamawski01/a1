@@ -7,7 +7,6 @@ import {
 import Card from "../reusable/components/Card";
 import {
   calculateAge,
-  capitalizeFirstLetter,
   capitalizeFirstLetterEachWord,
 } from "../reusable/utils/helpers";
 import {

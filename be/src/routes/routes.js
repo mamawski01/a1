@@ -15,8 +15,15 @@ import {
   apiConfirmUserPost,
   apiConfirmUsers,
 } from "./controller/confirmUser.js";
-import { joiValidator, registerSchema } from "../utils/joi.js";
+import { confirmSchema, joiValidator, registerSchema } from "../utils/joi.js";
 import { apiAttendances, apiAttendancesPost } from "./controller/attendance.js";
+
+import {
+  apiAttendanceId,
+  apiAttendanceIdPatch,
+  apiAttendanceIdPost,
+  apiAttendanceIds,
+} from "./controller/attendanceId.js";
 
 const router = express.Router();
 
@@ -48,14 +55,14 @@ router.get("/apiConfirmUser/:id", apiConfirmUser);
 
 router.post(
   "/apiConfirmUserPost",
-  joiValidator(registerSchema),
+  joiValidator(confirmSchema),
   apiConfirmUserPost
 );
 
 router.patch(
   "/apiConfirmUserPatchUser/:id",
   upload.single("image"),
-  joiValidator(registerSchema),
+  joiValidator(confirmSchema),
   apiConfirmUserPatchUser
 );
 
@@ -65,5 +72,14 @@ router.delete("/apiConfirmUserDelete/:id", apiConfirmUserDelete);
 router.get("/apiAttendances", apiAttendances);
 
 router.post("/apiAttendancesPost", apiAttendancesPost);
+
+//attendanceId routes
+router.get("/apiAttendanceIds", apiAttendanceIds);
+
+router.get("/apiAttendanceId/:id", apiAttendanceId);
+
+router.post("/apiAttendanceIdPost", apiAttendanceIdPost);
+
+router.patch("/apiAttendanceIdPatch/:id", apiAttendanceIdPatch);
 
 export default router;

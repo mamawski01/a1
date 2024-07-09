@@ -10,11 +10,7 @@ import {
 } from "@heroicons/react/24/solid";
 import toast from "react-hot-toast";
 
-import {
-  convertToJson,
-  formatFontInput,
-  formatFontLabel,
-} from "../utils/helpers";
+import { convertToJson, formatFontLabel } from "../utils/helpers";
 import Btn from "./Btn";
 import { useEffect, useState } from "react";
 
@@ -24,6 +20,7 @@ export default function Form({
   dataEdit = null,
   dataDelete = null,
   dataDefaultVal = null,
+  singleInput = false,
 }) {
   const specialIns = data[0].label?.specialIns?.[0];
   const { id } = useParams();
@@ -54,6 +51,7 @@ export default function Form({
   const [image, imageSet] = useState("");
 
   async function onSubmit(data) {
+    console.log(data);
     if (data.password !== data.repeatPassword) {
       toast.error("Passwords do not match");
       return null;
@@ -88,21 +86,23 @@ export default function Form({
     <form
       encType="multipart/form-data"
       onSubmit={handleSubmit(onSubmit, onError)}
-      className="container2"
+      className={`${singleInput ? "" : "container2"} `}
     >
       <div className="flex flex-col md:grid">
         <div className="flex justify-end">
-          <Btn
-            text={"exit"}
-            color={"red"}
-            type="button"
-            icon={[
-              {
-                icon: <XMarkIcon></XMarkIcon>,
-              },
-            ]}
-            onClick={() => navigate(-1)}
-          ></Btn>
+          {!singleInput && (
+            <Btn
+              text={"exit"}
+              color={"red"}
+              type="button"
+              icon={[
+                {
+                  icon: <XMarkIcon></XMarkIcon>,
+                },
+              ]}
+              onClick={() => navigate(-1)}
+            ></Btn>
+          )}
         </div>
         <div className="[&>*:nth-child(even)]:bg-slate-500/5">
           {data.map((rowLabel, i) => (
@@ -122,65 +122,67 @@ export default function Form({
             ></RowInput>
           ))}
         </div>
-        <div className="mt-6 flex justify-evenly">
-          <Btn
-            color="blue"
-            text={edit ? "update" : "Save"}
-            icon={
-              edit
-                ? [
-                    {
-                      icon: <PencilIcon></PencilIcon>,
-                    },
-                  ]
-                : [
-                    {
-                      icon: <PlusIcon></PlusIcon>,
-                    },
-                  ]
-            }
-            type="submit"
-          ></Btn>
-          <Btn
-            color={"yellow"}
-            type="reset"
-            text={"Clear"}
-            icon={[
-              {
-                icon: <SparklesIcon></SparklesIcon>,
-              },
-            ]}
-            onClick={() => {
-              toast.success("Form cleared successfully");
-              imageSet("");
-              reset({});
-            }}
-          ></Btn>
-          {edit && (
+        {!singleInput && (
+          <div className="mt-6 flex justify-evenly">
             <Btn
-              text={"delete"}
+              color="blue"
+              text={edit ? "update" : "Save"}
+              icon={
+                edit
+                  ? [
+                      {
+                        icon: <PencilIcon></PencilIcon>,
+                      },
+                    ]
+                  : [
+                      {
+                        icon: <PlusIcon></PlusIcon>,
+                      },
+                    ]
+              }
+              type="submit"
+            ></Btn>
+            <Btn
+              color={"yellow"}
+              type="reset"
+              text={"Clear"}
+              icon={[
+                {
+                  icon: <SparklesIcon></SparklesIcon>,
+                },
+              ]}
+              onClick={() => {
+                toast.success("Form cleared successfully");
+                imageSet("");
+                reset({});
+              }}
+            ></Btn>
+            {edit && (
+              <Btn
+                text={"delete"}
+                color={"red"}
+                type="button"
+                icon={[
+                  {
+                    icon: <TrashIcon></TrashIcon>,
+                  },
+                ]}
+                onClick={() => dataDelete(editData._id)}
+              ></Btn>
+            )}
+            <Btn
+              text={"exit"}
               color={"red"}
               type="button"
               icon={[
                 {
-                  icon: <TrashIcon></TrashIcon>,
+                  icon: <XMarkIcon></XMarkIcon>,
                 },
               ]}
-              onClick={() => dataDelete(editData._id)}
+              onClick={() => navigate(-1)}
             ></Btn>
-          )}
-          <Btn
-            text={"exit"}
-            color={"red"}
-            type="button"
-            icon={[
-              {
-                icon: <XMarkIcon></XMarkIcon>,
-              },
-            ]}
-            onClick={() => navigate(-1)}
-          ></Btn>
-        </div>
+          </div>
+        )}
       </div>
     </form>
   );
@@ -192,6 +194,7 @@ Form.propTypes = {
   dataEdit: PropTypes.any,
   dataDefaultVal: PropTypes.any,
   dataDelete: PropTypes.any,
+  singleInput: PropTypes.any,
 };
 
 function getGridDesign(inputLength) {

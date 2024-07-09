@@ -12,6 +12,7 @@ import ConfirmUserPage from "./Pages/ConfirmUserPage.jsx";
 import Upload from "./Pages/Upload.jsx";
 import UserAttendance from "./reusable/components/UserAttendance.jsx";
 import Attendance from "./Pages/Attendance.jsx";
+import AttendanceId from "./Pages/AttendanceId.jsx";
 
 export default function App() {
   return (
@@ -48,6 +49,10 @@ export default function App() {
             <Route
               path="dashboard/attendance"
               element={<Attendance></Attendance>}
+            ></Route>
+            <Route
+              path="dashboard/attendance/:id"
+              element={<AttendanceId></AttendanceId>}
             ></Route>
           </Route>
           <Route path="login" element={<LoginPage></LoginPage>}></Route>
