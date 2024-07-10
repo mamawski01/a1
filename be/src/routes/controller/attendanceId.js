@@ -1,12 +1,13 @@
 import { getter, getters } from "../../utils/beHelpers.js";
 import AttendanceId from "./models/AttendanceId.js";
+import ConfirmUser from "./models/ConfirmUser.js";
 
 export async function apiAttendanceIds(req, res) {
   getters(res, AttendanceId, "apiAttendanceIds");
 }
 
 export async function apiAttendanceId(req, res) {
-  getter(req, res, AttendanceId, "apiAttendanceId");
+  getter(req, res, ConfirmUser, "apiAttendanceId");
 }
 
 export async function apiAttendanceIdPost(req, res) {
@@ -21,7 +22,7 @@ export async function apiAttendanceIdPost(req, res) {
 export async function apiAttendanceIdPatch(req, res) {
   const { id } = req.params;
   try {
-    const data = await AttendanceId.findByIdAndUpdate(id, req.body, {
+    const data = await ConfirmUser.findByIdAndUpdate(id, req.body, {
       new: true,
     });
     if (!data) return res.status(404).send("User not found");

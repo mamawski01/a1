@@ -5,6 +5,7 @@ import {
   prevImgAndDelImg,
   userEmailAndDelImage,
 } from "../../utils/beHelpers.js";
+import AttendanceId from "./models/AttendanceId.js";
 import ConfirmUser from "./models/ConfirmUser.js";
 import User from "./models/User.js";
 
@@ -46,14 +47,19 @@ export async function apiConfirmUserPatchUser(req, res) {
     if (success) return res.status(404).send(sucMess);
     //userPrevImg
 
+    const attendanceId = await AttendanceId.findById({ attendanceId });
+    console.log(attendanceId);
+
     const data = await ConfirmUser.findByIdAndUpdate(
       id,
       {
         ...req.body,
         image: "http://localhost:8000/uploads/images/" + req.file.filename,
+        attendanceId,
       },
       { new: true }
     );
+
     if (!data) return res.status(404).send("User not found");
 
     return res.status(200).send({ message: "User updated", data });

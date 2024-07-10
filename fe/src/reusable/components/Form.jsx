@@ -157,7 +157,7 @@ export default function Form({
                 reset({});
               }}
             ></Btn>
-            {edit && (
+            {edit && dataDelete && (
               <Btn
                 text={"delete"}
                 color={"red"}

@@ -9,7 +9,6 @@ import Table from "../reusable/components/Table";
 
 export default function Attendance() {
   const [confirmUsers, confirmUsersSet] = useState([]);
-  console.log(confirmUsers);
 
   feSocket.on("dataReceivedConfirmUser", (data) => {
     confirmUsersSet(data);
@@ -52,7 +51,7 @@ export default function Attendance() {
     const dateStrings = [];
     let currentDate = new Date(startDate);
     while (currentDate <= endDate) {
-      const dateString = dayjs(currentDate).format("YY-MM-DD ddd DD");
+      const dateString = dayjs(currentDate).format("YY-MM-DD dd DD");
       dateStrings.push(dateString);
       currentDate.setDate(currentDate.getDate() + 1);
     }
@@ -107,13 +106,11 @@ export default function Attendance() {
                 data: {
                   details: [
                     {
-                      detailsData: confirmUser.id,
-                      userId: confirmUser.attendanceId,
+                      detailsLabel: "Attendance Id: ",
+                      detailsData: confirmUser.attendanceId,
+                      userId: confirmUser._id,
                     },
-                    {
-                      detailsLabel: "User id: ",
-                      detailsData: confirmUser._id,
-                    },
+
                     {
                       detailsLabel: "Name: ",
                       detailsData:
@@ -123,6 +120,7 @@ export default function Attendance() {
                   content: [
                     {
                       contentLabels: daysArr,
+                      contentData: attendance,
                     },
                   ],
                 },

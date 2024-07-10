@@ -241,9 +241,10 @@ export async function apiAttendancesPost(attendance) {
 
 //attendanceId
 export async function apiAttendanceId(userId) {
+  console.log(userId);
   try {
     if (!userId) return null;
-    const data = await apiClient.get(`/apiAttendanceId/${userId}`);
+    const data = await apiClient.get(`/apiConfirmUserPatchUser/${userId}`);
     toast.success("UserId fetched successfully");
     return data;
   } catch (exception) {

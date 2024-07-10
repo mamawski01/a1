@@ -76,7 +76,7 @@ router.post("/apiAttendancesPost", apiAttendancesPost);
 //attendanceId routes
 router.get("/apiAttendanceIds", apiAttendanceIds);
 
-router.get("/apiAttendanceId/:id", apiAttendanceId);
+router.get("/apiConfirmUserPatchUser/:id", apiAttendanceId);
 
 router.post("/apiAttendanceIdPost", apiAttendanceIdPost);
 
