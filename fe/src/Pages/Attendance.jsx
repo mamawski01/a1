@@ -51,7 +51,7 @@ export default function Attendance() {
     const dateStrings = [];
     let currentDate = new Date(startDate);
     while (currentDate <= endDate) {
-      const dateString = dayjs(currentDate).format("YY-MM-DD dd DD");
+      const dateString = dayjs(currentDate).format("YY-MM-DD ddd DD");
       dateStrings.push(dateString);
       currentDate.setDate(currentDate.getDate() + 1);
     }
@@ -95,7 +95,7 @@ export default function Attendance() {
       <h1 className="pb-6 text-center text-lg font-bold">
         Start date: {value.startDate} / End date: {value.endDate}
       </h1>
-      <div className="flex flex-col gap-2 [&>*:nth-child(even)]:bg-slate-500/10">
+      <div className="flex flex-col gap-10 [&>*:nth-child(even)]:bg-slate-500/10">
         {confirmUsers
           .slice()
           .reverse()

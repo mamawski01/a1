@@ -1,5 +1,8 @@
 import PropTypes from "prop-types";
-import { capitalizeFirstLetterEachWord } from "../utils/helpers";
+import {
+  capitalizeFirstLetterEachWord,
+  getTimeDifference,
+} from "../utils/helpers";
 import { PencilIcon } from "@heroicons/react/24/solid";
 import Btn from "./Btn";
 import dayjs from "dayjs";
@@ -9,11 +12,39 @@ export default function Table({ data }) {
     .map((detail) => detail.detailsData)
     .shift();
 
+  const contentLabels = data.data.content[0].contentLabels;
+  // console.log(contentLabels);
+
   const userId = data.data.content.flatMap((content) =>
     content.contentData
       .filter((item) => item.UserId === detailsData)
-      .filter((item) => dayjs(item.DateTime).format("YY-MM-DD ddd DD")),
+      .filter((item) => dayjs(item.DateTime).format("YY-MM-DD dd DD")),
   );
+
+  const contentArr = contentLabels.map((item) => {
+    const userIdData = userId.filter((date) => {
+      const formattedDate = dayjs(date.DateTime).format("YY-MM-DD ddd DD");
+      return formattedDate === item;
+    });
+
+    const timeDuty =
+      userIdData.length > 1
+        ? {
+            timeDuty: getTimeDifference(
+              userIdData[0].DateTime,
+              userIdData[userIdData.length - 1].DateTime,
+            ),
+          }
+        : { timeDuty: "No data" };
+
+    // if (userIdData.length > 0) {
+    //   return [...userIdData, timeDuty];
+    // }
+    console.log(timeDuty);
+
+    return [item, userIdData];
+  });
+  console.log(contentArr);
 
   return (
     <div>
@@ -49,43 +80,36 @@ export default function Table({ data }) {
 
       <table className="w-full table-fixed">
         <thead>
-          <tr className="flex flex-col">
-            {data.data.content.map((content, i) => (
-              <td key={i} className="flex flex-wrap">
-                {content.contentLabels.flatMap((userContent, i) => (
-                  <div
-                    key={i}
-                    className="flex w-44 flex-col text-wrap border p-1 text-center"
-                  >
-                    <span className="h-fit border-b">{userContent}</span>
-                    {userId[i]?.DateTime ? (
-                      <span className="flex flex-col justify-start p-2">
-                        {userId.map((content, i) => (
-                          <span key={i} className="w-fit">
-                            {dayjs(content.DateTime).format(
-                              "YY-MM-DD dd DD",
-                            ) === userContent ? (
-                              <span className="flex justify-evenly gap-2">
-                                <span>
-                                  {dayjs(content.DateTime).format("hh:mm a")}
-                                </span>
-                                <span className="w-10 text-start">
-                                  {content.Mode}
-                                </span>
-                                {i}
-                              </span>
-                            ) : null}
-                          </span>
-                        ))}
-                      </span>
-                    ) : (
-                      "No data"
-                    )}
+          {/* <tr className="flex flex-wrap">
+            {contentArr.map((content, i) => (
+              <td key={i} className="flex flex-col text-nowrap border">
+                <p className="w-44 border-b p-2 text-center font-medium">
+                  {content[0]}
+                </p>
+                {content[1].length > 0 ? (
+                  <div className="p-1">
+                    {content[1].map((item, i) => (
+                      <div key={i} className="flex gap-1">
+                        <div>{dayjs(item.DateTime).format("hh:mm a")}</div>
+                        <div className="w-10">{item.Mode}</div>
+                        <div>
+                          {i % 2 === 0 ? (
+                            <span className="text-green-600">In</span>
+                          ) : (
+                            <span className="text-red-600">Out</span>
+                          )}
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                ))}
+                ) : (
+                  <div className="flex h-full items-center justify-center p-4">
+                    No data
+                  </div>
+                )}
               </td>
             ))}
-          </tr>
+          </tr> */}
         </thead>
         <tbody></tbody>
       </table>
@@ -98,24 +122,136 @@ Table.propTypes = {
 };
 
 const arr1 = [
-  "24-05-2022",
-  "24-05-2022",
-  "24-06-2022",
-  "24-06-2022",
-  "24-07-2022",
-  "24-07-2022",
+  [
+    {
+      Name: "KIER TIBERIO",
+      Mode: "FACE",
+      DateTime: "2024-06-29 11:01:30",
+      __v: 0,
+    },
+    {
+      Name: "KIER TIBERIO",
+      Mode: "FACE",
+      DateTime: "2024-06-29 11:03:05",
+      __v: 0,
+    },
+  ],
+  [
+    {
+      Name: "KIER TIBERIO",
+      Mode: "FACE",
+      DateTime: "2024-07-29 11:08:21",
+      __v: 0,
+    },
+    {
+      Name: "KIER TIBERIO",
+      Mode: "FACE",
+      DateTime: "2024-07-29 11:10:30",
+      __v: 0,
+    },
+  ],
+  [],
+  [
+    {
+      Name: "KIER TIBERIO",
+      Mode: "FACE",
+      DateTime: "2024-09-29 11:15:05",
+      __v: 0,
+    },
+    {
+      Name: "KIER TIBERIO",
+      Mode: "FACE",
+      DateTime: "2024-09-29 11:20:21",
+      __v: 0,
+    },
+    {
+      Name: "KIER TIBERIO",
+      Mode: "FACE",
+      DateTime: "2024-09-29 11:50:21",
+      __v: 0,
+    },
+  ],
 ];
 
-const arr2 = ["24-05-2022", "24-06-2022", "24-07-2022"];
+//////////
 
-const finalArr = arr1.reduce((acc, item) => {
-  const existingItem = acc.find(([date]) => date === item);
-  if (existingItem) {
-    existingItem[1].push(item);
-  } else {
-    acc.push([item, [item]]);
+const result = arr1.map((subArr) => {
+  // console.log(subArr);
+
+  if (subArr.length > 0) {
+    const timeDuty =
+      subArr.length > 1
+        ? {
+            timeDuty: getTimeDifference(
+              subArr[0].DateTime,
+              subArr[subArr.length - 1].DateTime,
+            ),
+          }
+        : { timeDuty: "No time Out!" };
+
+    return [...subArr, timeDuty];
   }
-  return acc;
-}, []);
 
-console.log(finalArr);
+  return subArr;
+});
+
+// console.log(result);
+
+[
+  [
+    {
+      Name: "KIER TIBERIO",
+      Mode: "FACE",
+      DateTime: "2024-06-29 11:01:30",
+      __v: 0,
+    },
+    {
+      Name: "KIER TIBERIO",
+      Mode: "FACE",
+      DateTime: "2024-06-29 11:03:05",
+      __v: 0,
+    },
+    { timeDuty: "0hr, 1min, 35sec" },
+  ],
+  [
+    {
+      Name: "KIER TIBERIO",
+      Mode: "FACE",
+      DateTime: "2024-07-29 11:08:21",
+      __v: 0,
+    },
+    {
+      Name: "KIER TIBERIO",
+      Mode: "FACE",
+      DateTime: "2024-07-29 11:10:30",
+      __v: 0,
+    },
+    { timeDuty: "0hr, 2min, 9sec" },
+  ],
+  [],
+  [
+    {
+      Name: "KIER TIBERIO",
+      Mode: "FACE",
+      DateTime: "2024-09-29 11:15:05",
+      __v: 0,
+    },
+    {
+      Name: "KIER TIBERIO",
+      Mode: "FACE",
+      DateTime: "2024-09-29 11:20:21",
+      __v: 0,
+    },
+    { timeDuty: "0hr, 5min, 16sec" },
+  ],
+
+  [
+    {
+      Name: "KIER TIBERIO",
+      Mode: "FACE",
+      DateTime: "2024-09-29 11:50:21",
+      __v: 0,
+    },
+    { timeDuty: "No time Out!" },
+  ],
+];

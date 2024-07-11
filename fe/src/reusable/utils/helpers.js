@@ -83,29 +83,14 @@ export function convertToJson(file) {
   });
 }
 
-[
-  {
-    No: "123",
-    DevNo: "123",
-    UserId: "123",
-    Name: "123",
-    Mode: "123",
-    DateTime: "123",
-  },
-  {
-    No: "123",
-    DevNo: "123",
-    UserId: "123",
-    Name: "123",
-    Mode: "123",
-    DateTime: "123",
-  },
-  {
-    No: "124",
-    DevNo: "123",
-    UserId: "123",
-    Name: "123",
-    Mode: "123",
-    DateTime: "123",
-  },
-];
+export function getTimeDifference(startTime, endTime) {
+  const start = new Date(startTime);
+  const end = new Date(endTime);
+  const timeDiff = end - start;
+
+  const hours = Math.floor(timeDiff / 3600000);
+  const minutes = Math.floor((timeDiff % 3600000) / 60000);
+  const seconds = Math.floor((timeDiff % 60000) / 1000);
+
+  return `${hours}hr, ${minutes}min, ${seconds}sec`;
+}
