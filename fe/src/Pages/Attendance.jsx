@@ -32,7 +32,7 @@ export default function Attendance() {
 
   const [value, setValue] = useState({
     startDate: dayjs().startOf("month").format("YYYY-MM-DD"),
-    endDate: dayjs().endOf("month").format("YYYY-MM-DD"),
+    endDate: dayjs().format("YYYY-MM-DD"),
   });
 
   useEffect(() => {
@@ -69,7 +69,7 @@ export default function Attendance() {
 
   function defaultDates() {
     const startDate = value.startDate;
-    const endDate = dayjs().endOf("month").$d;
+    const endDate = dayjs().$d;
 
     return whileDate(startDate, endDate);
   }
@@ -110,7 +110,10 @@ export default function Attendance() {
                       detailsData: confirmUser.attendanceId,
                       userId: confirmUser._id,
                     },
-
+                    {
+                      detailsLabel: "Wage: ",
+                      detailsData: confirmUser.wage,
+                    },
                     {
                       detailsLabel: "Name: ",
                       detailsData:

@@ -6,6 +6,7 @@ import {
 import { PencilIcon } from "@heroicons/react/24/solid";
 import Btn from "./Btn";
 import dayjs from "dayjs";
+import Input from "./Input";
 
 export default function Table({ data }) {
   const detailsData = data.data.details
@@ -13,7 +14,6 @@ export default function Table({ data }) {
     .shift();
 
   const contentLabels = data.data.content[0].contentLabels;
-  // console.log(contentLabels);
 
   const userId = data.data.content.flatMap((content) =>
     content.contentData
@@ -27,24 +27,55 @@ export default function Table({ data }) {
       return formattedDate === item;
     });
 
-    const timeDuty =
-      userIdData.length > 1
-        ? {
-            timeDuty: getTimeDifference(
-              userIdData[0].DateTime,
-              userIdData[userIdData.length - 1].DateTime,
-            ),
-          }
-        : { timeDuty: "No data" };
-
-    // if (userIdData.length > 0) {
-    //   return [...userIdData, timeDuty];
-    // }
-    console.log(timeDuty);
-
-    return [item, userIdData];
+    const result = userIdData.reduce((acc, obj, i) => {
+      acc.push(obj);
+      const startTime = userIdData[0].DateTime;
+      const endTime = obj.DateTime;
+      const timeRes = getTimeDifference(startTime, endTime);
+      if (i % 2 === 1) {
+        acc.push({
+          timeDuty: timeRes,
+        });
+      } else if (i === userIdData.length - 1) {
+        acc.push({
+          timeDuty: "No time out!",
+          DateTime: "",
+          totalHoursDuty: timeRes,
+        });
+      }
+      return acc;
+    }, []);
+    return [item, result];
   });
-  console.log(contentArr);
+
+  /////////
+  const test = contentArr.map((item) => item[1]);
+  const arr = test[0];
+  // console.log(arr);
+
+  const result2 = arr.reduce((acc, obj, i) => {
+    acc.push(obj);
+    const startTimeMain = arr[0].DateTime;
+    const endTimeMain = obj.DateTime;
+
+    if (i % 2 === 1) {
+      const startTime = arr[i - 1].DateTime;
+
+      const endTime = obj.DateTime;
+      acc.push({
+        timeDuty: getTimeDifference(startTime, endTime),
+      });
+    } else if (i === arr.length - 1) {
+      acc.push({
+        timeDuty: "No time out!",
+        DateTime: "",
+        totalHoursDuty: getTimeDifference(startTimeMain, endTimeMain),
+      });
+    }
+    return acc;
+  }, []);
+  // console.log(result2);
+  ////////////////
 
   return (
     <div>
@@ -64,6 +95,10 @@ export default function Table({ data }) {
                   </div>
                 </th>
               ))}
+            <th className="flex h-8 w-64 items-center gap-1">
+              <span>Break:</span>
+              <Input type="text" />
+            </th>
             <th>
               <Btn
                 text="Assign Attendance Id"
@@ -71,7 +106,6 @@ export default function Table({ data }) {
                 type="link"
                 color={"yellow"}
                 to={data.data.details[0].userId}
-                //check kier the attandance id 106
               ></Btn>
             </th>
           </tr>
@@ -80,25 +114,45 @@ export default function Table({ data }) {
 
       <table className="w-full table-fixed">
         <thead>
-          {/* <tr className="flex flex-wrap">
+          <tr className="flex flex-wrap">
             {contentArr.map((content, i) => (
-              <td key={i} className="flex flex-col text-nowrap border">
-                <p className="w-44 border-b p-2 text-center font-medium">
+              <td
+                key={i}
+                className="flex flex-col text-nowrap border hover:bg-black"
+              >
+                <p
+                  className={`w-44 border-b p-2 text-center font-medium ${
+                    content[0].includes("Sun") ? "text-blue-600" : ""
+                  }`}
+                >
                   {content[0]}
                 </p>
                 {content[1].length > 0 ? (
                   <div className="p-1">
                     {content[1].map((item, i) => (
-                      <div key={i} className="flex gap-1">
-                        <div>{dayjs(item.DateTime).format("hh:mm a")}</div>
-                        <div className="w-10">{item.Mode}</div>
-                        <div>
-                          {i % 2 === 0 ? (
-                            <span className="text-green-600">In</span>
-                          ) : (
-                            <span className="text-red-600">Out</span>
-                          )}
-                        </div>
+                      <div key={i} className="flex gap-2">
+                        {item.DateTime ? (
+                          <>
+                            <div>{dayjs(item.DateTime).format("hh:mm a")}</div>
+                            <div className="w-10">{item.Mode}</div>
+                            {i % 3 ? (
+                              <div className="text-red-600">Out</div>
+                            ) : (
+                              <div className="text-green-600">In</div>
+                            )}
+                          </>
+                        ) : (
+                          <div className="w-full border-t text-center">
+                            <div>
+                              {item.timeDuty.message
+                                ? item.timeDuty.message
+                                : item.timeDuty}
+                            </div>
+                            <div className="">
+                              {item.totalHoursDuty?.message}
+                            </div>
+                          </div>
+                        )}
                       </div>
                     ))}
                   </div>
@@ -109,7 +163,7 @@ export default function Table({ data }) {
                 )}
               </td>
             ))}
-          </tr> */}
+          </tr>
         </thead>
         <tbody></tbody>
       </table>
@@ -121,137 +175,40 @@ Table.propTypes = {
   data: PropTypes.any,
 };
 
-const arr1 = [
-  [
-    {
-      Name: "KIER TIBERIO",
-      Mode: "FACE",
-      DateTime: "2024-06-29 11:01:30",
-      __v: 0,
-    },
-    {
-      Name: "KIER TIBERIO",
-      Mode: "FACE",
-      DateTime: "2024-06-29 11:03:05",
-      __v: 0,
-    },
-  ],
-  [
-    {
-      Name: "KIER TIBERIO",
-      Mode: "FACE",
-      DateTime: "2024-07-29 11:08:21",
-      __v: 0,
-    },
-    {
-      Name: "KIER TIBERIO",
-      Mode: "FACE",
-      DateTime: "2024-07-29 11:10:30",
-      __v: 0,
-    },
-  ],
-  [],
-  [
-    {
-      Name: "KIER TIBERIO",
-      Mode: "FACE",
-      DateTime: "2024-09-29 11:15:05",
-      __v: 0,
-    },
-    {
-      Name: "KIER TIBERIO",
-      Mode: "FACE",
-      DateTime: "2024-09-29 11:20:21",
-      __v: 0,
-    },
-    {
-      Name: "KIER TIBERIO",
-      Mode: "FACE",
-      DateTime: "2024-09-29 11:50:21",
-      __v: 0,
-    },
-  ],
-];
-
 //////////
-
-const result = arr1.map((subArr) => {
-  // console.log(subArr);
-
-  if (subArr.length > 0) {
-    const timeDuty =
-      subArr.length > 1
-        ? {
-            timeDuty: getTimeDifference(
-              subArr[0].DateTime,
-              subArr[subArr.length - 1].DateTime,
-            ),
-          }
-        : { timeDuty: "No time Out!" };
-
-    return [...subArr, timeDuty];
-  }
-
-  return subArr;
-});
-
-// console.log(result);
+////////////
 
 [
-  [
-    {
-      Name: "KIER TIBERIO",
-      Mode: "FACE",
-      DateTime: "2024-06-29 11:01:30",
-      __v: 0,
-    },
-    {
-      Name: "KIER TIBERIO",
-      Mode: "FACE",
-      DateTime: "2024-06-29 11:03:05",
-      __v: 0,
-    },
-    { timeDuty: "0hr, 1min, 35sec" },
-  ],
-  [
-    {
-      Name: "KIER TIBERIO",
-      Mode: "FACE",
-      DateTime: "2024-07-29 11:08:21",
-      __v: 0,
-    },
-    {
-      Name: "KIER TIBERIO",
-      Mode: "FACE",
-      DateTime: "2024-07-29 11:10:30",
-      __v: 0,
-    },
-    { timeDuty: "0hr, 2min, 9sec" },
-  ],
-  [],
-  [
-    {
-      Name: "KIER TIBERIO",
-      Mode: "FACE",
-      DateTime: "2024-09-29 11:15:05",
-      __v: 0,
-    },
-    {
-      Name: "KIER TIBERIO",
-      Mode: "FACE",
-      DateTime: "2024-09-29 11:20:21",
-      __v: 0,
-    },
-    { timeDuty: "0hr, 5min, 16sec" },
-  ],
-
-  [
-    {
-      Name: "KIER TIBERIO",
-      Mode: "FACE",
-      DateTime: "2024-09-29 11:50:21",
-      __v: 0,
-    },
-    { timeDuty: "No time Out!" },
-  ],
+  {
+    _id: "668bb8bf4b2a435801ad5015",
+    No: "13",
+    DevNo: "1",
+    UserId: "3",
+    Name: "RHEA JOY GUZON",
+    Mode: "FP",
+    DateTime: "2024-07-01 08:53:42",
+    __v: 0,
+  },
+  {
+    _id: "668bb8bf4b2a435801ad5016",
+    No: "14",
+    DevNo: "1",
+    UserId: "3",
+    Name: "RHEA JOY GUZON",
+    Mode: "FACE",
+    DateTime: "2024-07-01 08:57:08",
+    __v: 0,
+  },
+  { timeDuty: "hh:mm:ss" },
+  {
+    _id: "668bb8bf4b2a435801ad501e",
+    No: "22",
+    DevNo: "1",
+    UserId: "3",
+    Name: "RHEA JOY GUZON",
+    Mode: "FACE",
+    DateTime: "2024-07-01 18:01:56",
+    __v: 0,
+  },
+  { timeDuty: "No time Out Since only Time In is present" },
 ];

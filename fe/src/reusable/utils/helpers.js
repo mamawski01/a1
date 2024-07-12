@@ -92,5 +92,5 @@ export function getTimeDifference(startTime, endTime) {
   const minutes = Math.floor((timeDiff % 3600000) / 60000);
   const seconds = Math.floor((timeDiff % 60000) / 1000);
 
-  return `${hours}hr, ${minutes}min, ${seconds}sec`;
+  return { message: `${hours}h:${minutes}m:${seconds}s`, value: timeDiff };
 }
