@@ -20,7 +20,6 @@ export default function Form({
   dataEdit = null,
   dataDelete = null,
   dataDefaultVal = null,
-  singleInput = false,
 }) {
   const specialIns = data[0].label?.specialIns?.[0];
   const { id } = useParams();
@@ -86,11 +85,11 @@ export default function Form({
     <form
       encType="multipart/form-data"
       onSubmit={handleSubmit(onSubmit, onError)}
-      className={`${singleInput ? "" : "container2"} `}
+      className="container2"
     >
       <div className="flex flex-col md:grid">
         <div className="flex justify-end">
-          {!singleInput && (
+          {
             <Btn
               text={"exit"}
               color={"red"}
@@ -102,7 +101,7 @@ export default function Form({
               ]}
               onClick={() => navigate(-1)}
             ></Btn>
-          )}
+          }
         </div>
         <div className="[&>*:nth-child(even)]:bg-slate-500/5">
           {data.map((rowLabel, i) => (
@@ -122,7 +121,7 @@ export default function Form({
             ></RowInput>
           ))}
         </div>
-        {!singleInput && (
+        {
           <div className="mt-6 flex justify-evenly">
             <Btn
               color="blue"
@@ -182,7 +181,7 @@ export default function Form({
               onClick={() => navigate(-1)}
             ></Btn>
           </div>
-        )}
+        }
       </div>
     </form>
   );

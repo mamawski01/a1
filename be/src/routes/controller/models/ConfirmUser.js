@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
-import { schemaModel } from "../../../utils/beHelpers.js";
+
+import { schemaModel } from "./schemaModel.js";
 
 const { Schema } = mongoose;
 const confirmUserSchema = new Schema({

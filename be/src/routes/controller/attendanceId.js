@@ -1,22 +1,8 @@
-import { getter, getters } from "../../utils/beHelpers.js";
-import AttendanceId from "./models/AttendanceId.js";
 import ConfirmUser from "./models/ConfirmUser.js";
-
-export async function apiAttendanceIds(req, res) {
-  getters(res, AttendanceId, "apiAttendanceIds");
-}
+import { getter } from "./operators.js";
 
 export async function apiAttendanceId(req, res) {
-  getter(req, res, ConfirmUser, "apiAttendanceId");
-}
-
-export async function apiAttendanceIdPost(req, res) {
-  try {
-    const data = await AttendanceId.create(req.body);
-    return res.status(200).send(data._id);
-  } catch (error) {
-    return res.status(500).send(error.message);
-  }
+  getter(req, res, ConfirmUser, "apiAttendanceId", true);
 }
 
 export async function apiAttendanceIdPatch(req, res) {

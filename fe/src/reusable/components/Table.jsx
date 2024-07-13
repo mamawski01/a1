@@ -6,7 +6,6 @@ import {
 import { PencilIcon } from "@heroicons/react/24/solid";
 import Btn from "./Btn";
 import dayjs from "dayjs";
-import Input from "./Input";
 
 export default function Table({ data }) {
   const detailsData = data.data.details
@@ -95,10 +94,7 @@ export default function Table({ data }) {
                   </div>
                 </th>
               ))}
-            <th className="flex h-8 w-64 items-center gap-1">
-              <span>Break:</span>
-              <Input type="text" />
-            </th>
+
             <th>
               <Btn
                 text="Assign Attendance Id"

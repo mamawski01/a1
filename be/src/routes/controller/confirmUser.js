@@ -1,42 +1,22 @@
 import {
   deleteImage,
-  getter,
-  getters,
   prevImgAndDelImg,
   userEmailAndDelImage,
 } from "../../utils/beHelpers.js";
-import AttendanceId from "./models/AttendanceId.js";
 import ConfirmUser from "./models/ConfirmUser.js";
 import User from "./models/User.js";
+import { getter, poster } from "./operators.js";
 
 export async function apiConfirmUsers(req, res) {
-  getters(res, ConfirmUser, "ConfirmUsers");
+  getter(req, res, ConfirmUser, "ConfirmUsers", false);
 }
 
 export async function apiConfirmUser(req, res) {
-  getter(req, res, ConfirmUser, "ConfirmUser");
+  getter(req, res, ConfirmUser, "ConfirmUser", true);
 }
 
 export async function apiConfirmUserPost(req, res) {
-  const { email, _id } = req.body;
-  try {
-    //check if email exist and delete image
-    const { conflict, confMess } = await userEmailAndDelImage(
-      req,
-      email,
-      ConfirmUser,
-      false
-    );
-    if (conflict) return res.status(409).send(confMess);
-    //check if email exist and delete image
-
-    const user = await User.findByIdAndDelete(_id);
-    if (!user) return res.status(404).send("User not found");
-    const data = await ConfirmUser.create(req.body);
-    return res.status(200).send(data._id);
-  } catch (error) {
-    return res.status(500).send(error.message);
-  }
+  poster(req, res, ConfirmUser, "apiConfirmUserPost", false, User);
 }
 
 export async function apiConfirmUserPatchUser(req, res) {
@@ -47,15 +27,11 @@ export async function apiConfirmUserPatchUser(req, res) {
     if (success) return res.status(404).send(sucMess);
     //userPrevImg
 
-    const attendanceId = await AttendanceId.findById({ attendanceId });
-    console.log(attendanceId);
-
     const data = await ConfirmUser.findByIdAndUpdate(
       id,
       {
         ...req.body,
         image: "http://localhost:8000/uploads/images/" + req.file.filename,
-        attendanceId,
       },
       { new: true }
     );

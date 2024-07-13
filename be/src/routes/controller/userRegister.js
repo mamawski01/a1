@@ -1,45 +1,23 @@
 import User from "./models/User.js";
 import {
   deleteImage,
-  getter,
-  getters,
   passwordEncrypt,
   prevImgAndDelImg,
   url,
   userEmailAndDelImage,
 } from "../../utils/beHelpers.js";
+import { getter, poster } from "./operators.js";
 
 export function apiUsers(req, res) {
-  getters(res, User, "Users");
+  getter(req, res, User, "Users", false);
 }
 
 export function apiUser(req, res) {
-  getter(req, res, User, "User");
+  getter(req, res, User, "User", true);
 }
 
 export async function apiUserPostUser(req, res) {
-  const { email, password } = req.body;
-  try {
-    //check if email exist and delete image
-    const { conflict, confMess } = await userEmailAndDelImage(req, email, User);
-    if (conflict) return res.status(409).send(confMess);
-    //check if email exist and delete image
-
-    //encrypt password
-    const encryptedPassword = await passwordEncrypt(password);
-    //encrypt password
-
-    const data = await User.create({
-      ...req.body,
-      password: encryptedPassword,
-      repeatPassword: encryptedPassword,
-      image: url + req.file.filename,
-    });
-    return res.status(200).send({ data });
-  } catch (error) {
-    deleteImage(req.file.path);
-    return res.status(500).send(error.message);
-  }
+  poster(req, res, User, "apiUserPostUser", false);
 }
 
 export async function apiUserPatchUser(req, res) {

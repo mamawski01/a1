@@ -20,7 +20,7 @@
     "react-router-dom": "^6.23.1",
     "react-tailwindcss-datepicker": "^1.6.6",
     "socket.io-client": "^4.7.5",
-    "sweetalert2": "^11.12.0"
+    "sweetalert2": "^11.6.13"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

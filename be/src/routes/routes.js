@@ -17,13 +17,15 @@ import {
 } from "./controller/confirmUser.js";
 import { confirmSchema, joiValidator, registerSchema } from "../utils/joi.js";
 import { apiAttendances, apiAttendancesPost } from "./controller/attendance.js";
-
 import {
   apiAttendanceId,
   apiAttendanceIdPatch,
-  apiAttendanceIdPost,
-  apiAttendanceIds,
 } from "./controller/attendanceId.js";
+import {
+  apiAttendanceSetting,
+  apiAttendanceSettingPatch,
+  apiAttendanceSettingPost,
+} from "./controller/attendanceSetting.js";
 
 const router = express.Router();
 
@@ -74,12 +76,15 @@ router.get("/apiAttendances", apiAttendances);
 router.post("/apiAttendancesPost", apiAttendancesPost);
 
 //attendanceId routes
-router.get("/apiAttendanceIds", apiAttendanceIds);
-
 router.get("/apiConfirmUserPatchUser/:id", apiAttendanceId);
 
-router.post("/apiAttendanceIdPost", apiAttendanceIdPost);
-
 router.patch("/apiAttendanceIdPatch/:id", apiAttendanceIdPatch);
+
+//attendance routes settings
+router.get("/apiAttendanceSetting/:id", apiAttendanceSetting);
+
+router.post("/apiAttendanceSettingPost", apiAttendanceSettingPost);
+
+router.patch("/apiAttendanceSettingPatch/:id", apiAttendanceSettingPatch);
 
 export default router;
