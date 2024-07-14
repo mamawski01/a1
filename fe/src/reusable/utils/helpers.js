@@ -1,14 +1,18 @@
 import Swal from "sweetalert2";
 
-export function swalAlert() {
+export function swalAlert(
+  title = "Are you sure?",
+  text = "You won't be able to revert this!",
+  confirmButtonText = "Yes, delete it!",
+) {
   const confirmDelete = Swal.fire({
-    title: "Are you sure?",
-    text: "You won't be able to revert this!",
+    title: title,
+    text: text,
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
-    confirmButtonText: "Yes, delete it!",
+    confirmButtonText: confirmButtonText,
     customClass: {
       popup: "bg-slate-100/80 backdrop-blur-sm",
     },
@@ -44,7 +48,7 @@ export function capitalizeFirstLetterEachWord(str) {
 }
 
 export function capitalizeFirstLetter(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
+  return str?.charAt(0).toUpperCase() + str?.slice(1);
 }
 
 export function onHoverBgColor(color) {

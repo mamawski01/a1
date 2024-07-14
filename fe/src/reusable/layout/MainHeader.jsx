@@ -1,5 +1,6 @@
 import {
   Bars3Icon,
+  Cog6ToothIcon,
   MagnifyingGlassIcon,
   PaperClipIcon,
   PlusIcon,
@@ -94,6 +95,16 @@ export default function MainHeader() {
                         to: "/dashboard/upload",
                         url: url,
                         icon: <PaperClipIcon />,
+                        onClick: null,
+                      },
+                    },
+                    {
+                      link: {
+                        text: "AttendanceSetting",
+                        hidden: true,
+                        to: "/dashboard/attendance/attendanceSettingForm",
+                        url: url,
+                        icon: <Cog6ToothIcon />,
                         onClick: null,
                       },
                     },

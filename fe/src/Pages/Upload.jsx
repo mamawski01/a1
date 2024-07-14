@@ -1,4 +1,4 @@
-import { apiAttendancesPost } from "../api/api";
+import { apiAttendancesPost } from "../api/attendance";
 import Form from "../reusable/components/Form";
 
 export default function Upload() {

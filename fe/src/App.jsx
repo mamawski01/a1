@@ -13,6 +13,8 @@ import Upload from "./Pages/Upload.jsx";
 import UserAttendance from "./reusable/components/UserAttendance.jsx";
 import Attendance from "./Pages/Attendance.jsx";
 import AttendanceId from "./Pages/AttendanceId.jsx";
+import AttendanceSettingForm from "./Pages/AttendanceSettingForm.jsx";
+import AttendanceSettingFormEdit from "./Pages/AttendanceSettingFormEdit.jsx";
 
 export default function App() {
   return (
@@ -53,6 +55,14 @@ export default function App() {
             <Route
               path="dashboard/attendance/:id"
               element={<AttendanceId></AttendanceId>}
+            ></Route>
+            <Route
+              path="dashboard/attendance/attendanceSettingForm"
+              element={<AttendanceSettingForm></AttendanceSettingForm>}
+            ></Route>{" "}
+            <Route
+              path="dashboard/attendance/attendanceSettingForm/:id"
+              element={<AttendanceSettingFormEdit></AttendanceSettingFormEdit>}
             ></Route>
           </Route>
           <Route path="login" element={<LoginPage></LoginPage>}></Route>

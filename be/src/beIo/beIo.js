@@ -1,10 +1,15 @@
 import { Server } from "socket.io";
 
-import {
-  emitDataReceived,
-  emitDataReceivedAttendance,
-  emitDataReceivedConfirmUser,
-} from "./emit/emitDataReceived.js";
+async function emitter(mess, io, data) {
+  try {
+    io.emit(mess, data);
+  } catch (err) {
+    console.log(err);
+    io.emit(mess, {
+      error: err,
+    });
+  }
+}
 
 let io;
 
@@ -18,13 +23,16 @@ export function registerSocketServer(server) {
 
   io.on("connection", (socket) => {
     socket.on("sendData", (data) => {
-      emitDataReceived(io, data);
+      emitter("dataReceived", io, data);
     });
     socket.on("sendDataConfirmUser", (data) => {
-      emitDataReceivedConfirmUser(io, data);
+      emitter("dataReceivedConfirmUser", io, data);
     });
     socket.on("sendAttendance", (data) => {
-      emitDataReceivedAttendance(io, data);
+      emitter("dataReceivedAttendance", io, data);
+    });
+    socket.on("sendAttendanceSetting", (data) => {
+      emitter("dataReceivedAttendanceSetting", io, data);
     });
   });
 }

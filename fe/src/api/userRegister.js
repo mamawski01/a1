@@ -2,21 +2,34 @@ import { updateRealtime } from "../feIo/feIo";
 import { deleter, getter, patcher, poster } from "./operators";
 
 export async function apiUsers() {
-  return getter("/apiUsers", "apiUsers", apiUsers, updateRealtime, false);
+  return getter(
+    "Registry Users fetched",
+    "/apiUsers",
+    apiUsers,
+    updateRealtime,
+    false,
+  );
 }
 
 export async function apiUser(id) {
-  return getter("/apiUser/", "apiUser", apiUsers, updateRealtime, true, id);
+  return getter(
+    "Single Registry User fetched",
+    "/apiUser/",
+    apiUsers,
+    updateRealtime,
+    true,
+    id,
+  );
 }
 
 export async function apiUserPostUser(newUser) {
-  return poster("/apiUserPostUser", "apiUserPostUser", apiUsers, newUser);
+  return poster("Registry User created", "/apiUserPostUser", apiUsers, newUser);
 }
 
 export async function apiUserPatchUser(id, newUser) {
   return patcher(
+    "Registry User updated",
     "/apiUserPatchUser/",
-    "apiUserPatchUser",
     apiUsers,
     id,
     newUser,
@@ -24,5 +37,11 @@ export async function apiUserPatchUser(id, newUser) {
 }
 
 export async function apiUserDeleteUser(id) {
-  return deleter("/apiUserDeleteUser/", "apiUserDeleteUser", apiUsers, id);
+  return deleter(
+    "Registry User deleted",
+    "/apiUserDeleteUser/",
+    apiUsers,
+    id,
+    true,
+  );
 }

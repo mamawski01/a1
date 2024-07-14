@@ -30,7 +30,7 @@ export default function Form({
   const { register, handleSubmit, formState, reset } = useForm();
 
   useEffect(() => {
-    async function fetchUser() {
+    async function fetchData() {
       if (id) {
         const response = await dataDefaultVal(id);
         const finalData = response?.data?.data;
@@ -39,7 +39,7 @@ export default function Form({
         return response;
       }
     }
-    fetchUser();
+    fetchData();
     //cleaning
     return () => {};
   }, [id, reset, dataDefaultVal]);
@@ -222,7 +222,7 @@ function RowInput({
         className="col-span-full flex items-center text-xl font-bold"
         title={font}
       >
-        {font}:
+        {font}
       </h1>
       {inputs.map((input, i) => (
         <Input

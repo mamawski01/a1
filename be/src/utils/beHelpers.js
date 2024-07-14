@@ -37,10 +37,12 @@ export async function userEmailAndDelImage(
 export async function prevImgAndDelImg(req, model, id, delImgPath = true) {
   const prevImg = await model.findById(id);
   if (!prevImg) {
-    delImgPath && deleteImage(req.file.path);
+    delImgPath || (req.file.path && deleteImage(req.file.path));
     return { success: false, sucMess: "User not found" };
   }
   const imageUrl = prevImg.image.substring(prevImg.image.lastIndexOf("/") + 1);
-  deleteImage(location + "/" + imageUrl);
+  setTimeout(() => {
+    deleteImage(location + "/" + imageUrl);
+  }, 1000);
   return { success: true };
 }

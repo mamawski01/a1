@@ -3,10 +3,10 @@ import Datepicker from "react-tailwindcss-datepicker";
 import dayjs from "dayjs";
 
 import { feSocket } from "../feIo/feIo";
-import { apiAttendances } from "../api/api";
 
 import Table from "../reusable/components/Table";
 import { apiConfirmUsers } from "../api/confirmUser";
+import { apiAttendances } from "../api/attendance";
 
 export default function Attendance() {
   const [confirmUsers, confirmUsersSet] = useState([]);

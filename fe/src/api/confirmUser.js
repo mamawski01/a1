@@ -3,8 +3,8 @@ import { deleter, getter, patcher, poster } from "./operators";
 
 export async function apiConfirmUsers() {
   return getter(
+    "Users fetched",
     "/apiConfirmUsers",
-    "apiConfirmUsers",
     apiConfirmUsers,
     updateRealtimeConfirmUser,
     false,
@@ -13,8 +13,8 @@ export async function apiConfirmUsers() {
 
 export async function apiConfirmUser(id) {
   return getter(
+    "Single User fetched",
     "/apiConfirmUser/",
-    "apiConfirmUser",
     apiConfirmUsers,
     updateRealtimeConfirmUser,
     true,
@@ -22,30 +22,26 @@ export async function apiConfirmUser(id) {
   );
 }
 
-export async function apiConfirmUserPost(confirmUser) {
-  return poster(
-    "/apiConfirmUserPost",
-    "apiConfirmUserPost",
-    apiConfirmUsers,
-    confirmUser,
-  );
+export async function apiConfirmUserPost(data) {
+  return poster("User created", "/apiConfirmUserPost", apiConfirmUsers, data);
 }
 
-export async function apiConfirmUserPatchUser(id, confirmUser) {
+export async function apiConfirmUserPatchUser(id, data) {
   return patcher(
+    "User updated",
     "/apiConfirmUserPatchUser/",
-    "apiConfirmUserPatchUser",
     apiConfirmUsers,
     id,
-    confirmUser,
+    data,
   );
 }
 
 export async function apiConfirmUserDelete(id) {
   return deleter(
+    "User deleted",
     "/apiConfirmUserDelete/",
-    "apiConfirmUserDelete",
     apiConfirmUsers,
     id,
+    true,
   );
 }

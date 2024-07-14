@@ -141,7 +141,11 @@ export async function patcher(req, res, model, mess, simple = false) {
         },
         { new: true }
       );
-      if (!data) return res.status(404).send(mess + " not found");
+
+      if (!data) {
+        deleteImage(req?.file?.path);
+        return res.status(404).send(mess + " not found");
+      }
       return res.status(200).send({ data });
     }
   } catch (error) {

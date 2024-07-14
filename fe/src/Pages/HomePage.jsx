@@ -20,7 +20,6 @@ import { apiConfirmUserPost } from "../api/confirmUser.js";
 
 export default function HomePage() {
   const [users, usersSet] = useState([]);
-  console.log(users);
 
   feSocket.on("dataReceived", (data) => {
     usersSet(data);

@@ -1,14 +1,17 @@
 import toast from "react-hot-toast";
+import axios from "axios";
+
 import { swalAlert } from "../reusable/utils/helpers";
-
 import connectWithSocketServer from "../feIo/feIo";
-import { apiClient } from "./api";
 
-import Swal from "sweetalert2";
+const apiClient = axios.create({
+  baseURL: "http://localhost:7000",
+  timeout: 10000,
+});
 
 export async function getter(
+  custMess,
   url,
-  mess,
   updater,
   updateRealtime,
   single = true,
@@ -17,15 +20,15 @@ export async function getter(
   try {
     connectWithSocketServer();
     if (single) {
-      if (!id) return toast.error(mess + " " + "fail to fetch");
+      if (!id) return toast.error(custMess);
       const data = await apiClient.get(url + id);
-      toast.success(mess + " " + "fetched successfully");
+      toast.success(custMess);
       updater();
       return data;
     }
     if (!single) {
       const data = await apiClient.get(url);
-      toast.success(mess + " " + "fetched successfully");
+      toast.success(custMess);
       updateRealtime(data.data.data);
       return data;
     }
@@ -35,9 +38,15 @@ export async function getter(
   }
 }
 
-export async function poster(url, mess, updater, newData) {
+export async function poster(custMess, url, updater, newData, simple = false) {
   try {
-    if (mess === "apiUserPostUser") {
+    if (simple) {
+      const data = await apiClient.post(url, newData);
+      toast.success(custMess);
+      updater();
+      return data;
+    }
+    if (url === "/apiUserPostUser") {
       const form = new FormData();
       for (const key in newData) {
         if (key === "image") {
@@ -47,27 +56,20 @@ export async function poster(url, mess, updater, newData) {
         }
       }
       const data = await apiClient.post(url, form);
-      toast.success(mess + " " + "created successfully");
+      toast.success(custMess);
       updater();
       return data;
     }
 
-    if (mess === "apiConfirmUserPost") {
-      const confirmDelete = await Swal.fire({
-        title: "Are you sure to confirm this user?",
-        text: "User will be move to confirmed list",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, move to confirmed list!",
-        customClass: {
-          popup: "bg-slate-100/80 backdrop-blur-sm",
-        },
-      });
+    if (url === "/apiConfirmUserPost") {
+      const confirmDelete = await swalAlert(
+        "Are you sure to confirm this user?",
+        "User will be move to confirmed list",
+        "Yes, move to confirmed list!",
+      );
       if (confirmDelete.isConfirmed) {
         const data = await apiClient.post(url, newData);
-        toast.success(mess + " " + "created successfully");
+        toast.success(custMess);
         updater();
         return data;
       }
@@ -78,9 +80,22 @@ export async function poster(url, mess, updater, newData) {
   }
 }
 
-export async function patcher(url, mess, updater, id, newData) {
+export async function patcher(
+  custMess,
+  url,
+  updater,
+  id,
+  newData,
+  simple = false,
+) {
   try {
-    if (mess === "apiUserPatchUser" || mess === "apiConfirmUserPatchUser") {
+    if (simple) {
+      const data = await apiClient.patch(url + id, newData);
+      toast.success(custMess);
+      updater();
+      return data;
+    }
+    if (url === "/apiUserPatchUser/" || url === "/apiConfirmUserPatchUser/") {
       const form = new FormData();
       for (const key in newData) {
         if (key === "image") {
@@ -90,7 +105,7 @@ export async function patcher(url, mess, updater, id, newData) {
         }
       }
       const data = await apiClient.patch(url + id, form);
-      toast.success(mess + " " + "updated successfully");
+      toast.success(custMess);
       updater();
       return data;
     }
@@ -100,13 +115,13 @@ export async function patcher(url, mess, updater, id, newData) {
   }
 }
 
-export async function deleter(url, mess, updater, id) {
+export async function deleter(custMess, url, updater, id, simple = false) {
   try {
-    if (mess === "apiUserDeleteUser" || mess === "apiConfirmUserDelete") {
+    if (simple) {
       const confirmDelete = await swalAlert();
       if (confirmDelete.isConfirmed) {
         const data = await apiClient.delete(url + id);
-        toast.success(mess + " " + "deleted successfully");
+        toast.success(custMess);
         updater();
         return data;
       }

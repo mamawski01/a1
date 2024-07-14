@@ -1,4 +1,4 @@
-import { apiAttendanceId, apiAttendanceIdPatch } from "../api/api";
+import { apiAttendanceId, apiAttendanceIdPatch } from "../api/attendanceId";
 import Form from "../reusable/components/Form";
 
 export default function AttendanceId() {

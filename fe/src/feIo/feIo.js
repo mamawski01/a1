@@ -19,3 +19,7 @@ export function updateRealtimeConfirmUser(data) {
 export function updateRealtimeAttendance(data) {
   return feSocket.emit("sendAttendance", data);
 }
+
+export function updateRealtimeAttendanceSettings(data) {
+  return feSocket.emit("sendAttendanceSetting", data);
+}

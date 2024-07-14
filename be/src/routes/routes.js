@@ -25,6 +25,7 @@ import {
   apiAttendanceSetting,
   apiAttendanceSettingPatch,
   apiAttendanceSettingPost,
+  apiAttendanceSettings,
 } from "./controller/attendanceSetting.js";
 
 const router = express.Router();
@@ -81,6 +82,8 @@ router.get("/apiConfirmUserPatchUser/:id", apiAttendanceId);
 router.patch("/apiAttendanceIdPatch/:id", apiAttendanceIdPatch);
 
 //attendance routes settings
+router.get("/apiAttendanceSettings", apiAttendanceSettings);
+
 router.get("/apiAttendanceSetting/:id", apiAttendanceSetting);
 
 router.post("/apiAttendanceSettingPost", apiAttendanceSettingPost);

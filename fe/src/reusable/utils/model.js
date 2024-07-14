@@ -77,3 +77,26 @@ export function registerModel() {
     },
   ];
 }
+
+export function attendanceSettingModel() {
+  return [
+    {
+      label: {
+        rowLabels: "attendanceSetting",
+        inputs: ["breakTime", "regularRating", "holidayRatingRegular"],
+        isRequired: [true, true, true],
+        inputTypes: ["option", "option", "option"],
+        options: [["15mins", "30mins", "1hr", "1hr:30mins"], ["30%"], ["30%"]],
+      },
+    },
+    {
+      label: {
+        rowLabels: "",
+        inputs: ["holidayRatingSpecial", "regularDutyHours"],
+        isRequired: [true, true],
+        inputTypes: ["option", "option"],
+        options: [["30%"], ["6", "7", "8", "9"]],
+      },
+    },
+  ];
+}
