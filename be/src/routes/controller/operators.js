@@ -1,6 +1,7 @@
 import {
   deleteImage,
   passwordEncrypt,
+  prevImgAndDelImg,
   url,
   userEmailAndDelImage,
 } from "../../utils/beHelpers.js";
@@ -19,7 +20,7 @@ export async function getter(req, res, model, mess, single = true) {
       return res.status(200).send({ data });
     }
   } catch (error) {
-    return res.status(500).send(error.message + mess);
+    return res.status(500).send(error.message + " " + mess);
   }
 }
 
@@ -27,7 +28,7 @@ export async function poster(req, res, model, mess, simple = false, secModel) {
   try {
     if (simple) {
       const data = await model.create(req.body);
-      // return res.status(200).send(data._id);
+      return res.status(200).send({ data });
     }
 
     if (mess === "apiUserPostUser") {
@@ -103,6 +104,86 @@ export async function poster(req, res, model, mess, simple = false, secModel) {
     }
   } catch (error) {
     deleteImage(req?.file?.path);
-    return res.status(500).send(error.message + mess);
+    return res.status(500).send(error.message + " " + mess);
+  }
+}
+
+export async function patcher(req, res, model, mess, simple = false) {
+  const { id } = req.params;
+  try {
+    if (simple) {
+      const data = await model.findByIdAndUpdate(id, req.body, {
+        new: true,
+      });
+      if (!data) return res.status(404).send(mess + " not found");
+      return res.status(200).send({ data });
+    }
+
+    if (mess === "apiConfirmUserPatchUser" || mess === "apiUserPatchUser") {
+      const { password } = req.body;
+
+      //encrypt password
+      const encryptedPassword = await passwordEncrypt(password);
+      //encrypt password
+
+      //userPrevImg
+      const { success, sucMess } = prevImgAndDelImg(req, model, id);
+      if (success) return res.status(404).send(mess + sucMess);
+      //userPrevImg
+
+      const data = await model.findByIdAndUpdate(
+        id,
+        {
+          ...req.body,
+          password: encryptedPassword,
+          repeatPassword: encryptedPassword,
+          image: url + req.file.filename,
+        },
+        { new: true }
+      );
+      if (!data) return res.status(404).send(mess + " not found");
+      return res.status(200).send({ data });
+    }
+  } catch (error) {
+    deleteImage(req?.file?.path);
+    return res.status(500).send(error.message + " " + mess);
+  }
+}
+
+export async function deleter(req, res, model, mess, simple = false) {
+  const { id } = req.params;
+  try {
+    if (mess === "apiConfirmUserDelete") {
+      //userPrevImg
+      const { success, sucMess } = prevImgAndDelImg(req, model, id, false);
+      if (success) return res.status(404).send(sucMess);
+      //userPrevImg
+
+      const data = await model.findByIdAndDelete(id);
+      if (!model) return res.status(404).send(mess + " not found");
+      return res.status(200).send({ data });
+    }
+
+    if (mess === "apiUserDeleteUser") {
+      //check if email exist and delete image
+      const { conflict, confMess } = await userEmailAndDelImage(
+        req,
+        false,
+        model
+      );
+      if (conflict) return res.status(409).send(confMess);
+      //check if email exist and delete image
+
+      //userPrevImg
+      const { success, sucMess } = prevImgAndDelImg(req, model, id, true);
+      if (success) return res.status(404).send(sucMess);
+      //userPrevImg
+
+      const data = await model.findByIdAndDelete(id);
+      if (!data) return res.status(404).send(mess + " not found");
+      return res.status(200).send({ data });
+    }
+  } catch (error) {
+    return res.status(500).send(error.message + " " + mess);
   }
 }

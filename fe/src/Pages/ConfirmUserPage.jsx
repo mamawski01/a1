@@ -1,8 +1,8 @@
 import {
+  apiConfirmUser,
   apiConfirmUserDelete,
   apiConfirmUserPatchUser,
-  getConfirmUser,
-} from "../api/api";
+} from "../api/confirmUser";
 import Form from "../reusable/components/Form";
 import { registerModel } from "../reusable/utils/model";
 
@@ -11,7 +11,7 @@ export default function ConfirmUserPage() {
     <Form
       dataEdit={apiConfirmUserPatchUser}
       dataDelete={apiConfirmUserDelete}
-      dataDefaultVal={getConfirmUser}
+      dataDefaultVal={apiConfirmUser}
       data={registerModel()}
     ></Form>
   );

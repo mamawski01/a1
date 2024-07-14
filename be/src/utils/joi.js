@@ -4,7 +4,11 @@ import ExpressValidation from "express-joi-validation";
 const validator = ExpressValidation.createValidator();
 const joi = Joi.optional().allow("");
 
-const initialSchema = {
+export function joiValidator(schema) {
+  return validator.body(schema);
+}
+
+const userSchema = {
   _id: joi,
   __v: Joi.number().optional().allow(""),
   firstName: joi,
@@ -36,13 +40,9 @@ const initialSchema = {
   image: joi,
 };
 
-export const registerSchema = Joi.object(initialSchema);
+export const registerSchema = Joi.object(userSchema);
 
 export const confirmSchema = Joi.object({
-  ...initialSchema,
+  ...userSchema,
   attendanceId: joi,
 });
-
-export function joiValidator(schema) {
-  return validator.body(schema);
-}

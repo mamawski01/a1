@@ -3,9 +3,10 @@ import Datepicker from "react-tailwindcss-datepicker";
 import dayjs from "dayjs";
 
 import { feSocket } from "../feIo/feIo";
-import { apiAttendances, getConfirmUsers } from "../api/api";
+import { apiAttendances } from "../api/api";
 
 import Table from "../reusable/components/Table";
+import { apiConfirmUsers } from "../api/confirmUser";
 
 export default function Attendance() {
   const [confirmUsers, confirmUsersSet] = useState([]);
@@ -16,7 +17,7 @@ export default function Attendance() {
 
   useEffect(() => {
     async function fetchConfirmUsers() {
-      const response = await getConfirmUsers();
+      const response = await apiConfirmUsers();
       return response;
     }
     fetchConfirmUsers();

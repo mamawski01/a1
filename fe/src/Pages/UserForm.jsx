@@ -3,7 +3,7 @@ import {
   apiUserDeleteUser,
   apiUserPatchUser,
   apiUserPostUser,
-} from "../api/api";
+} from "../api/userRegister";
 import Form from "../reusable/components/Form";
 import { registerModel } from "../reusable/utils/model";
 

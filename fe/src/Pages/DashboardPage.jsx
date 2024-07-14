@@ -1,9 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  apiConfirmUserDelete,
-  apiConfirmUserPatchUser,
-  getConfirmUsers,
-} from "../api/api";
+
 import Card from "../reusable/components/Card";
 import {
   calculateAge,
@@ -19,6 +15,11 @@ import {
   TrashIcon,
 } from "@heroicons/react/24/solid";
 import { feSocket } from "../feIo/feIo";
+import {
+  apiConfirmUserDelete,
+  apiConfirmUserPatchUser,
+  apiConfirmUsers,
+} from "../api/confirmUser";
 
 export default function DashboardPage() {
   const [confirmUsers, confirmUsersSet] = useState([]);
@@ -29,7 +30,7 @@ export default function DashboardPage() {
 
   useEffect(() => {
     async function fetchConfirmUsers() {
-      const response = await getConfirmUsers();
+      const response = await apiConfirmUsers();
       return response;
     }
     fetchConfirmUsers();

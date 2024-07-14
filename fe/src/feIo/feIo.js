@@ -4,7 +4,7 @@ export const feSocket = io("http://localhost:7000");
 
 export default function connectWithSocketServer() {
   feSocket.on("connect", () => {
-    console.log("feSocket: " + feSocket.id);
+    feSocket.id;
   });
 }
 

@@ -50,7 +50,6 @@ export default function Form({
   const [image, imageSet] = useState("");
 
   async function onSubmit(data) {
-    console.log(data);
     if (data.password !== data.repeatPassword) {
       toast.error("Passwords do not match");
       return null;
@@ -72,7 +71,7 @@ export default function Form({
           ? await dataEdit(editData._id, finalData)
           : await dataSave(finalData);
         if (response.data) {
-          navigate(-1);
+          // navigate(-1);
         }
       }
     }

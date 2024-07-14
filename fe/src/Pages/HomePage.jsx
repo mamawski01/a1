@@ -1,13 +1,5 @@
 import { feSocket } from "../feIo/feIo.js";
 import { useEffect, useState } from "react";
-
-import {
-  apiConfirmUserPost,
-  apiUserDeleteUser,
-  apiUserPatchUser,
-  apiUsers,
-} from "../api/api.js";
-import Card from "../reusable/components/Card.jsx";
 import {
   BookOpenIcon,
   CheckIcon,
@@ -16,10 +8,19 @@ import {
   PhoneIcon,
   TrashIcon,
 } from "@heroicons/react/24/solid";
+
+import Card from "../reusable/components/Card.jsx";
 import { calculateAge } from "../reusable/utils/helpers.js";
+import {
+  apiUserDeleteUser,
+  apiUserPatchUser,
+  apiUsers,
+} from "../api/userRegister.js";
+import { apiConfirmUserPost } from "../api/confirmUser.js";
 
 export default function HomePage() {
   const [users, usersSet] = useState([]);
+  console.log(users);
 
   feSocket.on("dataReceived", (data) => {
     usersSet(data);
@@ -36,12 +37,9 @@ export default function HomePage() {
   }, []);
 
   return (
-    <>
-      <div className="">
-        {users.length === 0 && "No Users for registration"}
-      </div>
-      <div className="flex flex-col gap-6 [&>*:nth-child(even)]:bg-slate-500/10">
-        {users
+    <div className="flex flex-col gap-6 [&>*:nth-child(even)]:bg-slate-500/10">
+      {users.length > 0 ? (
+        users
           .slice()
           .reverse()
           .map((user, i) => (
@@ -114,8 +112,10 @@ export default function HomePage() {
                 },
               ]}
             ></Card>
-          ))}
-      </div>
-    </>
+          ))
+      ) : (
+        <p>No Data</p>
+      )}
+    </div>
   );
 }
