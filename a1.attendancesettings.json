@@ -1,0 +1,11 @@
+[{
+  "_id": {
+    "$oid": "6690e1f8294eefc3eda5d0d7"
+  },
+  "breakTime": "1",
+  "regularRating": "1",
+  "holidayRatingRegular": "1.3",
+  "holidayRatingSpecial": "1.3",
+  "regularDutyHours": "7",
+  "__v": 0
+}]

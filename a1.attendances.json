@@ -1,6 +1,6 @@
 [{
   "_id": {
-    "$oid": "6684e532c21e73e0b43e0fd6"
+    "$oid": "668bb8bf4b2a435801ad5009"
   },
   "No": "1",
   "DevNo": "1",
@@ -12,7 +12,7 @@
 },
 {
   "_id": {
-    "$oid": "6684e532c21e73e0b43e0fd7"
+    "$oid": "668bb8bf4b2a435801ad500a"
   },
   "No": "2",
   "DevNo": "1",
@@ -24,7 +24,7 @@
 },
 {
   "_id": {
-    "$oid": "6684e532c21e73e0b43e0fd8"
+    "$oid": "668bb8bf4b2a435801ad500b"
   },
   "No": "3",
   "DevNo": "1",
@@ -36,7 +36,7 @@
 },
 {
   "_id": {
-    "$oid": "6684e532c21e73e0b43e0fd9"
+    "$oid": "668bb8bf4b2a435801ad500c"
   },
   "No": "4",
   "DevNo": "1",
@@ -48,7 +48,7 @@
 },
 {
   "_id": {
-    "$oid": "6684e532c21e73e0b43e0fda"
+    "$oid": "668bb8bf4b2a435801ad500d"
   },
   "No": "5",
   "DevNo": "1",
@@ -60,7 +60,7 @@
 },
 {
   "_id": {
-    "$oid": "6684e532c21e73e0b43e0fdb"
+    "$oid": "668bb8bf4b2a435801ad500e"
   },
   "No": "6",
   "DevNo": "1",
@@ -72,7 +72,7 @@
 },
 {
   "_id": {
-    "$oid": "6684e532c21e73e0b43e0fdc"
+    "$oid": "668bb8bf4b2a435801ad500f"
   },
   "No": "7",
   "DevNo": "1",
@@ -84,7 +84,7 @@
 },
 {
   "_id": {
-    "$oid": "6684e532c21e73e0b43e0fdd"
+    "$oid": "668bb8bf4b2a435801ad5010"
   },
   "No": "8",
   "DevNo": "1",
@@ -96,7 +96,7 @@
 },
 {
   "_id": {
-    "$oid": "6684e532c21e73e0b43e0fde"
+    "$oid": "668bb8bf4b2a435801ad5011"
   },
   "No": "9",
   "DevNo": "1",
@@ -108,7 +108,7 @@
 },
 {
   "_id": {
-    "$oid": "6684e532c21e73e0b43e0fdf"
+    "$oid": "668bb8bf4b2a435801ad5012"
   },
   "No": "10",
   "DevNo": "1",
@@ -120,7 +120,7 @@
 },
 {
   "_id": {
-    "$oid": "6684e532c21e73e0b43e0fe0"
+    "$oid": "668bb8bf4b2a435801ad5013"
   },
   "No": "11",
   "DevNo": "1",
@@ -132,7 +132,7 @@
 },
 {
   "_id": {
-    "$oid": "6684e532c21e73e0b43e0fe1"
+    "$oid": "668bb8bf4b2a435801ad5014"
   },
   "No": "12",
   "DevNo": "1",
@@ -144,7 +144,7 @@
 },
 {
   "_id": {
-    "$oid": "6684e532c21e73e0b43e0fe2"
+    "$oid": "668bb8bf4b2a435801ad5015"
   },
   "No": "13",
   "DevNo": "1",
@@ -156,7 +156,7 @@
 },
 {
   "_id": {
-    "$oid": "6684e532c21e73e0b43e0fe3"
+    "$oid": "668bb8bf4b2a435801ad5016"
   },
   "No": "14",
   "DevNo": "1",
@@ -168,7 +168,7 @@
 },
 {
   "_id": {
-    "$oid": "6684e532c21e73e0b43e0fe4"
+    "$oid": "668bb8bf4b2a435801ad5017"
   },
   "No": "15",
   "DevNo": "1",
@@ -180,7 +180,7 @@
 },
 {
   "_id": {
-    "$oid": "6684e532c21e73e0b43e0fe5"
+    "$oid": "668bb8bf4b2a435801ad5018"
   },
   "No": "16",
   "DevNo": "1",
@@ -192,7 +192,7 @@
 },
 {
   "_id": {
-    "$oid": "6684e532c21e73e0b43e0fe6"
+    "$oid": "668bb8bf4b2a435801ad5019"
   },
   "No": "17",
   "DevNo": "1",
@@ -204,7 +204,7 @@
 },
 {
   "_id": {
-    "$oid": "6684e532c21e73e0b43e0fe7"
+    "$oid": "668bb8bf4b2a435801ad501a"
   },
   "No": "18",
   "DevNo": "1",
@@ -216,7 +216,7 @@
 },
 {
   "_id": {
-    "$oid": "6684e532c21e73e0b43e0fe8"
+    "$oid": "668bb8bf4b2a435801ad501b"
   },
   "No": "19",
   "DevNo": "1",
@@ -228,7 +228,7 @@
 },
 {
   "_id": {
-    "$oid": "6684e532c21e73e0b43e0fe9"
+    "$oid": "668bb8bf4b2a435801ad501c"
   },
   "No": "20",
   "DevNo": "1",
@@ -240,7 +240,7 @@
 },
 {
   "_id": {
-    "$oid": "6684e532c21e73e0b43e0fea"
+    "$oid": "668bb8bf4b2a435801ad501d"
   },
   "No": "21",
   "DevNo": "1",
@@ -252,7 +252,7 @@
 },
 {
   "_id": {
-    "$oid": "6684e532c21e73e0b43e0feb"
+    "$oid": "668bb8bf4b2a435801ad501e"
   },
   "No": "22",
   "DevNo": "1",
@@ -264,7 +264,7 @@
 },
 {
   "_id": {
-    "$oid": "6684e532c21e73e0b43e0fec"
+    "$oid": "668bb8bf4b2a435801ad501f"
   },
   "No": "23",
   "DevNo": "1",
@@ -276,7 +276,7 @@
 },
 {
   "_id": {
-    "$oid": "6684e532c21e73e0b43e0fed"
+    "$oid": "668bb8bf4b2a435801ad5020"
   },
   "No": "24",
   "DevNo": "1",
@@ -288,7 +288,7 @@
 },
 {
   "_id": {
-    "$oid": "6684e532c21e73e0b43e0fee"
+    "$oid": "668bb8bf4b2a435801ad5021"
   },
   "No": "25",
   "DevNo": "1",
@@ -300,7 +300,7 @@
 },
 {
   "_id": {
-    "$oid": "6684e532c21e73e0b43e0fef"
+    "$oid": "668bb8bf4b2a435801ad5022"
   },
   "No": "26",
   "DevNo": "1",
@@ -312,7 +312,7 @@
 },
 {
   "_id": {
-    "$oid": "6684e532c21e73e0b43e0ff0"
+    "$oid": "668bb8bf4b2a435801ad5023"
   },
   "No": "27",
   "DevNo": "1",
@@ -324,7 +324,7 @@
 },
 {
   "_id": {
-    "$oid": "6684e532c21e73e0b43e0ff1"
+    "$oid": "668bb8bf4b2a435801ad5024"
   },
   "No": "28",
   "DevNo": "1",
@@ -336,7 +336,7 @@
 },
 {
   "_id": {
-    "$oid": "6684e532c21e73e0b43e0ff2"
+    "$oid": "668bb8bf4b2a435801ad5025"
   },
   "No": "29",
   "DevNo": "1",
@@ -348,7 +348,7 @@
 },
 {
   "_id": {
-    "$oid": "6684e532c21e73e0b43e0ff3"
+    "$oid": "668bb8bf4b2a435801ad5026"
   },
   "No": "30",
   "DevNo": "1",
@@ -360,7 +360,7 @@
 },
 {
   "_id": {
-    "$oid": "6684e532c21e73e0b43e0ff4"
+    "$oid": "668bb8bf4b2a435801ad5027"
   },
   "No": "31",
   "DevNo": "1",
@@ -372,7 +372,7 @@
 },
 {
   "_id": {
-    "$oid": "6684e532c21e73e0b43e0ff5"
+    "$oid": "668bb8bf4b2a435801ad5028"
   },
   "No": "32",
   "DevNo": "1",
@@ -384,7 +384,7 @@
 },
 {
   "_id": {
-    "$oid": "6684e532c21e73e0b43e0ff6"
+    "$oid": "668bb8bf4b2a435801ad5029"
   },
   "No": "33",
   "DevNo": "1",
@@ -396,7 +396,7 @@
 },
 {
   "_id": {
-    "$oid": "6684e532c21e73e0b43e0ff7"
+    "$oid": "668bb8bf4b2a435801ad502a"
   },
   "No": "34",
   "DevNo": "1",
@@ -408,7 +408,7 @@
 },
 {
   "_id": {
-    "$oid": "6684e532c21e73e0b43e0ff8"
+    "$oid": "668bb8bf4b2a435801ad502b"
   },
   "No": "35",
   "DevNo": "1",
@@ -416,5 +416,677 @@
   "Name": "KIER TIBERIO",
   "Mode": "FACE",
   "DateTime": "2024-07-03 09:43:13",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668bb8bf4b2a435801ad502c"
+  },
+  "No": "36",
+  "DevNo": "1",
+  "UserId": "1",
+  "Name": "KIER TIBERIO",
+  "Mode": "FACE",
+  "DateTime": "2024-07-03 18:09:30",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668bb8bf4b2a435801ad502d"
+  },
+  "No": "37",
+  "DevNo": "1",
+  "UserId": "4",
+  "Name": "JONAH MAE BALOGO",
+  "Mode": "FACE",
+  "DateTime": "2024-07-03 18:11:03",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668bb8bf4b2a435801ad502e"
+  },
+  "No": "38",
+  "DevNo": "1",
+  "UserId": "5",
+  "Name": "MARY ROSE MONDEJAR",
+  "Mode": "FACE",
+  "DateTime": "2024-07-03 18:13:24",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668bb8bf4b2a435801ad502f"
+  },
+  "No": "39",
+  "DevNo": "1",
+  "UserId": "2",
+  "Name": "KIMBERLY BALOGO",
+  "Mode": "FACE",
+  "DateTime": "2024-07-03 18:13:50",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668bb8bf4b2a435801ad5030"
+  },
+  "No": "40",
+  "DevNo": "1",
+  "UserId": "3",
+  "Name": "RHEA JOY GUZON",
+  "Mode": "FP",
+  "DateTime": "2024-07-04 08:47:31",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668bb8bf4b2a435801ad5031"
+  },
+  "No": "41",
+  "DevNo": "1",
+  "UserId": "5",
+  "Name": "MARY ROSE MONDEJAR",
+  "Mode": "FACE",
+  "DateTime": "2024-07-04 08:47:44",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668bb8bf4b2a435801ad5032"
+  },
+  "No": "42",
+  "DevNo": "1",
+  "UserId": "4",
+  "Name": "JONAH MAE BALOGO",
+  "Mode": "FACE",
+  "DateTime": "2024-07-04 09:01:24",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668bb8bf4b2a435801ad5033"
+  },
+  "No": "43",
+  "DevNo": "1",
+  "UserId": "1",
+  "Name": "KIER TIBERIO",
+  "Mode": "FACE",
+  "DateTime": "2024-07-04 09:44:27",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668bb8bf4b2a435801ad5034"
+  },
+  "No": "44",
+  "DevNo": "1",
+  "UserId": "5",
+  "Name": "MARY ROSE MONDEJAR",
+  "Mode": "FACE",
+  "DateTime": "2024-07-04 18:02:42",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668bb8bf4b2a435801ad5035"
+  },
+  "No": "45",
+  "DevNo": "1",
+  "UserId": "4",
+  "Name": "JONAH MAE BALOGO",
+  "Mode": "FACE",
+  "DateTime": "2024-07-04 18:04:15",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668bb8bf4b2a435801ad5036"
+  },
+  "No": "46",
+  "DevNo": "1",
+  "UserId": "3",
+  "Name": "RHEA JOY GUZON",
+  "Mode": "FP",
+  "DateTime": "2024-07-04 18:04:56",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668bb8bf4b2a435801ad5037"
+  },
+  "No": "47",
+  "DevNo": "1",
+  "UserId": "1",
+  "Name": "KIER TIBERIO",
+  "Mode": "FACE",
+  "DateTime": "2024-07-04 18:35:44",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668bb8bf4b2a435801ad5038"
+  },
+  "No": "48",
+  "DevNo": "1",
+  "UserId": "4",
+  "Name": "JONAH MAE BALOGO",
+  "Mode": "FACE",
+  "DateTime": "2024-07-05 08:46:18",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668bb8bf4b2a435801ad5039"
+  },
+  "No": "49",
+  "DevNo": "1",
+  "UserId": "3",
+  "Name": "RHEA JOY GUZON",
+  "Mode": "FP",
+  "DateTime": "2024-07-05 08:46:23",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668bb8bf4b2a435801ad503a"
+  },
+  "No": "50",
+  "DevNo": "1",
+  "UserId": "2",
+  "Name": "KIMBERLY BALOGO",
+  "Mode": "FP",
+  "DateTime": "2024-07-05 08:46:25",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668bb8bf4b2a435801ad503b"
+  },
+  "No": "51",
+  "DevNo": "1",
+  "UserId": "1",
+  "Name": "KIER TIBERIO",
+  "Mode": "FACE",
+  "DateTime": "2024-07-05 09:29:32",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668bb8bf4b2a435801ad503c"
+  },
+  "No": "52",
+  "DevNo": "1",
+  "UserId": "2",
+  "Name": "KIMBERLY BALOGO",
+  "Mode": "FP",
+  "DateTime": "2024-07-05 18:01:29",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668bb8bf4b2a435801ad503d"
+  },
+  "No": "53",
+  "DevNo": "1",
+  "UserId": "3",
+  "Name": "RHEA JOY GUZON",
+  "Mode": "FP",
+  "DateTime": "2024-07-05 18:04:08",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668bb8bf4b2a435801ad503e"
+  },
+  "No": "54",
+  "DevNo": "1",
+  "UserId": "4",
+  "Name": "JONAH MAE BALOGO",
+  "Mode": "FP",
+  "DateTime": "2024-07-05 18:04:16",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668bb8bf4b2a435801ad503f"
+  },
+  "No": "55",
+  "DevNo": "1",
+  "UserId": "1",
+  "Name": "KIER TIBERIO",
+  "Mode": "FACE",
+  "DateTime": "2024-07-05 18:28:12",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668bb8bf4b2a435801ad5040"
+  },
+  "No": "56",
+  "DevNo": "1",
+  "UserId": "5",
+  "Name": "MARY ROSE MONDEJAR",
+  "Mode": "FACE",
+  "DateTime": "2024-07-08 08:43:34",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668bb8bf4b2a435801ad5041"
+  },
+  "No": "57",
+  "DevNo": "1",
+  "UserId": "3",
+  "Name": "RHEA JOY GUZON",
+  "Mode": "FP",
+  "DateTime": "2024-07-08 09:05:46",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668bb8bf4b2a435801ad5042"
+  },
+  "No": "58",
+  "DevNo": "1",
+  "UserId": "1",
+  "Name": "KIER TIBERIO",
+  "Mode": "FACE",
+  "DateTime": "2024-07-08 09:41:24",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668f73a82b130203d5f963d3"
+  },
+  "No": "59",
+  "DevNo": "1",
+  "UserId": "3",
+  "Name": "RHEA JOY GUZON",
+  "Mode": "FACE",
+  "DateTime": "2024-07-08 18:10:22",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668f73a82b130203d5f963d4"
+  },
+  "No": "60",
+  "DevNo": "1",
+  "UserId": "5",
+  "Name": "MARY ROSE MONDEJAR",
+  "Mode": "FACE",
+  "DateTime": "2024-07-08 18:10:37",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668f73a82b130203d5f963d5"
+  },
+  "No": "61",
+  "DevNo": "1",
+  "UserId": "1",
+  "Name": "KIER TIBERIO",
+  "Mode": "FACE",
+  "DateTime": "2024-07-08 18:56:55",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668f73a82b130203d5f963d6"
+  },
+  "No": "62",
+  "DevNo": "1",
+  "UserId": "2",
+  "Name": "KIMBERLY BALOGO",
+  "Mode": "FP",
+  "DateTime": "2024-07-09 08:51:30",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668f73a82b130203d5f963d7"
+  },
+  "No": "63",
+  "DevNo": "1",
+  "UserId": "4",
+  "Name": "JONAH MAE BALOGO",
+  "Mode": "FP",
+  "DateTime": "2024-07-09 08:51:40",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668f73a82b130203d5f963d8"
+  },
+  "No": "64",
+  "DevNo": "1",
+  "UserId": "5",
+  "Name": "MARY ROSE MONDEJAR",
+  "Mode": "FACE",
+  "DateTime": "2024-07-09 08:53:29",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668f73a82b130203d5f963d9"
+  },
+  "No": "65",
+  "DevNo": "1",
+  "UserId": "3",
+  "Name": "RHEA JOY GUZON",
+  "Mode": "FP",
+  "DateTime": "2024-07-09 08:58:02",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668f73a82b130203d5f963da"
+  },
+  "No": "66",
+  "DevNo": "1",
+  "UserId": "1",
+  "Name": "KIER TIBERIO",
+  "Mode": "FACE",
+  "DateTime": "2024-07-09 09:57:36",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668f73a82b130203d5f963db"
+  },
+  "No": "67",
+  "DevNo": "1",
+  "UserId": "2",
+  "Name": "KIMBERLY BALOGO",
+  "Mode": "FP",
+  "DateTime": "2024-07-09 18:01:49",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668f73a82b130203d5f963dc"
+  },
+  "No": "68",
+  "DevNo": "1",
+  "UserId": "5",
+  "Name": "MARY ROSE MONDEJAR",
+  "Mode": "FACE",
+  "DateTime": "2024-07-09 18:01:55",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668f73a82b130203d5f963dd"
+  },
+  "No": "69",
+  "DevNo": "1",
+  "UserId": "4",
+  "Name": "JONAH MAE BALOGO",
+  "Mode": "FP",
+  "DateTime": "2024-07-09 18:02:01",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668f73a82b130203d5f963de"
+  },
+  "No": "70",
+  "DevNo": "1",
+  "UserId": "3",
+  "Name": "RHEA JOY GUZON",
+  "Mode": "FP",
+  "DateTime": "2024-07-09 18:03:50",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668f73a82b130203d5f963df"
+  },
+  "No": "71",
+  "DevNo": "1",
+  "UserId": "1",
+  "Name": "KIER TIBERIO",
+  "Mode": "FACE",
+  "DateTime": "2024-07-09 19:11:18",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668f73a82b130203d5f963e0"
+  },
+  "No": "72",
+  "DevNo": "1",
+  "UserId": "5",
+  "Name": "MARY ROSE MONDEJAR",
+  "Mode": "FACE",
+  "DateTime": "2024-07-10 07:24:22",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668f73a82b130203d5f963e1"
+  },
+  "No": "73",
+  "DevNo": "1",
+  "UserId": "2",
+  "Name": "KIMBERLY BALOGO",
+  "Mode": "FP",
+  "DateTime": "2024-07-10 08:53:19",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668f73a82b130203d5f963e2"
+  },
+  "No": "74",
+  "DevNo": "1",
+  "UserId": "4",
+  "Name": "JONAH MAE BALOGO",
+  "Mode": "FP",
+  "DateTime": "2024-07-10 08:53:25",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668f73a82b130203d5f963e3"
+  },
+  "No": "75",
+  "DevNo": "1",
+  "UserId": "1",
+  "Name": "KIER TIBERIO",
+  "Mode": "FACE",
+  "DateTime": "2024-07-10 08:58:22",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668f73a82b130203d5f963e4"
+  },
+  "No": "76",
+  "DevNo": "1",
+  "UserId": "4",
+  "Name": "JONAH MAE BALOGO",
+  "Mode": "FP",
+  "DateTime": "2024-07-10 18:06:08",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668f73a82b130203d5f963e5"
+  },
+  "No": "77",
+  "DevNo": "1",
+  "UserId": "5",
+  "Name": "MARY ROSE MONDEJAR",
+  "Mode": "FP",
+  "DateTime": "2024-07-10 18:06:13",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668f73a82b130203d5f963e6"
+  },
+  "No": "78",
+  "DevNo": "1",
+  "UserId": "2",
+  "Name": "KIMBERLY BALOGO",
+  "Mode": "FP",
+  "DateTime": "2024-07-10 18:06:24",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668f73a82b130203d5f963e7"
+  },
+  "No": "79",
+  "DevNo": "1",
+  "UserId": "1",
+  "Name": "KIER TIBERIO",
+  "Mode": "FACE",
+  "DateTime": "2024-07-10 19:27:58",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668f73a82b130203d5f963e8"
+  },
+  "No": "80",
+  "DevNo": "1",
+  "UserId": "1",
+  "Name": "KIER TIBERIO",
+  "Mode": "FACE",
+  "DateTime": "2024-07-11 08:23:00",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668f73a82b130203d5f963e9"
+  },
+  "No": "81",
+  "DevNo": "1",
+  "UserId": "5",
+  "Name": "MARY ROSE MONDEJAR",
+  "Mode": "FP",
+  "DateTime": "2024-07-11 08:37:27",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668f73a82b130203d5f963ea"
+  },
+  "No": "82",
+  "DevNo": "1",
+  "UserId": "4",
+  "Name": "JONAH MAE BALOGO",
+  "Mode": "FP",
+  "DateTime": "2024-07-11 08:54:07",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668f73a82b130203d5f963eb"
+  },
+  "No": "83",
+  "DevNo": "1",
+  "UserId": "3",
+  "Name": "RHEA JOY GUZON",
+  "Mode": "FP",
+  "DateTime": "2024-07-11 09:01:48",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6690f9200921f7b72a1169a6"
+  },
+  "No": "84",
+  "DevNo": "1",
+  "UserId": "1",
+  "Name": "KIER TIBERIO",
+  "Mode": "FACE",
+  "DateTime": "2024-07-11 17:42:57",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6690f9200921f7b72a1169a7"
+  },
+  "No": "85",
+  "DevNo": "1",
+  "UserId": "4",
+  "Name": "JONAH MAE BALOGO",
+  "Mode": "FP",
+  "DateTime": "2024-07-11 18:00:07",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6690f9200921f7b72a1169a8"
+  },
+  "No": "86",
+  "DevNo": "1",
+  "UserId": "5",
+  "Name": "MARY ROSE MONDEJAR",
+  "Mode": "FP",
+  "DateTime": "2024-07-11 18:00:18",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6690f9200921f7b72a1169a9"
+  },
+  "No": "87",
+  "DevNo": "1",
+  "UserId": "3",
+  "Name": "RHEA JOY GUZON",
+  "Mode": "FP",
+  "DateTime": "2024-07-11 18:00:31",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6690f9200921f7b72a1169aa"
+  },
+  "No": "88",
+  "DevNo": "1",
+  "UserId": "2",
+  "Name": "KIMBERLY BALOGO",
+  "Mode": "FP",
+  "DateTime": "2024-07-12 08:55:26",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6690f9200921f7b72a1169ab"
+  },
+  "No": "89",
+  "DevNo": "1",
+  "UserId": "4",
+  "Name": "JONAH MAE BALOGO",
+  "Mode": "FP",
+  "DateTime": "2024-07-12 08:55:33",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6690f9200921f7b72a1169ac"
+  },
+  "No": "90",
+  "DevNo": "1",
+  "UserId": "3",
+  "Name": "RHEA JOY GUZON",
+  "Mode": "FP",
+  "DateTime": "2024-07-12 08:57:51",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6690f9200921f7b72a1169ad"
+  },
+  "No": "91",
+  "DevNo": "1",
+  "UserId": "1",
+  "Name": "KIER TIBERIO",
+  "Mode": "FACE",
+  "DateTime": "2024-07-12 09:55:48",
   "__v": 0
 }]
