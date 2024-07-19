@@ -82,7 +82,7 @@ export default function MainHeader() {
                       link: {
                         text: "attendance",
                         hidden: true,
-                        to: "/dashboard/attendance",
+                        to: "/dashboard/attendances",
                         url: url,
                         icon: <UserGroupIcon />,
                         onClick: null,
@@ -90,7 +90,7 @@ export default function MainHeader() {
                     },
                     {
                       link: {
-                        text: "UploadAttendance",
+                        text: "Uploads",
                         hidden: true,
                         to: "/dashboard/upload",
                         url: url,

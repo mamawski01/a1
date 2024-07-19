@@ -6,13 +6,29 @@ import {
   userEmailAndDelImage,
 } from "../../utils/beHelpers.js";
 
-export async function getter(req, res, model, mess, single = true) {
+export async function getter(
+  req,
+  res,
+  model,
+  mess,
+  single = true,
+  children = false
+) {
   try {
-    if (single) {
-      const { id } = req.params;
+    const { id, id2nd } = req.params;
+    if (single && !children) {
       const data = await model.findById(id);
       if (!data) return res.status(404).send(`${mess} not found`);
       return res.status(200).send({ data });
+    }
+    if (single && children) {
+      const data = await model.findById(id);
+      const data2nd = data?.schedule.find(
+        (data) => data._id.toString() === id2nd
+      );
+      if (!data) return res.status(404).send(`${mess} not found`);
+      if (!data2nd) return res.status(404).send(`${mess} not found`);
+      return res.status(200).send({ data2nd });
     }
     if (!single) {
       const data = await model.find();
@@ -24,11 +40,55 @@ export async function getter(req, res, model, mess, single = true) {
   }
 }
 
-export async function poster(req, res, model, mess, simple = false, secModel) {
+export async function poster(
+  req,
+  res,
+  model,
+  mess,
+  simple = false,
+  secModel,
+  trdModel,
+  children = false
+) {
   try {
-    if (simple) {
+    if (simple && !children) {
       const data = await model.create(req.body);
       return res.status(200).send({ data });
+    }
+
+    if (simple && children) {
+      const { id } = req.params;
+
+      const data = await model.findByIdAndUpdate(
+        id,
+        { $push: req.body },
+        { new: true }
+      );
+      return res.status(200).send({ data });
+    }
+
+    if (mess === "apiSchedulesPostPatch") {
+      const { id } = req.params;
+
+      const existingSchedule = await model.findById(id);
+      if (!existingSchedule) {
+        return res.status(404).send("Schedule not found");
+      }
+
+      const array = existingSchedule.schedule || [];
+      const isDuplicate = array.some(
+        (item) => item.date === req.body.schedule[0].date
+      );
+      if (!isDuplicate) {
+        const data = await model.findByIdAndUpdate(
+          id,
+          { $push: req.body },
+          { new: true }
+        );
+        return res.status(200).send({ data });
+      } else {
+        return res.status(409).send("Duplicate Date");
+      }
     }
 
     if (mess === "apiUserPostUser") {
@@ -67,11 +127,24 @@ export async function poster(req, res, model, mess, simple = false, secModel) {
       if (conflict) return res.status(409).send(confMess);
       //check if email exist and delete image
 
+      const newSchedule = await trdModel.create({
+        schedule: [
+          {
+            date: "",
+            timeIn: "",
+            timeOut: "",
+            confirmUserId: _id,
+          },
+        ],
+      });
       const user = await secModel.findByIdAndDelete(_id);
       if (!user) {
         return res.status(404).send(mess + " not found");
       } else {
-        const data = await model.create(req.body);
+        const data = await model.create({
+          ...req.body,
+          schedules: newSchedule._id,
+        });
         return res.status(200).send({ data });
       }
     }
@@ -108,13 +181,36 @@ export async function poster(req, res, model, mess, simple = false, secModel) {
   }
 }
 
-export async function patcher(req, res, model, mess, simple = false) {
-  const { id } = req.params;
+export async function patcher(
+  req,
+  res,
+  model,
+  mess,
+  simple = false,
+  children = false
+) {
+  const { id, id2nd } = req.params;
   try {
-    if (simple) {
+    if (simple && !children) {
       const data = await model.findByIdAndUpdate(id, req.body, {
         new: true,
       });
+      if (!data) return res.status(404).send(mess + " not found");
+      return res.status(200).send({ data });
+    }
+
+    if (simple && children) {
+      const data = await model.findOneAndUpdate(
+        { _id: id, "schedule._id": id2nd },
+        {
+          $set: {
+            "schedule.$.date": req.body.schedule[0].date,
+            "schedule.$.timeIn": req.body.schedule[0].timeIn,
+            "schedule.$.timeOut": req.body.schedule[0].timeOut,
+          },
+        },
+        { new: true }
+      );
       if (!data) return res.status(404).send(mess + " not found");
       return res.status(200).send({ data });
     }
@@ -149,13 +245,13 @@ export async function patcher(req, res, model, mess, simple = false) {
       return res.status(200).send({ data });
     }
   } catch (error) {
-    deleteImage(req?.file?.path);
+    // deleteImage(req?.file?.path);
     return res.status(500).send(error.message + " " + mess);
   }
 }
 
-export async function deleter(req, res, model, mess, simple = false) {
-  const { id } = req.params;
+export async function deleter(req, res, model, mess, simple = false, secModel) {
+  const { id, id2nd } = req.params;
   try {
     if (mess === "apiConfirmUserDelete") {
       //userPrevImg
@@ -164,8 +260,9 @@ export async function deleter(req, res, model, mess, simple = false) {
       //userPrevImg
 
       const data = await model.findByIdAndDelete(id);
+      const data2 = await secModel.findByIdAndDelete(id2nd);
       if (!model) return res.status(404).send(mess + " not found");
-      return res.status(200).send({ data });
+      return res.status(200).send({ data, data2 });
     }
 
     if (mess === "apiUserDeleteUser") {

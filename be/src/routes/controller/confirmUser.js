@@ -1,4 +1,5 @@
 import ConfirmUser from "./models/ConfirmUser.js";
+import Schedule from "./models/Schedule.js";
 import User from "./models/User.js";
 import { deleter, getter, patcher, poster } from "./operators.js";
 
@@ -11,7 +12,15 @@ export async function apiConfirmUser(req, res) {
 }
 
 export async function apiConfirmUserPost(req, res) {
-  return poster(req, res, ConfirmUser, "apiConfirmUserPost", false, User);
+  return poster(
+    req,
+    res,
+    ConfirmUser,
+    "apiConfirmUserPost",
+    false,
+    User,
+    Schedule
+  );
 }
 
 export async function apiConfirmUserPatchUser(req, res) {
@@ -19,5 +28,12 @@ export async function apiConfirmUserPatchUser(req, res) {
 }
 
 export async function apiConfirmUserDelete(req, res) {
-  return deleter(req, res, ConfirmUser, "apiConfirmUserDelete", true);
+  return deleter(
+    req,
+    res,
+    ConfirmUser,
+    "apiConfirmUserDelete",
+    false,
+    Schedule
+  );
 }

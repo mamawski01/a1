@@ -6,6 +6,10 @@ const { Schema } = mongoose;
 const confirmUserSchema = new Schema({
   ...schemaModel(),
   attendanceId: { type: String },
+  schedules: {
+    type: Schema.Types.ObjectId,
+    ref: "ScheduleSchema",
+  },
 });
 const ConfirmUser = mongoose.model("ConfirmUser", confirmUserSchema);
 

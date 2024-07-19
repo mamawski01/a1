@@ -34,5 +34,8 @@ export function registerSocketServer(server) {
     socket.on("sendAttendanceSetting", (data) => {
       emitter("dataReceivedAttendanceSetting", io, data);
     });
+    socket.on("sendSchedule", (data) => {
+      emitter("dataReceivedSchedule", io, data);
+    });
   });
 }

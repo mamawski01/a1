@@ -45,4 +45,5 @@ export const registerSchema = Joi.object(userSchema);
 export const confirmSchema = Joi.object({
   ...userSchema,
   attendanceId: joi,
+  schedules: joi,
 });

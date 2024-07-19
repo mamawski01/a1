@@ -1,8 +1,5 @@
 import User from "./models/User.js";
-import {
-  prevImgAndDelImg,
-  userEmailAndDelImage,
-} from "../../utils/beHelpers.js";
+
 import { deleter, getter, patcher, poster } from "./operators.js";
 
 export function apiUsers(req, res) {

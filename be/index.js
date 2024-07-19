@@ -33,8 +33,4 @@ mongoose
     console.log("Db and server fail" + err);
   });
 
-app.get("/", (req, res) => {
-  return res.json("Hello Earth");
-});
-
 app.use("/", routes);

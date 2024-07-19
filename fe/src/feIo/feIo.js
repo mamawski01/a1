@@ -23,3 +23,7 @@ export function updateRealtimeAttendance(data) {
 export function updateRealtimeAttendanceSettings(data) {
   return feSocket.emit("sendAttendanceSetting", data);
 }
+
+export function updateRealtimeSchedule(data) {
+  return feSocket.emit("sendSchedule", data);
+}

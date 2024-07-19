@@ -27,6 +27,13 @@ import {
   apiAttendanceSettingPost,
   apiAttendanceSettings,
 } from "./controller/attendanceSetting.js";
+import {
+  apiScheduleChildren,
+  apiScheduleParent,
+  apiSchedules,
+  apiSchedulesChildrenPatch,
+  apiSchedulesPostPatch,
+} from "./controller/schedule.js";
 
 const router = express.Router();
 
@@ -69,7 +76,7 @@ router.patch(
   apiConfirmUserPatchUser
 );
 
-router.delete("/apiConfirmUserDelete/:id", apiConfirmUserDelete);
+router.delete("/apiConfirmUserDelete/:id/:id2nd", apiConfirmUserDelete);
 
 //attendance routes
 router.get("/apiAttendances", apiAttendances);
@@ -89,5 +96,19 @@ router.get("/apiAttendanceSetting/:id", apiAttendanceSetting);
 router.post("/apiAttendanceSettingPost", apiAttendanceSettingPost);
 
 router.patch("/apiAttendanceSettingPatch/:id", apiAttendanceSettingPatch);
+
+//schedule routes
+router.get("/apiSchedules", apiSchedules);
+
+router.get("/apiScheduleParent/:id", apiScheduleParent);
+
+router.get("/apiScheduleChildren/:id/:id2nd", apiScheduleChildren);
+
+router.patch("/apiSchedulesPostPatch/:id", apiSchedulesPostPatch); //special ni kier
+
+router.patch(
+  "/apiSchedulesChildrenPatch/:id/:id2nd",
+  apiSchedulesChildrenPatch
+);
 
 export default router;

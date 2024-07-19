@@ -15,6 +15,7 @@ import Attendance from "./Pages/Attendance.jsx";
 import AttendanceId from "./Pages/AttendanceId.jsx";
 import AttendanceSettingForm from "./Pages/AttendanceSettingForm.jsx";
 import AttendanceSettingFormEdit from "./Pages/AttendanceSettingFormEdit.jsx";
+import ScheduleForm from "./Pages/ScheduleForm.jsx";
 
 export default function App() {
   return (
@@ -49,20 +50,24 @@ export default function App() {
             ></Route>
             <Route path="dashboard/upload" element={<Upload></Upload>}></Route>
             <Route
-              path="dashboard/attendance"
+              path="dashboard/attendances"
               element={<Attendance></Attendance>}
             ></Route>
             <Route
-              path="dashboard/attendance/:id"
+              path="dashboard/attendances/:id"
               element={<AttendanceId></AttendanceId>}
             ></Route>
             <Route
               path="dashboard/attendance/attendanceSettingForm"
               element={<AttendanceSettingForm></AttendanceSettingForm>}
-            ></Route>{" "}
+            ></Route>
             <Route
               path="dashboard/attendance/attendanceSettingForm/:id"
               element={<AttendanceSettingFormEdit></AttendanceSettingFormEdit>}
+            ></Route>
+            <Route
+              path="dashboard/attendances/scheduleForm"
+              element={<ScheduleForm></ScheduleForm>}
             ></Route>
           </Route>
           <Route path="login" element={<LoginPage></LoginPage>}></Route>

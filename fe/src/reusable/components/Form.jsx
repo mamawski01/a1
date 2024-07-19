@@ -60,6 +60,9 @@ export default function Form({
         if (response.data) {
           // navigate(-1);
         }
+      } else if (specialIns === "schedule") {
+        // const response = await
+        convertToJson(data.file[0]);
       } else {
         const finalData = data;
         for (const key in finalData) {
@@ -325,7 +328,7 @@ function Input({
           />
         </>
       )}
-      {specifyFile === "file" && (
+      {[".txt", ".xlsx"].includes(specifyFile) && (
         <input
           type={inputType}
           placeholder={font}
@@ -334,7 +337,7 @@ function Input({
           className={`${style} ${inputType === "file" && "cursor-pointer"}`}
           title={font}
           {...register(input, validate)}
-          accept={".txt"}
+          accept={specifyFile}
         ></input>
       )}
       {inputType === "option" && (

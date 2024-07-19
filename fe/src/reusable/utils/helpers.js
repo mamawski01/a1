@@ -1,3 +1,4 @@
+import readXlsxFile from "read-excel-file";
 import Swal from "sweetalert2";
 
 export function swalAlert(
@@ -65,6 +66,7 @@ export function convertToJson(file) {
 
     reader.onload = function (e) {
       const content = e.target.result;
+      console.log(content);
       const lines = content.split("\n");
       const newArray = lines.map((element) => element.replace("\r", ""));
       const headers = newArray.map((element) => element.split("\t"));
@@ -87,11 +89,29 @@ export function convertToJson(file) {
   });
 }
 
-export function getTimeDifference(startTime, endTime) {
+export function convertExcelToJson(file) {
+  const data = readXlsxFile(file);
+  console.log(data);
+
+  return;
+}
+
+export function getTimeDifference(startTime, endTime, breakTime) {
   const start = new Date(startTime);
   const end = new Date(endTime);
-  const timeDiff = end - start;
+  let timeDiff = end - start;
 
+  if (breakTime) {
+    const string = breakTime;
+    const regex = /(\d+)hr:(\d+)min/;
+    const match = string.match(regex);
+    const hours = parseInt(match[1]);
+    const minutes = parseInt(match[2]);
+    const time = 60 * (60 + minutes) * 1000 * (hours ? hours : 1);
+
+    timeDiff = end - start - time;
+  }
+  if (timeDiff < 0) return null;
   const hours = Math.floor(timeDiff / 3600000);
   const minutes = Math.floor((timeDiff % 3600000) / 60000);
   const seconds = Math.floor((timeDiff % 60000) / 1000);

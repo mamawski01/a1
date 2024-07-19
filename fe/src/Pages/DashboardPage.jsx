@@ -23,6 +23,7 @@ import {
 
 export default function DashboardPage() {
   const [confirmUsers, confirmUsersSet] = useState([]);
+  console.log(confirmUsers);
 
   feSocket.on("dataReceivedConfirmUser", (data) => {
     confirmUsersSet(data);
@@ -128,7 +129,8 @@ export default function DashboardPage() {
                 },
                 {
                   btn: {
-                    function: () => apiConfirmUserDelete(user._id),
+                    function: () =>
+                      apiConfirmUserDelete(user._id, user.schedules),
                     text: "delete",
                     color: "red",
                     icon: { icon: <TrashIcon></TrashIcon> },

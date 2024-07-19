@@ -7,6 +7,9 @@ import { feSocket } from "../feIo/feIo";
 import Table from "../reusable/components/Table";
 import { apiConfirmUsers } from "../api/confirmUser";
 import { apiAttendances } from "../api/attendance";
+import { apiAttendanceSettings } from "../api/attendanceSetting";
+import Btn from "../reusable/components/Btn";
+import { Cog6ToothIcon } from "@heroicons/react/24/solid";
 
 export default function Attendance() {
   const [confirmUsers, confirmUsersSet] = useState([]);
@@ -25,15 +28,10 @@ export default function Attendance() {
     return () => {};
   }, []);
 
-  feSocket.on("dataReceivedAttendance", (data) => {
-    attendanceSet(data);
-  });
-
   const [attendance, attendanceSet] = useState([]);
 
-  const [value, setValue] = useState({
-    startDate: dayjs().startOf("month").format("YYYY-MM-DD"),
-    endDate: dayjs().format("YYYY-MM-DD"),
+  feSocket.on("dataReceivedAttendance", (data) => {
+    attendanceSet(data);
   });
 
   useEffect(() => {
@@ -45,6 +43,27 @@ export default function Attendance() {
     //cleaning
     return () => {};
   }, []);
+
+  const [attendanceSetting, attendanceSettingSet] = useState([]);
+
+  feSocket.on("dataReceivedAttendanceSetting", (data) => {
+    attendanceSettingSet(data);
+  });
+
+  useEffect(() => {
+    async function fetchData() {
+      const response = await apiAttendanceSettings();
+      return response;
+    }
+    fetchData();
+    //cleaning
+    return () => {};
+  }, []);
+
+  const [value, setValue] = useState({
+    startDate: dayjs().startOf("month").format("YYYY-MM-DD"),
+    endDate: dayjs().format("YYYY-MM-DD"),
+  });
 
   const [daysArr, daysArrSet] = useState(defaultDates());
 
@@ -96,6 +115,20 @@ export default function Attendance() {
       <h1 className="pb-6 text-center text-lg font-bold">
         Start date: {value.startDate} / End date: {value.endDate}
       </h1>
+      <h1 className="font-bold">Attendance rules:</h1>
+      <div className="flex items-center justify-evenly">
+        <span>Break time: {attendanceSetting[0]?.breakTime}</span>
+        <span>Duty hours: {attendanceSetting[0]?.regularDutyHours}</span>
+        <span>Holiday Rating: {attendanceSetting[0]?.regularRating}</span>
+        <span>Overtime Starts: {attendanceSetting[0]?.overtimeStarts}</span>
+        <Btn
+          text="Edit Attendance setting"
+          icon={[{ icon: <Cog6ToothIcon /> }]}
+          type="link"
+          color={"yellow"}
+          to={"attendanceSettingForm/" + attendanceSetting[0]?._id}
+        ></Btn>
+      </div>
       <div className="flex flex-col gap-10 [&>*:nth-child(even)]:bg-slate-500/10">
         {confirmUsers
           .slice()
@@ -103,6 +136,7 @@ export default function Attendance() {
           .map((confirmUser, i) => (
             <Table
               key={i}
+              attendanceSetting={attendanceSetting}
               data={{
                 data: {
                   details: [

@@ -86,17 +86,40 @@ export function attendanceSettingModel() {
         inputs: ["breakTime", "regularRating", "holidayRatingRegular"],
         isRequired: [true, true, true],
         inputTypes: ["option", "option", "option"],
-        options: [["15mins", "30mins", "1hr", "1hr:30mins"], ["30%"], ["30%"]],
+        options: [
+          ["0hr:15min", "0hr:30min", "1hr:00min", "1hr:30min"],
+          ["30%"],
+          ["30%"],
+        ],
       },
     },
     {
       label: {
         rowLabels: "",
-        inputs: ["holidayRatingSpecial", "regularDutyHours"],
-        isRequired: [true, true],
-        inputTypes: ["option", "option"],
-        options: [["30%"], ["6", "7", "8", "9"]],
+        inputs: ["holidayRatingSpecial", "regularDutyHours", "overtimeStarts"],
+        isRequired: [true, true, true],
+        inputTypes: ["option", "option", "option"],
+        options: [
+          ["30%"],
+          ["6hr:00min", "7hr:00min", "8hr:00min", "9hr:00min"],
+          ["0hr:15min", "0hr:30min", "1hr:00min", "1hr:30min"],
+        ],
       },
     },
   ];
+}
+
+export function timeArr(defVal) {
+  let timeArray = [];
+
+  for (let hour = 0; hour < 24; hour++) {
+    for (let minute of [0, 30]) {
+      let period = hour < 12 ? "am" : "pm";
+      let hour12 = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour;
+      let time = `${hour12.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")} ${period}`;
+      timeArray.push(time);
+    }
+  }
+
+  return [defVal, "day-off", ...timeArray];
 }

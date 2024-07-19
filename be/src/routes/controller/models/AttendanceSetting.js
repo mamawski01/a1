@@ -7,6 +7,7 @@ const attendanceSettingSchema = new Schema({
   holidayRatingRegular: { type: String },
   holidayRatingSpecial: { type: String },
   regularDutyHours: { type: String },
+  overtimeStarts: { type: String },
 });
 
 const AttendanceSetting = mongoose.model(
@@ -15,3 +16,9 @@ const AttendanceSetting = mongoose.model(
 );
 
 export default AttendanceSetting;
+
+[
+  {
+    DateTime: "24-07-22 Mon 22",
+  },
+];

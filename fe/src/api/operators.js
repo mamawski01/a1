@@ -3,20 +3,24 @@ import axios from "axios";
 
 import { swalAlert } from "../reusable/utils/helpers";
 import connectWithSocketServer from "../feIo/feIo";
+import { apiAttendances } from "./attendance";
+import { apiAttendanceSettings } from "./attendanceSetting";
+import { apiConfirmUsers } from "./confirmUser";
+import { apiUsers } from "./userRegister";
 
 const apiClient = axios.create({
   baseURL: "http://localhost:7000",
   timeout: 10000,
 });
 
-export async function getter(
-  custMess,
-  url,
-  updater,
-  updateRealtime,
-  single = true,
-  id,
-) {
+function updater() {
+  apiAttendances();
+  apiAttendanceSettings();
+  apiConfirmUsers();
+  apiUsers();
+}
+
+export async function getter(custMess, url, updateRealtime, single = true, id) {
   try {
     connectWithSocketServer();
     if (single) {
@@ -38,10 +42,16 @@ export async function getter(
   }
 }
 
-export async function poster(custMess, url, updater, newData, simple = false) {
+export async function poster(custMess, url, newData, simple = false, id) {
   try {
-    if (simple) {
+    if (simple && !id) {
       const data = await apiClient.post(url, newData);
+      toast.success(custMess);
+      updater();
+      return data;
+    }
+    if (simple && id) {
+      const data = await apiClient.patch(url + "/" + id, newData);
       toast.success(custMess);
       updater();
       return data;
@@ -80,14 +90,7 @@ export async function poster(custMess, url, updater, newData, simple = false) {
   }
 }
 
-export async function patcher(
-  custMess,
-  url,
-  updater,
-  id,
-  newData,
-  simple = false,
-) {
+export async function patcher(custMess, url, id, newData, simple = false) {
   try {
     if (simple) {
       const data = await apiClient.patch(url + id, newData);
@@ -115,12 +118,22 @@ export async function patcher(
   }
 }
 
-export async function deleter(custMess, url, updater, id, simple = false) {
+export async function deleter(custMess, url, id, simple = false, id2nd) {
+  console.log(id2nd);
   try {
     if (simple) {
       const confirmDelete = await swalAlert();
       if (confirmDelete.isConfirmed) {
         const data = await apiClient.delete(url + id);
+        toast.success(custMess);
+        updater();
+        return data;
+      }
+    }
+    if (!simple && id2nd) {
+      const confirmDelete = await swalAlert();
+      if (confirmDelete.isConfirmed) {
+        const data = await apiClient.delete(url + id + "/" + id2nd);
         toast.success(custMess);
         updater();
         return data;
