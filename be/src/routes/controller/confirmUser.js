@@ -17,7 +17,7 @@ export async function apiConfirmUserPost(req, res) {
     res,
     ConfirmUser,
     "apiConfirmUserPost",
-    false,
+    "",
     User,
     Schedule
   );

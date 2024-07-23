@@ -45,18 +45,18 @@ export async function poster(
   res,
   model,
   mess,
-  simple = false,
+  simple = "",
   secModel,
   trdModel,
   children = false
 ) {
   try {
-    if (simple && !children) {
+    if (simple === "simple") {
       const data = await model.create(req.body);
       return res.status(200).send({ data });
     }
 
-    if (simple && children) {
+    if (children) {
       const { id } = req.params;
 
       const data = await model.findByIdAndUpdate(
@@ -127,16 +127,7 @@ export async function poster(
       if (conflict) return res.status(409).send(confMess);
       //check if email exist and delete image
 
-      const newSchedule = await trdModel.create({
-        schedule: [
-          {
-            date: "",
-            timeIn: "",
-            timeOut: "",
-            confirmUserId: _id,
-          },
-        ],
-      });
+      const newSchedule = await trdModel.create({});
       const user = await secModel.findByIdAndDelete(_id);
       if (!user) {
         return res.status(404).send(mess + " not found");
@@ -181,17 +172,10 @@ export async function poster(
   }
 }
 
-export async function patcher(
-  req,
-  res,
-  model,
-  mess,
-  simple = false,
-  children = false
-) {
+export async function patcher(req, res, model, mess, simple = false) {
   const { id, id2nd } = req.params;
   try {
-    if (simple && !children) {
+    if (simple) {
       const data = await model.findByIdAndUpdate(id, req.body, {
         new: true,
       });
@@ -199,7 +183,7 @@ export async function patcher(
       return res.status(200).send({ data });
     }
 
-    if (simple && children) {
+    if (mess === "apiSchedulesChildrenPatch") {
       const data = await model.findOneAndUpdate(
         { _id: id, "schedule._id": id2nd },
         {
@@ -211,6 +195,8 @@ export async function patcher(
         },
         { new: true }
       );
+      console.log(req.body);
+      console.log(data);
       if (!data) return res.status(404).send(mess + " not found");
       return res.status(200).send({ data });
     }
@@ -245,7 +231,7 @@ export async function patcher(
       return res.status(200).send({ data });
     }
   } catch (error) {
-    // deleteImage(req?.file?.path);
+    deleteImage(req?.file?.path);
     return res.status(500).send(error.message + " " + mess);
   }
 }

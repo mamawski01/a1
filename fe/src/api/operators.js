@@ -7,6 +7,7 @@ import { apiAttendances } from "./attendance";
 import { apiAttendanceSettings } from "./attendanceSetting";
 import { apiConfirmUsers } from "./confirmUser";
 import { apiUsers } from "./userRegister";
+import { apiSchedules } from "./schedule";
 
 const apiClient = axios.create({
   baseURL: "http://localhost:7000",
@@ -18,6 +19,7 @@ function updater() {
   apiAttendanceSettings();
   apiConfirmUsers();
   apiUsers();
+  apiSchedules();
 }
 
 export async function getter(custMess, url, updateRealtime, single = true, id) {
@@ -42,15 +44,15 @@ export async function getter(custMess, url, updateRealtime, single = true, id) {
   }
 }
 
-export async function poster(custMess, url, newData, simple = false, id) {
+export async function poster(custMess, url, newData, simple = "", id) {
   try {
-    if (simple && !id) {
+    if (simple === "simple") {
       const data = await apiClient.post(url, newData);
       toast.success(custMess);
       updater();
       return data;
     }
-    if (simple && id) {
+    if (url === "/apiSchedulesPostPatch") {
       const data = await apiClient.patch(url + "/" + id, newData);
       toast.success(custMess);
       updater();
@@ -90,10 +92,16 @@ export async function poster(custMess, url, newData, simple = false, id) {
   }
 }
 
-export async function patcher(custMess, url, id, newData, simple = false) {
+export async function patcher(custMess, url, id, newData, simple = "", id2nd) {
   try {
-    if (simple) {
+    if (simple === "simple") {
       const data = await apiClient.patch(url + id, newData);
+      toast.success(custMess);
+      updater();
+      return data;
+    }
+    if (id2nd) {
+      const data = await apiClient.patch(url + id + "/" + id2nd, newData);
       toast.success(custMess);
       updater();
       return data;

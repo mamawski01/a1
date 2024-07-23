@@ -10,14 +10,38 @@ export default function Input({
   dataDelete = null,
   dataDefaultVal = null,
   attendanceId,
+  index,
+  schedules,
+  daysArr,
 }) {
+  function newObj(daysArr = null, id = null, id2nd = null, mess) {
+    return {
+      date: daysArr,
+      id,
+      id2nd,
+      mess: id2nd && mess,
+    };
+  }
+
+  const { date, id, id2nd, mess } = newObj(
+    daysArr,
+    attendanceId,
+    schedules.schedule?.[index]?._id,
+    "update",
+  );
+
+  // console.log(date, id, id2nd);
+
   const submitBtnHidden = data[0].label.submitBtnHidden;
 
   const { register, handleSubmit } = useForm();
-
   async function onSubmit(data) {
+    console.log(data);
     const finalData = { schedule: [{ ...data }] };
     console.log(finalData);
+    // updated
+    //   ? dataEdit(attendanceId, finalData, "id2nd")
+    //   : dataSave(finalData, attendanceId);
     dataSave(finalData, attendanceId);
   }
 
@@ -41,10 +65,13 @@ export default function Input({
             <button
               className="px-1 hover:rounded-md hover:bg-slate-600"
               type="submit"
+              // onMouseEnter={updated ? null : handleSubmit(onSubmit)}
               onMouseEnter={handleSubmit(onSubmit)}
+              // onClick={updated ? handleSubmit(onSubmit) : null}
             >
-              Submit
+              {id2nd ? "Update " : "Save "}
             </button>
+            {mess}
           </div>
         </form>
       ))}
@@ -109,7 +136,6 @@ RowInput.propTypes = {
 function InputDetails({
   input = "",
   inputType = "text",
-  specifyFile = "",
   options = [],
   register,
   inputsHidden = false,
@@ -117,7 +143,6 @@ function InputDetails({
   rowLabelsHidden = false,
 }) {
   const font = formatFontLabel(input);
-
   const style =
     "w-full rounded-md border border-gray-400 bg-slate-700 placeholder:text-sky-500 hover:ring hover:ring-gray-500 focus:outline-none focus:ring focus:ring-gray-500";
 
@@ -131,26 +156,20 @@ function InputDetails({
         {font}
       </label>
       {(inputType === "text" ||
-        inputType === "date" ||
         inputType === "email" ||
         inputType === "password") && (
-        <>
-          <input
-            type={inputType}
-            placeholder={font}
-            id={input}
-            name={input}
-            className={`${style} ${inputType === "file" && "cursor-pointer"}`}
-            autoComplete="off"
-            title={font}
-            {...register(input)}
-            defaultValue={inputsDefault}
-          />
-
-          {specifyFile === "file" && <input></input>}
-        </>
+        <input
+          type={inputType}
+          placeholder={font}
+          id={input}
+          name={input}
+          className={`${style} ${inputType === "file" && "cursor-pointer"}`}
+          autoComplete="off"
+          title={font}
+          {...register(input)}
+          defaultValue={inputsDefault}
+        />
       )}
-
       {inputType === "option" && (
         <select
           id={input}

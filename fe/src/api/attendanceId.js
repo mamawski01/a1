@@ -17,6 +17,6 @@ export async function apiAttendanceIdPatch(id, confirmUser) {
     "/apiAttendanceIdPatch/",
     id,
     confirmUser,
-    true,
+    "simple",
   );
 }

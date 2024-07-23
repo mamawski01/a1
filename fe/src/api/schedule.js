@@ -21,5 +21,16 @@ export async function apiSchedules() {
 // }
 
 export async function apiSchedulesPostPatch(data, id) {
-  return poster("Schedule created", "/apiSchedulesPostPatch", data, true, id);
+  return poster("Schedule created", "/apiSchedulesPostPatch", data, "", id);
+}
+
+export async function apiSchedulesChildrenPatch(id, data, id2nd) {
+  return patcher(
+    "Schedule updated",
+    "/apiSchedulesChildrenPatch/",
+    id,
+    data,
+    false,
+    id2nd,
+  );
 }

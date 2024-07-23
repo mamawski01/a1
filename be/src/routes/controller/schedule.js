@@ -27,5 +27,5 @@ export async function apiSchedulesPostPatch(req, res) {
 }
 
 export async function apiSchedulesChildrenPatch(req, res) {
-  return patcher(req, res, Schedule, "apiSchedulesChildrenPatch", true, true);
+  return patcher(req, res, Schedule, "apiSchedulesChildrenPatch", false);
 }

@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 import { location } from "./multer.js";
 
 export function deleteImage(path) {
+  if (!path) return null;
   return fs.unlink(path, (err) => {
     if (err) {
       console.error(err);
