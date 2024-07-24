@@ -10,9 +10,9 @@ export async function apiAttendanceSetting(req, res) {
 }
 
 export async function apiAttendanceSettingPost(req, res) {
-  poster(req, res, AttendanceSetting, "apiAttendanceSettingPost", true);
+  poster(req, res, AttendanceSetting, "apiAttendanceSettingPost", "simple");
 }
 
 export async function apiAttendanceSettingPatch(req, res) {
-  patcher(req, res, AttendanceSetting, "apiAttendanceSettingPatch", true);
+  patcher(req, res, AttendanceSetting, "apiAttendanceSettingPatch", "simple");
 }

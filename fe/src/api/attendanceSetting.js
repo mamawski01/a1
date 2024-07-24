@@ -21,7 +21,7 @@ export async function apiAttendanceSetting(id) {
 }
 
 export async function apiAttendanceSettingPost(data) {
-  return poster("Setting created", "/apiAttendanceSettingPost", data, true);
+  return poster("Setting created", "/apiAttendanceSettingPost", data, "simple");
 }
 
 export async function apiAttendanceSettingPatch(id, data) {
@@ -30,6 +30,6 @@ export async function apiAttendanceSettingPatch(id, data) {
     "/apiAttendanceSettingPatch/",
     id,
     data,
-    true,
+    "simple",
   );
 }

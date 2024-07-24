@@ -195,8 +195,7 @@ export async function patcher(req, res, model, mess, simple = false) {
         },
         { new: true }
       );
-      console.log(req.body);
-      console.log(data);
+
       if (!data) return res.status(404).send(mess + " not found");
       return res.status(200).send({ data });
     }

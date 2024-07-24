@@ -10,39 +10,27 @@ export default function Input({
   dataDelete = null,
   dataDefaultVal = null,
   attendanceId,
-  index,
   schedules,
   daysArr,
+  index,
 }) {
-  function newObj(daysArr = null, id = null, id2nd = null, mess) {
-    return {
-      date: daysArr,
-      id,
-      id2nd,
-      mess: id2nd && mess,
-    };
-  }
+  const scheduleArr = schedules?.schedule.map((obj) => obj.date);
 
-  const { date, id, id2nd, mess } = newObj(
-    daysArr,
-    attendanceId,
-    schedules.schedule?.[index]?._id,
-    "update",
-  );
+  const updated = daysArr.map((item) => {
+    const ids = schedules?.schedule.find((date) => date.date === item)?._id;
 
-  // console.log(date, id, id2nd);
+    return ids;
+  });
+  console.log(updated);
 
   const submitBtnHidden = data[0].label.submitBtnHidden;
 
   const { register, handleSubmit } = useForm();
   async function onSubmit(data) {
-    console.log(data);
     const finalData = { schedule: [{ ...data }] };
-    console.log(finalData);
-    // updated
-    //   ? dataEdit(attendanceId, finalData, "id2nd")
-    //   : dataSave(finalData, attendanceId);
-    dataSave(finalData, attendanceId);
+    updated[index]
+      ? dataEdit(attendanceId, finalData, "id2nd")
+      : dataSave(finalData, attendanceId);
   }
 
   return (
@@ -65,13 +53,12 @@ export default function Input({
             <button
               className="px-1 hover:rounded-md hover:bg-slate-600"
               type="submit"
-              // onMouseEnter={updated ? null : handleSubmit(onSubmit)}
-              onMouseEnter={handleSubmit(onSubmit)}
-              // onClick={updated ? handleSubmit(onSubmit) : null}
+              onMouseEnter={updated[index] ? null : handleSubmit(onSubmit)}
+              onClick={updated[index] ? handleSubmit(onSubmit) : null}
             >
-              {id2nd ? "Update " : "Save "}
+              {updated[index] ? "Update " : "Save "}
             </button>
-            {mess}
+            {updated[index] && updated[index]}
           </div>
         </form>
       ))}
@@ -198,3 +185,36 @@ InputDetails.propTypes = {
   inputsDefault: PropTypes.any,
   rowLabelsHidden: PropTypes.any,
 };
+
+const arr = [
+  {
+    date: "24-07-03 Wed 03",
+    timeIn: "9:00 am",
+    timeOut: "6:00 pm",
+    _id: {
+      $oid: "66a0bd0a716259f5a5c5c6f3",
+    },
+  },
+  {
+    date: "24-07-06 Sat 06",
+    timeIn: "9:00 am",
+    timeOut: "6:00 pm",
+    _id: {
+      $oid: "66a0bd1f716259f5a5c5c717",
+    },
+  },
+  {
+    date: "24-07-09 Tue 09",
+    timeIn: "9:00 am",
+    timeOut: "6:00 pm",
+    _id: {
+      $oid: "66a0bf4fb69fe5dd4b94429d",
+    },
+  },
+];
+
+const checker = "24-07-03 Wed 03";
+
+const result = arr.find((item) => item.date === checker)._id.$oid;
+
+// console.log(result);

@@ -1,4 +1,3 @@
-import readXlsxFile from "read-excel-file";
 import Swal from "sweetalert2";
 
 export function swalAlert(
@@ -87,13 +86,6 @@ export function convertToJson(file) {
 
     reader.readAsText(file);
   });
-}
-
-export function convertExcelToJson(file) {
-  const data = readXlsxFile(file);
-  console.log(data);
-
-  return;
 }
 
 export function getTimeDifference(startTime, endTime, breakTime) {

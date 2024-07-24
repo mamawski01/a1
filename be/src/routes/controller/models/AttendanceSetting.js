@@ -16,9 +16,3 @@ const AttendanceSetting = mongoose.model(
 );
 
 export default AttendanceSetting;
-
-[
-  {
-    DateTime: "24-07-22 Mon 22",
-  },
-];

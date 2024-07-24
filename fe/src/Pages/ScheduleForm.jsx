@@ -30,6 +30,7 @@ export default function ScheduleForm() {
   }, []);
 
   const [schedules, schedulesSet] = useState([]);
+  // console.log(schedules);
 
   feSocket.on("dataReceivedSchedule", (data) => {
     schedulesSet(data);
@@ -129,8 +130,7 @@ export default function ScheduleForm() {
                         attendanceId={user.schedules}
                         schedules={schedules[i]}
                         index={index}
-                        daysArr={daysArr[index]}
-                        i={i}
+                        daysArr={daysArr}
                         data={[
                           {
                             label: {
